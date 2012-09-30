@@ -1,0 +1,57 @@
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\bin\Debug\Flexible_computing.exe
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\bin\Debug\Flexible_computing.pdb
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.Form1.resources
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.Properties.Resources.resources
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.exe
+c:\users\администратор\documents\visual studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.pdb
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.exe
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.pdb
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\bin\Debug\Flexible_computing.exe
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\bin\Debug\Flexible_computing.pdb
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.Form1.resources
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.Properties.Resources.resources
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Администратор\Мои документы\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.exe
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.pdb
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\bin\Debug\Flexible_computing.exe
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\bin\Debug\Flexible_computing.pdb
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.Form1.resources
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\Flexible_computing.Properties.Resources.resources
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Sergey\Documents\Visual Studio 2010\Projects\Flexible_computing\Flexible_computing\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.exe
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.pdb
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\Flexible_computing.exe
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\Flexible_computing.pdb
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Form1.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Properties.Resources.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.About.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.TestForm.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\Flexible_computing.exe.config
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\Flexible_computing.exe.manifest
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\Flexible_computing.application
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.TrustInfo.xml
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.exe.manifest
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.application
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Form1.en.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Form1.ru.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\en\Flexible_computing.resources.dll
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\ru\Flexible_computing.resources.dll
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\en\Flexible_computing.resources.dll
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\ru\Flexible_computing.resources.dll
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Form1.en-US.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\bin\Debug\en-US\Flexible_computing.resources.dll
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\en-US\Flexible_computing.resources.dll
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb32_16p.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb32.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb64.resources
+C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb64_32f.resources

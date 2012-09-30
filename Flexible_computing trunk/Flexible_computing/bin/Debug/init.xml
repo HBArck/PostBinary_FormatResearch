@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<params>
+	<version>
+		<major>3</major>
+		<minor>0</minor>
+		<build>25</build>
+		<revision>25000</revision>
+	</version>
+	<problems>yes</problems>
+</params>
