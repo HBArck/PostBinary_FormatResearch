@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\demon's_blood.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Flexible_computing" version="3.34.0.17763" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="Flexible_computing" version="3.34.1.32611" language="neutral" processorArchitecture="x86" />
     <commandLine file="Flexible_computing.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,50 +43,50 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flexible_computing.exe" size="388096">
-      <assemblyIdentity name="Flexible_computing" version="3.34.0.17763" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flexible_computing.exe" size="390144">
+      <assemblyIdentity name="Flexible_computing" version="3.34.1.32611" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>PJ8eVieaGNe4p3j4KxjTwiKczHM=</dsig:DigestValue>
+        <dsig:DigestValue>u38JSVeml9NlyExiw/1RCrNXvec=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en\Flexible_computing.resources.dll" size="62976">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.17763" language="en" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.1.32611" language="en" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>3nRfJyntJrwaTReig16bUuAJlR8=</dsig:DigestValue>
+        <dsig:DigestValue>d4M7tz2CD5xwmgmPo935LbGd4Lc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en-US\Flexible_computing.resources.dll" size="30208">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.17763" language="en-US" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.1.32611" language="en-US" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>xf/4Vct+1oRMoELIaQcC0NwzJwg=</dsig:DigestValue>
+        <dsig:DigestValue>TcHh2HU6lLqKy9zsiqpWsOmDoV4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ru\Flexible_computing.resources.dll" size="31232">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.17763" language="ru" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.1.32611" language="ru" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>mUnFgsSJxRFJ7XdwyR4z0osuX9I=</dsig:DigestValue>
+        <dsig:DigestValue>nTieG9a1NRUz1+BVsnjrS+iVMQQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

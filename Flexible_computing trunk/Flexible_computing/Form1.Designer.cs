@@ -276,10 +276,6 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cExp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bCopy = new System.Windows.Forms.Button();
             this.l2ccTo16cc = new System.Windows.Forms.Label();
             this.recalculate = new System.Windows.Forms.Button();
@@ -306,6 +302,11 @@
             this.tTime = new System.Windows.Forms.Timer(this.components);
             this.lbTime = new System.Windows.Forms.ListBox();
             this.tStatus = new System.Windows.Forms.Timer(this.components);
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cExp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cExpR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip_Global.SuspendLayout();
             this.tabControl_Format.SuspendLayout();
             this.tabPB32.SuspendLayout();
@@ -2952,34 +2953,12 @@
             this.cName,
             this.cExp,
             this.cMan,
+            this.cExpR,
             this.cManRight});
             this.dataGridView2.Location = new System.Drawing.Point(5, 6);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(719, 150);
             this.dataGridView2.TabIndex = 24;
-            // 
-            // cName
-            // 
-            this.cName.HeaderText = "Name";
-            this.cName.Name = "cName";
-            // 
-            // cExp
-            // 
-            this.cExp.HeaderText = "Exp";
-            this.cExp.Name = "cExp";
-            this.cExp.Width = 200;
-            // 
-            // cMan
-            // 
-            this.cMan.HeaderText = "Man";
-            this.cMan.Name = "cMan";
-            this.cMan.Width = 200;
-            // 
-            // cManRight
-            // 
-            this.cManRight.HeaderText = "Man R";
-            this.cManRight.Name = "cManRight";
-            this.cManRight.Width = 200;
             // 
             // bCopy
             // 
@@ -3197,6 +3176,34 @@
             // 
             this.tStatus.Interval = 1000;
             this.tStatus.Tick += new System.EventHandler(this.TimerCount);
+            // 
+            // cName
+            // 
+            this.cName.HeaderText = "Name";
+            this.cName.Name = "cName";
+            // 
+            // cExp
+            // 
+            this.cExp.HeaderText = "Exp";
+            this.cExp.Name = "cExp";
+            this.cExp.Width = 200;
+            // 
+            // cMan
+            // 
+            this.cMan.HeaderText = "Man";
+            this.cMan.Name = "cMan";
+            this.cMan.Width = 200;
+            // 
+            // cExpR
+            // 
+            this.cExpR.HeaderText = "Exp R";
+            this.cExpR.Name = "cExpR";
+            // 
+            // cManRight
+            // 
+            this.cManRight.HeaderText = "Man R";
+            this.cManRight.Name = "cManRight";
+            this.cManRight.Width = 200;
             // 
             // Form1
             // 
@@ -3564,11 +3571,12 @@
         private System.Windows.Forms.ListBox lbTime;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Timer tStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn cName;
         private System.Windows.Forms.DataGridViewTextBoxColumn cExp;
         private System.Windows.Forms.DataGridViewTextBoxColumn cMan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cExpR;
         private System.Windows.Forms.DataGridViewTextBoxColumn cManRight;
-        private System.Windows.Forms.Timer tStatus;
     }
 }
 

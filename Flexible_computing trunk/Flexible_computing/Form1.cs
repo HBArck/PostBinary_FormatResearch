@@ -115,11 +115,6 @@ namespace Flexible_computing
             InitializeComponent();  
         }
 
-        public void timeOnForm(String text)
-        {
-            lbTime.Items.Add(System.DateTime.Now.ToString("hh:mm:ss:ms"));
-            lbEvent.Items.Add(text);
-        }
         private void Form1_Enter(object sender, EventArgs e)
         {
             this.SetTopLevel(true);
@@ -129,7 +124,7 @@ namespace Flexible_computing
             MinimumSize = new Size(870,MinimumSize.Height);
             Width = 870;
             dataGridView1.Rows.Add(3);
-            dataGridView2.Rows.Add(3);
+            dataGridView2.Rows.Add(12);
             //textCalcError= new String[4];
             //var  temp = Core.Num32.GetType().GetProperty("Mantisa");
             //temp.SetValue(Core.Num32, "new mantissa",null);
@@ -264,7 +259,7 @@ namespace Flexible_computing
             {
                 if (isThreadsRunning(0, false) == 0)
                 {
-                    bStop_Thread32.Enabled = false;
+                    //bStop_Thread32.Enabled = false;
                     progInc();
                     isNum32Refreshed = true;
                 }
@@ -276,7 +271,7 @@ namespace Flexible_computing
                 {
                     if (isThreadsRunning(1, false) == 0)
                     {
-                        bStop_Thread64.Enabled = false;
+                        //bStop_Thread64.Enabled = false;
                         progInc();
                         isNum64Refreshed = true;
                     }
@@ -285,7 +280,7 @@ namespace Flexible_computing
                 {
                     if (isThreadsRunning(1, true) == 0)
                     {
-                        bStop_Thread64.Enabled = false;
+                        //bStop_Thread64.Enabled = false;
                         progInc();
                         isNum64Refreshed = true;
                     }
@@ -298,7 +293,7 @@ namespace Flexible_computing
                 {
                     if (isThreadsRunning(2, false) == 0)
                     {
-                        bStop_Thread128.Enabled = false;
+                        //bStop_Thread128.Enabled = false;
                         progInc();
                         isNum128Refreshed = true;
                     }
@@ -307,7 +302,7 @@ namespace Flexible_computing
                 {
                     if (isThreadsRunning(2, true) == 0)
                     {
-                        bStop_Thread128.Enabled = false;
+                        //bStop_Thread128.Enabled = false;
                         progInc();
                         isNum128Refreshed = true;
                     }
@@ -323,7 +318,7 @@ namespace Flexible_computing
                         progInc();
                         isNum256Refreshed = true;
                         calcFinished = true;
-                        bStop_Thread256.Enabled = false;
+                       // bStop_Thread256.Enabled = false;
                         timeOnForm("Paint 256 Finished");
                     }
                 }
@@ -334,7 +329,7 @@ namespace Flexible_computing
                         progInc();
                         isNum256Refreshed = true;
                         calcFinished = true;
-                        bStop_Thread256.Enabled = false;
+                       // bStop_Thread256.Enabled = false;
                         timeOnForm("Paint 256 Finished + Right");
                     }
                 }
@@ -363,7 +358,6 @@ namespace Flexible_computing
                     progressBar1.Value = 0;
                     progressBar1.Refresh();
                 }
-
             }
         }
 
@@ -1474,7 +1468,7 @@ namespace Flexible_computing
                                 progInc();
                                 Core.changeNumberState(false, true);
                                 progInc();
-                                Core.calcRes(Core.Num32, false);
+                                Core.calcRes(Core.Num32, PartOfNumber.Left);
                                 progInc();
                                 changetbInputText(modifyMe((int)nUpDown.Value, Core.Num32.CorrectResult));
                                 setProgress(100);
@@ -1489,7 +1483,7 @@ namespace Flexible_computing
                                     Core.Num64.Exponenta = tbExp64.Text; progInc();
                                     Core.Num64.Mantisa = tbMantisa64.Text; progInc();
                                     Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num64, false); progInc();
+                                    Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
                                     changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResult));
                                     setProgress(100);
                                     break;
@@ -1509,13 +1503,13 @@ namespace Flexible_computing
                                     Core.Num64.Exponenta = tbExp64.Text;
                                     Core.Num64.Mantisa = tbMantisa64.Text; progInc();
                                     Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num64, false); progInc();
+                                    Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
                                     //tbInput.Text = Core.Num64.CorrectResult;
                                     progInc();
                                     Core.Num64.ExponentaRight = tbExp64_2.Text; progInc();
                                     Core.Num64.MantisaRight = tbMantisa64_2.Text; progInc();
                                     Core.changeNumberState(true, true); progInc();
-                                    Core.calcRes(Core.Num64, true); progInc();
+                                    Core.calcRes(Core.Num64, PartOfNumber.Right); progInc();
                                     if (inputStringFormat == 1)
                                         changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionR));
                                     else
@@ -1533,7 +1527,7 @@ namespace Flexible_computing
                                     Core.Num128.Exponenta = tbExp128.Text; progInc();
                                     Core.Num128.Mantisa = tbMantisa128.Text; progInc();
                                     Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num128, false); progInc();
+                                    Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
                                     changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult));
                                     setProgress(100);
                                     break;
@@ -1553,13 +1547,13 @@ namespace Flexible_computing
                                     Core.Num128.Exponenta = tbExp128.Text; progInc();
                                     Core.Num128.Mantisa = tbMantisa128.Text; progInc();
                                     Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num128, false); progInc();
+                                    Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
                                     //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult);
 
                                     Core.Num128.ExponentaRight = tbExp128_2.Text; progInc();
                                     Core.Num128.MantisaRight = tbMantisa128_2.Text; progInc();
                                     Core.changeNumberState(true, true); progInc();
-                                    Core.calcRes(Core.Num128, true); progInc();
+                                    Core.calcRes(Core.Num128, PartOfNumber.Right); progInc();
                                     if (inputStringFormat == 1)
                                         changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionR));
                                     else
@@ -1577,7 +1571,7 @@ namespace Flexible_computing
                                     Core.Num256.Exponenta = tbExp256.Text; progInc();
                                     Core.Num256.Mantisa = tbMantisa256.Text; progInc();
                                     Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num256, false); progInc();
+                                    Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
                                     changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult)); setProgress(100);
                                     break;
 
@@ -1596,13 +1590,13 @@ namespace Flexible_computing
                                     Core.Num256.Exponenta = tbExp256.Text; progInc();
                                     Core.Num256.Mantisa = tbMantisa256.Text; progInc();
                                     Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num256, false); progInc();
+                                    Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
                                     //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult);
 
                                     Core.Num256.ExponentaRight = tbExp256_2.Text; progInc();
                                     Core.Num256.MantisaRight = tbMantisa256_2.Text; progInc();
                                     Core.changeNumberState(true, true); progInc();
-                                    Core.calcRes(Core.Num256, true); progInc();
+                                    Core.calcRes(Core.Num256, PartOfNumber.Right); progInc();
                                     if (inputStringFormat == 1)
                                         changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionR));
                                     else
@@ -2121,10 +2115,10 @@ namespace Flexible_computing
                 nUpDown.Enabled = true;
                 tbInput.Enabled = true;
 
-                bStop_Thread32.Enabled = false;
-                bStop_Thread64.Enabled = false;
-                bStop_Thread128.Enabled = false;
-                bStop_Thread256.Enabled = false;
+                //bStop_Thread32.Enabled = false;
+                //bStop_Thread64.Enabled = false;
+                //bStop_Thread128.Enabled = false;
+                //bStop_Thread256.Enabled = false;
             // Special Buttons 
                 bStart.Enabled = true;
                 recalculate.Enabled = true;
@@ -2890,13 +2884,22 @@ namespace Flexible_computing
             }
         }
 
+
+//#################################  DEBUG Func's Section #########################################
+
+        public void timeOnForm(String text)
+        {
+            lbTime.Items.Add(System.DateTime.Now.ToString("hh:mm:ss:ms"));
+            lbEvent.Items.Add(text);
+        }
         private void tTime_Tick(object sender, EventArgs e)
         {
             lTime.Text = "Time: " + System.DateTime.Now.ToString("HH:mm:ss");
             
             //32
             dataGridView1.Rows[0].Cells[0].Value = Core.Num32.Name;
-
+                dataGridView1.Rows[0].Cells[1].Value = Core.Num32.NumberState;
+                dataGridView1.Rows[0].Cells[3].Value = Core.Num32.CorrectResult;
             //64
             dataGridView1.Rows[1].Cells[0].Value = Core.Num64.Name;
                 // StateL 
@@ -2934,30 +2937,55 @@ namespace Flexible_computing
 
             //64
             dataGridView2.Rows[1].Cells[0].Value = Core.Num64.Name;
-                // StateL 
+                // Exp R 
                 dataGridView2.Rows[1].Cells[1].Value = Core.Num64.Exponenta;
-                // StateR
+                // Man L 
                 dataGridView2.Rows[1].Cells[2].Value = Core.Num64.Mantisa;
-                // Res L
-                dataGridView2.Rows[1].Cells[3].Value = Core.Num64.MantisaRight;
+                // Exp R
+                dataGridView2.Rows[1].Cells[2].Value = Core.Num64.ExponentaRight;
+                // Man R
+                dataGridView2.Rows[1].Cells[4].Value = Core.Num64.MantisaRight;
 
             // 128
             dataGridView2.Rows[2].Cells[0].Value = Core.Num128.Name;
-                // StateL 
+                // Exp L 
                 dataGridView2.Rows[2].Cells[1].Value = Core.Num128.Exponenta;
-                // StateR
+                // Men L
                 dataGridView2.Rows[2].Cells[2].Value = Core.Num128.Mantisa;
-                // Res L
-                dataGridView2.Rows[2].Cells[3].Value = Core.Num128.MantisaRight;
+                // Exp R
+                dataGridView2.Rows[2].Cells[2].Value = Core.Num128.ExponentaRight;
+                // Man R
+                dataGridView2.Rows[2].Cells[4].Value = Core.Num128.MantisaRight;
 
             // 256
             dataGridView2.Rows[3].Cells[0].Value = Core.Num256.Name;
-                // StateL 
+                // Exp L 
                 dataGridView2.Rows[3].Cells[1].Value = Core.Num256.Exponenta;
-                // StateR
+                // Man L
                 dataGridView2.Rows[3].Cells[2].Value = Core.Num256.Mantisa;
-                // Res L
-                dataGridView2.Rows[3].Cells[3].Value = Core.Num256.MantisaRight;
+                // Exp R
+                dataGridView2.Rows[3].Cells[2].Value = Core.Num256.ExponentaRight;
+                // Man R
+                dataGridView2.Rows[3].Cells[4].Value = Core.Num256.MantisaRight;
+
+            // Binary String
+            dataGridView2.Rows[4].Cells[0].Value = "BinaryIntPart";
+            dataGridView2.Rows[4].Cells[1].Value = Core.BinaryIntPart;
+
+            dataGridView2.Rows[5].Cells[0].Value = "BinaryFloatPart";
+            dataGridView2.Rows[5].Cells[1].Value = Core.BinaryFloatPart;
+
+            dataGridView2.Rows[6].Cells[0].Value = "BinaryIntPartFILeft";
+            dataGridView2.Rows[6].Cells[1].Value = Core.BinaryIntPartFILeft;
+
+            dataGridView2.Rows[7].Cells[0].Value = "BinaryFloatPartFILeft";
+            dataGridView2.Rows[7].Cells[1].Value = Core.BinaryFloatPartFILeft;
+
+            dataGridView2.Rows[8].Cells[0].Value = "BinaryIntPartFIRight";
+            dataGridView2.Rows[8].Cells[1].Value = Core.BinaryIntPartFIRight;
+
+            dataGridView2.Rows[9].Cells[0].Value = "BinaryFloatPartFIRight";
+            dataGridView2.Rows[9].Cells[1].Value = Core.BinaryFloatPartFIRight;
         }
     
     }//class Form1

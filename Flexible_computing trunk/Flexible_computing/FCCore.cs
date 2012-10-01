@@ -72,6 +72,11 @@ namespace Flexible_computing
         NaN,
         error
     };
+    public enum PartOfNumber
+    {
+        Left = 1,
+        Right = 2,
+    };
     public class Number
     {
         public String Name;
@@ -344,10 +349,10 @@ namespace Flexible_computing
             }
         } // EXCEPTION NEEDED !!!!!     <<<<<<<<<<<<<<----------------
 
-        private String BIPfi;
-        public String BinaryIntPartFI
+        private String BIPfiL;
+        public String BinaryIntPartFILeft
         {
-            get { return BIPfi; }
+            get { return BIPfiL; }
             set
             {
                 //if (Offset == value.Length)
@@ -367,14 +372,14 @@ namespace Flexible_computing
                 //    else
                 //        BIP = value.Substring(value.Length - Offset, Offset);
                 //}
-                BIPfi = value;
+                BIPfiL = value;
             }
         } // EXCEPTION NEEDED !!!!!     <<<<<<<<<<<<<<----------------
 
-        private String BFPfi;
-        public String BinaryFloatPartFI
+        private String BFPfiL;
+        public String BinaryFloatPartFILeft
         {
-            get { return BFPfi; }
+            get { return BFPfiL; }
             set
             {
                 //if (Offset + MBits == value.Length)
@@ -394,10 +399,63 @@ namespace Flexible_computing
                 //    else
                 //        BFP = value.Substring(0, Offset + MBits);
                 //}
-                BFPfi = value;
+                BFPfiL = value;
             }
         } // EXCEPTION NEEDED !!!!!     <<<<<<<<<<<<<<----------------
 
+        private String BIPfiR;
+        public String BinaryIntPartFIRight
+        {
+            get { return BIPfiR; }
+            set
+            {
+                //if (Offset == value.Length)
+                //    BIP = value;
+                //else
+                //{
+                //    if (Offset > value.Length)
+                //    {
+                //        int i = 0;
+                //        BIP = "";
+                //        for (i = 0; i < Offset - value.Length; i++)
+                //        {
+                //            BIP += "0";
+                //        }
+                //        BIP = value;
+                //    }
+                //    else
+                //        BIP = value.Substring(value.Length - Offset, Offset);
+                //}
+                BIPfiR = value;
+            }
+        } // EXCEPTION NEEDED !!!!!     <<<<<<<<<<<<<<----------------
+
+        private String BFPfiR;
+        public String BinaryFloatPartFIRight
+        {
+            get { return BFPfiR; }
+            set
+            {
+                //if (Offset + MBits == value.Length)
+                //    BIP = value;
+                //else
+                //{
+                //    if (Offset + MBits > value.Length)
+                //    {
+                //        int i = 0;
+                //        BFP = value;
+                //        for (i = 0; i < Offset + MBits - value.Length; i++)
+                //        {
+                //            BFP += "0";
+                //        }
+
+                //    }
+                //    else
+                //        BFP = value.Substring(0, Offset + MBits);
+                //}
+                BFPfiR = value;
+            }
+        } // EXCEPTION NEEDED !!!!!     <<<<<<<<<<<<<<----------------
 
         public CalculationStatus CalcStatus;
         public stateOfNumber NumberState;
@@ -502,19 +560,25 @@ namespace Flexible_computing
         public String NormalizedNumber;
         public String NormalizedNumberRight;
         public String DenormalizedNumber;
+        public String DenormalizedNumberLeft;
         public String DenormalizedNumberRight;
         public String IntPartDenormalized;
         public String FloatPartDenormalized;
-        public String IntPartDenormalizedFI;
-        public String FloatPartDenormalizedFI;
+
+        public String IntPartDenormalizedFILeft;
+        public String FloatPartDenormalizedFILeft;
+        public String IntPartDenormalizedFIRight;
+        public String FloatPartDenormalizedFIRight;
         public String DenormIntPart;
         public String DenormFloatPart;
         public String DenormIntPartFI;
         public String DenormFloatPartFI;
         public String BinaryIntPart;
         public String BinaryFloatPart;
-        public String BinaryIntPartFI;
-        public String BinaryFloatPartFI;
+        public String BinaryIntPartFILeft;
+        public String BinaryFloatPartFILeft;
+        public String BinaryIntPartFIRight;
+        public String BinaryFloatPartFIRight;
 
         public String ExpSign;
         private String Sign;
@@ -584,6 +648,7 @@ namespace Flexible_computing
             Exception,
             Error
         };
+        
         CalculationStatus calcStatus = CalculationStatus.Ok;
         //private fields - lux maintance
         ExceptionUtil exceptionUtil;
@@ -636,45 +701,45 @@ namespace Flexible_computing
             {
                 NormalizedNumber = NormalizeNumber(inputString, 1000);
                 // Denormalize Number
-                Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber);
+                Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                 // Convert from 10cc to 2cc
 
                 this.BinaryIntPart = convert10to2IPart(Num32.IntPartDenormalized);
                 this.BinaryFloatPart = convert10to2FPart(Num32.FloatPartDenormalized);
-                FillBinaryVars();
+                FillBinaryVars(PartOfNumber.Left);
                 // Fill SEM 
                 switch (input)
                 {
                     case 32:
-                        Num32.Exponenta = selectExp(Num32);
-                        Num32.Mantisa = selectMantissa(Num32,NumberFormat);
-                        changeNumberState(32, false);
-                        calcRes(Num32,false);
-                        calcError(Num32, false);
+                        Num32.Exponenta = selectExp(Num32, PartOfNumber.Left);
+                        Num32.Mantisa = selectMantissa(Num32, NumberFormat, PartOfNumber.Left);
+                        changeNumberState(32, PartOfNumber.Left);
+                        calcRes(Num32, PartOfNumber.Left);
+                        calcError(Num32, PartOfNumber.Left);
                         break;
 
                     case 64:
-                        Num64.Exponenta = selectExp(Num64);
-                        Num64.Mantisa = selectMantissa(Num64, NumberFormat);
-                        changeNumberState(64, false);
-                        calcRes(Num64, false);
-                        calcError(Num64, false);
+                        Num64.Exponenta = selectExp(Num64, PartOfNumber.Left);
+                        Num64.Mantisa = selectMantissa(Num64, NumberFormat, PartOfNumber.Left);
+                        changeNumberState(64, PartOfNumber.Left);
+                        calcRes(Num64, PartOfNumber.Left);
+                        calcError(Num64, PartOfNumber.Left);
                         break;
 
                     case 128:
-                        Num128.Exponenta = selectExp(Num128);
-                        Num128.Mantisa = selectMantissa(Num128, NumberFormat);
-                        changeNumberState(128, false);
-                        calcRes(Num128, false);
-                        calcError(Num128, false);
+                        Num128.Exponenta = selectExp(Num128, PartOfNumber.Left);
+                        Num128.Mantisa = selectMantissa(Num128, NumberFormat, PartOfNumber.Left);
+                        changeNumberState(128, PartOfNumber.Left);
+                        calcRes(Num128, PartOfNumber.Left);
+                        calcError(Num128, PartOfNumber.Left);
                         break;
 
                     case 256:
-                        Num256.Exponenta = selectExp(Num256);
-                        Num256.Mantisa = selectMantissa(Num256, NumberFormat);
-                        changeNumberState(256, false);
-                        calcRes(Num256, false);
-                        calcError(Num256, false);
+                        Num256.Exponenta = selectExp(Num256, PartOfNumber.Left);
+                        Num256.Mantisa = selectMantissa(Num256, NumberFormat, PartOfNumber.Left);
+                        changeNumberState(256, PartOfNumber.Left);
+                        calcRes(Num256, PartOfNumber.Left);
+                        calcError(Num256, PartOfNumber.Left);
                         break;
                 }
             }
@@ -711,24 +776,24 @@ namespace Flexible_computing
                 {
                     NormalizedNumber = NormalizeNumber(inputString, 2000);
                     // Denormalize Number
-                    Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber);
+                    Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizedNumber = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
                     
                         // test State HERE
                         tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber,false);
+                        defineNumberState(tempNumber, PartOfNumber.Left);
                         if (Num256.NumberState != stateOfNumber.error)
                         {
                             this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
                             this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
                             progIncThreadSafe();
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Left);
                         }
                         else
                         {
                             this.BinaryIntPart = "0";
                             this.BinaryFloatPart = "0";
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Left);
                             progIncThreadSafe();
                         }
                         // Fill SEM 
@@ -794,23 +859,23 @@ namespace Flexible_computing
 
                     NormalizedNumber = NormalizeNumber(inputString, 2000);
                     // Denormalize Number
-                    Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber);
+                    Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizedNumberLeft = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
                    
-                        tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber,false);
+                        tempNumber = convertToExp(DenormalizedNumberLeft);
+                        defineNumberState(tempNumber, PartOfNumber.Left);
                         if (Num256.NumberState != stateOfNumber.error)
                         {
-                            this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
-                            this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
-                            FillBinaryVars();
+                            this.BinaryIntPartFILeft= convert10to2IPart(IntPartDenormalizedFILeft);
+                            this.BinaryFloatPartFILeft = convert10to2FPart(FloatPartDenormalizedFILeft);
+                            FillBinaryVars(PartOfNumber.Left);
                             // Fill SEM 
                         }
                         else
                         {
                             this.BinaryIntPart = "0";
                             this.BinaryFloatPart = "0";
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Left);
                         }
                         if (Num64.NumberState != stateOfNumber.error)
                         { 
@@ -848,23 +913,23 @@ namespace Flexible_computing
                     RightPartCalculating = true;
                     NormalizedNumberRight = NormalizeNumber(inputStringR, 2000);
                     // Denormalize Number
-                    Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizeNumber(NormalizedNumberRight);
+                    Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizedNumberRight = DenormalizeNumber(NormalizedNumberRight, PartOfNumber.Right);
                     // Convert from 10cc to 2cc
                     
                         tempNumber = convertToExp(DenormalizedNumberRight);
-                        defineNumberState(tempNumber,true);
+                        defineNumberState(tempNumber, PartOfNumber.Right);
                         if (Num256.NumberStateRight != stateOfNumber.error)
                         {
-                            this.BinaryIntPartFI = convert10to2IPart(IntPartDenormalizedFI);
-                            this.BinaryFloatPartFI = convert10to2FPart(FloatPartDenormalizedFI);
-                            FillBinaryVars();
+                            this.BinaryIntPartFIRight = convert10to2IPart(IntPartDenormalizedFIRight);
+                            this.BinaryFloatPartFIRight = convert10to2FPart(FloatPartDenormalizedFIRight);
+                            FillBinaryVars(PartOfNumber.Right);
                             // Fill SEM 
                         }
                         else
                         {
-                            this.BinaryIntPartFI = "0";
-                            this.BinaryFloatPartFI = "0";
-                            FillBinaryVars();
+                            this.BinaryIntPartFIRight = "0";
+                            this.BinaryFloatPartFIRight = "0";
+                            FillBinaryVars(PartOfNumber.Right);
                         }
 
                         if (Num64.NumberStateRight != stateOfNumber.error)
@@ -933,23 +998,23 @@ namespace Flexible_computing
                 {
                     NormalizedNumber = NormalizeNumber(inputString, 2000);
                     // Denormalize Number
-                    Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber);
+                    Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
                    
                         tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber,false);
+                        defineNumberState(tempNumber, PartOfNumber.Left);
                         if (Num256.NumberState != stateOfNumber.error)
                         {
                             this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
                             this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
 
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Left);
                         }
                         else
                         {
                             this.BinaryIntPart = "0";
                             this.BinaryFloatPart = "0";
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Left);
                         }
                         // Fill SEM 
                         if (Num32.NumberState != stateOfNumber.error)
@@ -986,24 +1051,24 @@ namespace Flexible_computing
 
                     NormalizedNumber = NormalizeNumber(inputString, 2000);
                     // Denormalize Number
-                    Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber);
+                    Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
                     //if ((IntPartDenormalized != "0") || (FloatPartDenormalized != "0"))
                     //{
                         tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber,false);
+                        defineNumberState(tempNumber, PartOfNumber.Left);
                         if (Num256.NumberState != stateOfNumber.error)
                         {
                             this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
                             this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Left);
                             // Fill SEM 
                         }
                         else
                         {
                             this.BinaryIntPart = "0";
                             this.BinaryFloatPart = "0";
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Left);
                         }
                         if (Num64.NumberState != stateOfNumber.error)
                         {
@@ -1025,24 +1090,24 @@ namespace Flexible_computing
                         RightPartCalculating = true;
                     NormalizedNumber = NormalizeNumber(inputStringR, 2000);
                     // Denormalize Number
-                    Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizeNumber(NormalizedNumber);
+                    Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizeNumber(NormalizedNumber, PartOfNumber.Right);
                     // Convert from 10cc to 2cc
                     //if ((IntPartDenormalized != "0") || (FloatPartDenormalized != "0"))
                     //{
                         tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber,false);
+                        defineNumberState(tempNumber, PartOfNumber.Right);
                         if (Num256.NumberStateRight != stateOfNumber.error)
                         {
                             this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
                             this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Right);
                             // Fill SEM 
                         }
                         else
                         {
                             this.BinaryIntPart = "0";
                             this.BinaryFloatPart = "0";
-                            FillBinaryVars();
+                            FillBinaryVars(PartOfNumber.Right);
                         }
 
                         if (Num64.NumberStateRight != stateOfNumber.error)
@@ -1072,13 +1137,13 @@ namespace Flexible_computing
         {
             try
             {
-                Num32.Exponenta = selectExp(Num32);
+                Num32.Exponenta = selectExp(Num32, PartOfNumber.Left);
                 progIncThreadSafe();
-                Num32.Mantisa = selectMantissa(Num32, NumberFormat);
+                Num32.Mantisa = selectMantissa(Num32, NumberFormat, PartOfNumber.Left);
                 progIncThreadSafe();
-                changeNumberState(32, false);
-                calcRes(Num32, false);
-                calcError(Num32, false);
+                changeNumberState(32, PartOfNumber.Left);
+                calcRes(Num32, PartOfNumber.Left);
+                calcError(Num32, PartOfNumber.Left);
                 progIncThreadSafe();
             }
             catch (Exception ex)
@@ -1092,19 +1157,20 @@ namespace Flexible_computing
             try
             {
                 bool RightPart = (bool)RightPartCalculation;
+                PartOfNumber tempPart = RightPart == false ? PartOfNumber.Left: PartOfNumber.Right;
                 if (!RightPart)
-                    Num64.Exponenta = selectExp(Num64);
+                    Num64.Exponenta = selectExp(Num64, PartOfNumber.Left);
                 else
-                    Num64.ExponentaRight = selectExp(Num64);
+                    Num64.ExponentaRight = selectExp(Num64, PartOfNumber.Right);
                 progIncThreadSafe();
                 if (!RightPart)
-                    Num64.Mantisa = selectMantissa(Num64, NumberFormat);
+                    Num64.Mantisa = selectMantissa(Num64, NumberFormat, PartOfNumber.Left);
                 else
-                    Num64.MantisaRight = selectMantissa(Num64, NumberFormat);
+                    Num64.MantisaRight = selectMantissa(Num64, NumberFormat, PartOfNumber.Right);
                 progIncThreadSafe();
-                changeNumberState(64, RightPart);
-                calcRes(Num64, RightPart);
-                calcError(Num64, RightPart);
+                changeNumberState(64, tempPart);
+                calcRes(Num64, tempPart);
+                calcError(Num64, tempPart);
                 progIncThreadSafe();
             }
             catch (Exception ex)
@@ -1118,21 +1184,22 @@ namespace Flexible_computing
             try
             {
                 bool RightPart = (bool)RightPartCalculation;
+                PartOfNumber tempPart = RightPart == false ? PartOfNumber.Left : PartOfNumber.Right;
                 if (!RightPart)
-                    Num128.Exponenta = selectExp(Num128);
+                    Num128.Exponenta = selectExp(Num128, PartOfNumber.Left);
                 else
-                    Num128.ExponentaRight = selectExp(Num128);
+                    Num128.ExponentaRight = selectExp(Num128, PartOfNumber.Right);
                 progIncThreadSafe();
                 if (!RightPart)
-                    Num128.Mantisa = selectMantissa(Num128, NumberFormat);
+                    Num128.Mantisa = selectMantissa(Num128, NumberFormat, PartOfNumber.Left);
                 else
-                    Num128.MantisaRight = selectMantissa(Num128, NumberFormat);
+                    Num128.MantisaRight = selectMantissa(Num128, NumberFormat, PartOfNumber.Right);
                 progIncThreadSafe();
-                changeNumberState(128, RightPart);
+                changeNumberState(128, tempPart);
                 //if ((Format == 0) || (RightPartCalculating))
                 //{
-                calcRes(Num128, RightPart);
-                calcError(Num128, RightPart);
+                calcRes(Num128, tempPart);
+                calcError(Num128, tempPart);
                 //}
                 progIncThreadSafe();
             }
@@ -1147,23 +1214,24 @@ namespace Flexible_computing
             try
             {
                 bool RightPart = (bool)RightPartCalculation;
+                PartOfNumber tempPart = RightPart == false ? PartOfNumber.Left : PartOfNumber.Right;
                 if (!RightPart)
-                    Num256.Exponenta = selectExp(Num256);
+                    Num256.Exponenta = selectExp(Num256, PartOfNumber.Left);
                 else
-                    Num256.ExponentaRight = selectExp(Num256);
+                    Num256.ExponentaRight = selectExp(Num256, PartOfNumber.Right);
 
                 progIncThreadSafe();
                 if (!RightPart)
-                    Num256.Mantisa = selectMantissa(Num256, NumberFormat);
+                    Num256.Mantisa = selectMantissa(Num256, NumberFormat, PartOfNumber.Left);
                 else
-                    Num256.MantisaRight = selectMantissa(Num256, NumberFormat);
+                    Num256.MantisaRight = selectMantissa(Num256, NumberFormat, PartOfNumber.Right);
 
                 progIncThreadSafe();
-                changeNumberState(256, RightPart);
+                changeNumberState(256, tempPart);
                 //if ((Format == 0) || (RightPartCalculating))
                 //{
-                calcRes(Num256, RightPart);
-                calcError(Num256, RightPart);
+                calcRes(Num256, tempPart);
+                calcError(Num256, tempPart);
                 //}
                 progIncThreadSafe();
             }
@@ -1174,6 +1242,9 @@ namespace Flexible_computing
             }
         }
 
+        /// <summary>
+        /// Separates number on Left and Right Part
+        /// </summary>
         public void SeparateInputNumber()
         {
             switch (NumberFormat)
@@ -1244,14 +1315,22 @@ namespace Flexible_computing
             return dataString;
         }
 
-        public String DenormalizeNumber(String dataString)
-        {   // signExp       -> ExpSign
+        /// <summary>
+        /// Denormolizes number
+        /// </summary>
+        /// <param name="dataString">Input String to dernomolize</param>
+        /// <param name="Left_Right">True if left part now working, else right</param>
+        /// <returns>Denormolized number as String</returns>
+        public String DenormalizeNumber(String dataString ,PartOfNumber Left_Right)
+        {   
+            /*/ signExp       -> ExpSign
             // sign          -> Sign
             // signCharacter -> SignCharacter
             // exp           -> E
             // iPart         -> IntPartDenormalized
             // fPart         -> FloatPartDenormalized
             // inputString   -> Denormalized
+             */
             String denormNumber = "";
             String denormIntPart = "", denormFloatPart = "";
             String[] tempArray;
@@ -1344,15 +1423,23 @@ namespace Flexible_computing
                     Num32.FloatPartDenormalized = Num64.FloatPartDenormalized = Num128.FloatPartDenormalized = Num256.FloatPartDenormalized = FloatPartDenormalized = denormFloatPart;
                     DenormIntPart = denormIntPart;
                     DenormFloatPart = denormFloatPart;
-                    DenormalizedNumber = denormNumber;
                 }
                 else
                 {
-                    Num32.IntPartDenormalizedFI = Num64.IntPartDenormalizedFI = Num128.IntPartDenormalizedFI = Num256.IntPartDenormalizedFI = IntPartDenormalizedFI = denormIntPart;
-                    Num32.FloatPartDenormalizedFI = Num64.FloatPartDenormalizedFI = Num128.FloatPartDenormalizedFI = Num256.FloatPartDenormalizedFI = FloatPartDenormalizedFI = denormFloatPart;
+                    if (Left_Right == PartOfNumber.Left)
+                    {
+                        IntPartDenormalizedFILeft = denormIntPart;
+                        FloatPartDenormalizedFILeft = denormFloatPart;
+                    }
+                    else
+                    {
+                        IntPartDenormalizedFIRight = denormIntPart;
+                        FloatPartDenormalizedFIRight = denormFloatPart;
+                    }
+                    //Num32.IntPartDenormalizedFI = Num64.IntPartDenormalizedFI = Num128.IntPartDenormalizedFI = Num256.IntPartDenormalizedFI = IntPartDenormalizedFI = denormIntPart;
+                    //Num32.FloatPartDenormalizedFI = Num64.FloatPartDenormalizedFI = Num128.FloatPartDenormalizedFI = Num256.FloatPartDenormalizedFI = FloatPartDenormalizedFI = denormFloatPart;
                     DenormIntPartFI = denormIntPart;
                     DenormFloatPartFI = denormFloatPart;
-                    DenormalizedNumberRight = denormNumber;
                 }
                 return denormNumber;
             }
@@ -1363,9 +1450,13 @@ namespace Flexible_computing
             }
         }
 
-        public void FillBinaryVars()
+        /// <summary>
+        /// Fills all binary string 
+        /// </summary>
+        /// <param name="Left_Right">False - Left part og number, else - Right </param>
+        public void FillBinaryVars(PartOfNumber Left_Right)
         {
-            if (((this.BinaryIntPart != null) && (this.BinaryFloatPart != null)) || ((this.BinaryFloatPartFI != null) && (this.BinaryIntPartFI != null)))
+            if (((this.BinaryIntPart != null) && (this.BinaryFloatPart != null)) || ((this.BinaryFloatPartFIRight != null) && (this.BinaryIntPartFIRight != null)) || ((this.BinaryFloatPartFILeft != null) && (this.BinaryIntPartFILeft != null)))
             {
                 if (Num32 != null)
                 {
@@ -1381,8 +1472,16 @@ namespace Flexible_computing
                     }
                     else
                     {
-                        Num64.BinaryIntPartFI = this.BinaryIntPartFI;
-                        Num64.BinaryFloatPartFI = this.BinaryFloatPartFI;
+                        if (Left_Right == PartOfNumber.Left)
+                        {
+                            Num64.BinaryIntPartFILeft = this.BinaryIntPartFILeft;
+                            Num64.BinaryFloatPartFILeft = this.BinaryFloatPartFILeft;
+                        }
+                        else
+                        {
+                            Num64.BinaryIntPartFIRight = this.BinaryIntPartFIRight;
+                            Num64.BinaryFloatPartFIRight = this.BinaryFloatPartFIRight;
+                        }
                     }
                 }
                 if (Num128 != null)
@@ -1394,8 +1493,16 @@ namespace Flexible_computing
                     }
                     else
                     {
-                        Num128.BinaryIntPartFI = this.BinaryIntPartFI;
-                        Num128.BinaryFloatPartFI = this.BinaryFloatPartFI;
+                        if (Left_Right == PartOfNumber.Left)
+                        {
+                            Num128.BinaryIntPartFIRight = this.BinaryIntPartFILeft;
+                            Num128.BinaryFloatPartFIRight = this.BinaryFloatPartFILeft;
+                        }
+                        else
+                        {
+                            Num128.BinaryIntPartFIRight = this.BinaryIntPartFIRight;
+                            Num128.BinaryFloatPartFIRight = this.BinaryFloatPartFIRight;
+                        }
                     }
                 }
                 if (Num256 != null)
@@ -1407,8 +1514,16 @@ namespace Flexible_computing
                     }
                     else
                     {
-                        Num256.BinaryIntPartFI = this.BinaryIntPartFI;
-                        Num256.BinaryFloatPartFI = this.BinaryFloatPartFI;
+                        if (Left_Right == PartOfNumber.Left)
+                        {
+                            Num256.BinaryIntPartFIRight = this.BinaryIntPartFILeft;
+                            Num256.BinaryFloatPartFIRight = this.BinaryFloatPartFILeft;
+                        }
+                        else
+                        {
+                            Num256.BinaryIntPartFIRight = this.BinaryIntPartFILeft;
+                            Num256.BinaryFloatPartFIRight = this.BinaryFloatPartFILeft;
+                        }
                     }
                 }
             }
@@ -1498,7 +1613,7 @@ namespace Flexible_computing
         /// Defines states for all numbers in FCCore.
         /// If Exp or Mantisa in number are empty , number state won't be calculated.
         /// </summary>
-        public void changeNumberState(int inputNumCapacity,bool RightPart)
+        public void changeNumberState(int inputNumCapacity,PartOfNumber Left_Right)
         {
             bool expZero, manZero, numZero, expFull;
             expZero = manZero = numZero = expFull = false;
@@ -1507,7 +1622,7 @@ namespace Flexible_computing
                 if (NumberFormat == 0)
                     numZero = isStringZero(inputString);
                 else
-                    if (RightPart)
+                    if (Left_Right == PartOfNumber.Left)
                         numZero = isStringZero(inputStringR);
                     else
                         numZero = isStringZero(inputString);
@@ -1516,7 +1631,7 @@ namespace Flexible_computing
                 {
                     case 32:
                         {
-                            if ((NumberFormat == 0) || (!RightPart))
+                            if ((NumberFormat == 0) || (Left_Right == PartOfNumber.Left))
                             {
                                 if ((Num32.Exponenta != "") && (Num32.Mantisa != ""))
                                 {
@@ -1531,7 +1646,7 @@ namespace Flexible_computing
                         }
                     case 64:
                         {
-                            if ((NumberFormat != 0) && (RightPart))
+                            if ((NumberFormat != 0) && (Left_Right == PartOfNumber.Right))
                             {
                                 if ((Num64.ExponentaRight != "") && (Num64.MantisaRight != ""))
                                 {
@@ -1557,7 +1672,7 @@ namespace Flexible_computing
                         }
                     case 128:
                         {
-                            if ((NumberFormat != 0) && (RightPart))
+                            if ((NumberFormat != 0) && (Left_Right == PartOfNumber.Right))
                             {
                                 if ((Num128.ExponentaRight != "") && (Num128.MantisaRight != ""))
                                 {
@@ -1583,7 +1698,7 @@ namespace Flexible_computing
                         }
                     case 256:
                         {
-                            if ((NumberFormat != 0) && (RightPart))
+                            if ((NumberFormat != 0) && (Left_Right == PartOfNumber.Right))
                             {
                                 if ((Num256.ExponentaRight != "") && (Num256.MantisaRight != ""))
                                 {
@@ -1770,7 +1885,7 @@ namespace Flexible_computing
         /// <summary> new func
         /// Defines states for all numbers in FCCore, based on nmber bounds
         /// </summary>
-        public void defineNumberState(String inNum, bool RightPart)
+        public void defineNumberState(String inNum, PartOfNumber RightPart)
         {
             String Exp="";
             int exp=0;
@@ -1835,7 +1950,7 @@ namespace Flexible_computing
                 
                 if ((exp < min32) || (exp > max32))
                 {
-                    if (!RightPart)
+                    if (RightPart == PartOfNumber.Left)
                         Num32.NumberState = stateOfNumber.error;
                     //else
                     //    Num32.NumberStateRight = stateOfNumber.error;
@@ -1843,7 +1958,7 @@ namespace Flexible_computing
 
                 if ((exp < min64) || (exp > max64))
                 {
-                    if (!RightPart)
+                    if (RightPart == PartOfNumber.Left)
                         Num64.NumberState = stateOfNumber.error;
                     else
                         Num64.NumberStateRight = stateOfNumber.error;
@@ -1851,7 +1966,7 @@ namespace Flexible_computing
 
                 if ((exp < min128) || (exp > max128))
                 {
-                    if (RightPart)
+                    if (RightPart == PartOfNumber.Left)
                         Num128.NumberState = stateOfNumber.error;
                     else
                         Num128.NumberStateRight = stateOfNumber.error;
@@ -1859,7 +1974,7 @@ namespace Flexible_computing
 
                 if ((exp < min256) || (exp > max256))
                 {
-                    if (RightPart)
+                    if (RightPart == PartOfNumber.Left)
                         Num256.NumberState = stateOfNumber.error;
                     else
                         Num64.NumberStateRight = stateOfNumber.error;
@@ -1868,11 +1983,11 @@ namespace Flexible_computing
             else
             {
                 //32 
-                if (!RightPart)
+                if ( RightPart == PartOfNumber.Left)
                 Num32.NumberState = stateOfNumber.normalized;
 
                 //64
-                if (RightPart)
+                if (RightPart == PartOfNumber.Right)
                 {
                     Num64.NumberStateRight = stateOfNumber.normalized;
                 }
@@ -1882,7 +1997,7 @@ namespace Flexible_computing
                 }
 
                 //128
-                if (RightPart)
+                if (RightPart == PartOfNumber.Right)
                 {
                     Num128.NumberStateRight = stateOfNumber.normalized;
                 }
@@ -1892,7 +2007,7 @@ namespace Flexible_computing
                 }
 
                 //256
-                if (RightPart)
+                if (RightPart == PartOfNumber.Right)
                 {
                     Num256.NumberStateRight = stateOfNumber.normalized;
                 }
@@ -2376,11 +2491,13 @@ namespace Flexible_computing
         }
 
         //----------------------   String Utils  END
+
+        // TO DO - EXPONENTA CAN BE LEFT OR RIGHT PART of Number 
         public void sumExp(Number inNumber, String inStr)
         {
             String E;
             int iE, Offset = 0;
-            E = inNumber.Exponenta;
+            E = inNumber.Exponenta; // It can be Fraction or Interval
             switch (NumberFormat)
             {
                 case 0: Offset = inNumber.Offset; break;
@@ -2404,8 +2521,9 @@ namespace Flexible_computing
         /// Uses : Number.BinaryIntPart,Number.BinaryFloatPart
         /// </summary>
         /// <param name="inNumber">Number - var from which exponenta need to be taken</param>
+        /// <param name="Left_Right">False - Left part og number, else - Right </param>
         /// <returns>Returns Exponent in 2cc</returns>
-        public String selectExp(Number inNumber)
+        public String selectExp(Number inNumber, PartOfNumber Left_Right)
         {
 
             int i, z = 0;
@@ -2419,8 +2537,16 @@ namespace Flexible_computing
             }
             else 
             {
-                bynaryStringInt = inNumber.BinaryIntPartFI;
-                bynaryStringFloat = inNumber.BinaryFloatPartFI;
+                if (Left_Right ==  PartOfNumber.Left)
+                {// Left part of number
+                    bynaryStringInt = inNumber.BinaryIntPartFILeft;
+                    bynaryStringFloat = inNumber.BinaryFloatPartFILeft;
+                }
+                else
+                {// Right part of number
+                    bynaryStringInt = inNumber.BinaryIntPartFIRight;
+                    bynaryStringFloat = inNumber.BinaryFloatPartFIRight;
+                }
             }
 
             if (bynaryStringInt != null)
@@ -2491,8 +2617,9 @@ namespace Flexible_computing
         /// Uses : Number.BinaryIntPart,Number.BinaryFloatPart
         /// </summary>
         /// <param name="inNumber">Number - var from which mantissa need to be taken</param>
+        /// <param name="Left_Right">False - Left part og number, else - Right </param>
         /// <returns>Returns Mantissa in 2cc</returns>
-        public String selectMantissa(Number inNumber,int inputStringFormat)
+        public String selectMantissa(Number inNumber,int inputStringFormat, PartOfNumber Left_Right)
         {
             int i,l, z = 0;
             int currMBits;
@@ -2509,8 +2636,16 @@ namespace Flexible_computing
             }
             else
             {
-                bynaryStringInt = inNumber.BinaryIntPartFI;
-                bynaryStringFloat = inNumber.BinaryFloatPartFI;
+                if (Left_Right == PartOfNumber.Left)
+                {// Left part of number
+                    bynaryStringInt = inNumber.BinaryIntPartFILeft;
+                    bynaryStringFloat = inNumber.BinaryFloatPartFILeft;
+                }
+                else
+                {// Right part of number
+                    bynaryStringInt = inNumber.BinaryIntPartFIRight;
+                    bynaryStringFloat = inNumber.BinaryFloatPartFIRight;
+                }
             }
 
             try
@@ -2707,7 +2842,7 @@ namespace Flexible_computing
         /// Uses: Number.E, Number.M
         /// </summary>
         /// <param name="inNumber">Input variable.</param>
-        public void calcRes(Number inNumber,bool RightPart)
+        public void calcRes(Number inNumber,PartOfNumber RightPart)
         {
 
             String M = "", E = "", Mr = "", Er = "", binIPartOut, binFPartOut;
@@ -2736,7 +2871,7 @@ namespace Flexible_computing
                 }
 
                 cycle = NumberFormat == 0 ? 1 : 2;
-                z = RightPart == false ? 0 : 1;
+                z = RightPart == PartOfNumber.Left ? 0 : 1;
                 //for (z = 0; z < cycle; z++)
                 //{
                     if (NumberFormat == 0 || z==0) // Number
@@ -2783,7 +2918,7 @@ namespace Flexible_computing
                             break;
 
                     }//switch
-                    stateOfNumber tempState = RightPart == true ? inNumber.NumberStateRight : inNumber.NumberState;
+                    stateOfNumber tempState = RightPart == PartOfNumber.Right ? inNumber.NumberStateRight : inNumber.NumberState;
                     if ((tempState == stateOfNumber.normalized) || (tempState == stateOfNumber.denormalized))
                     {
                         switch(NumberFormat)
@@ -3146,14 +3281,14 @@ namespace Flexible_computing
         /// Calculates Error based on input and correct numbers.
         /// </summary>
         /// <param name="inNumber">User Number</param>
-        public void calcError(Number inNumber, bool RightPart)
+        public void calcError(Number inNumber, PartOfNumber RightPart)
         {
             try
             {
                 int z,cycle;
                 
                 cycle = NumberFormat == 0 ? 1 : 2;
-                z = RightPart == false ? 0 : 1;
+                z = RightPart == PartOfNumber.Left ? 0 : 1;
                 //for (z = 0; z < cycle; z++)
                 //{
                     if ((inNumber.NumberState != stateOfNumber.error && NumberFormat == 0) || (NumberFormat != 0 && inNumber.NumberStateRight != stateOfNumber.error))
