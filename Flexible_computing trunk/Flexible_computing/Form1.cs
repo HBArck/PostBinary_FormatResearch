@@ -2501,13 +2501,13 @@ namespace Flexible_computing
 
             if (((CheckBox)sender).Checked)
             {
-                this.MinimumSize = new Size(this.Size.Width + 300, this.Size.Height);
-                this.MaximumSize = new Size(this.Size.Width + 300, this.Size.Height);
+                this.MinimumSize = new Size(this.Size.Width + 500, this.Size.Height);
+                this.MaximumSize = new Size(this.Size.Width + 500, this.Size.Height);
             }
             else
             {
-                this.MinimumSize = new Size(this.Size.Width - 300, this.Size.Height);
-                this.MaximumSize = new Size(this.Size.Width - 300, this.Size.Height);
+                this.MinimumSize = new Size(this.Size.Width - 500, this.Size.Height);
+                this.MaximumSize = new Size(this.Size.Width - 500, this.Size.Height);
             }
         }
 
