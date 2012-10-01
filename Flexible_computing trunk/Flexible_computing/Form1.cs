@@ -120,6 +120,10 @@ namespace Flexible_computing
             lbTime.Items.Add(System.DateTime.Now.ToString("hh:mm:ss:ms"));
             lbEvent.Items.Add(text);
         }
+        private void Form1_Enter(object sender, EventArgs e)
+        {
+            this.SetTopLevel(true);
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             MinimumSize = new Size(870,MinimumSize.Height);
@@ -172,7 +176,198 @@ namespace Flexible_computing
             mainNode = treeView1.Nodes.Add("Core","Core",0); 
             treeView1.SelectedImageIndex = 4;         
         }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show(inStr[lang][8, 0], inStr[lang][2, 4] + "?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                e.Cancel = false;
+            }
+            else
+            {
+                isFormClosing = true;
+                tTime.Stop();
+                e.Cancel = true;
+                if (Core.thread32 != null)
+                {
 
+                    if ((Core.thread32.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
+                        bStop_Thread32_Click(sender, e);
+                    //Core.thread32.Abort();
+
+                }
+                if (Core.thread64 != null)
+                {
+                    if ((Core.thread64.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
+                        bStop_Thread64_Click(sender, e);
+                    //Core.thread64.Suspend();
+                }
+                if (Core.thread128 != null)
+                {
+                    if ((Core.thread128.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
+                        bStop_Thread128_Click(sender, e);
+                    //Core.thread128.Suspend();
+                }
+                if (Core.thread256 != null)
+                {
+                    if ((Core.thread256.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
+                        bStop_Thread256_Click(sender, e);
+                    //Core.thread256.Suspend();
+                }
+                //if (Core.thread64_right != null)
+                //{
+                //    if (Core.thread64_right.IsAlive)
+                //        Core.thread64_right.Suspend();
+                //}
+                //if (Core.thread128_right != null)
+                //{
+                //    if (Core.thread128_right.IsAlive)
+                //        Core.thread128_right.Suspend();
+                //}
+                //if (Core.thread256_right != null)
+                //{
+                //    if (Core.thread256_right.IsAlive)
+                //        Core.thread256_right.Suspend();
+                //}
+            }
+        }
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            //FillForm();
+            // calcResultsAndErrors(this, null);
+            refreshNumberStatus();
+            if (isFirstTime)
+            {
+                tbInput.Focus();
+                isFirstTime = false;
+            }
+            lExp32Len.Text = "( " + tbExp32.TextLength + " )";
+            lExp64Len.Text = "( " + tbExp64.TextLength + " )";
+            lExp128Len.Text = "( " + tbExp128.TextLength + " )";
+            lExp256Len.Text = "( " + tbExp256.TextLength + " )";
+
+            lMan32Len.Text = "( " + tbMantisa32.TextLength + " )";
+            lMan64Len.Text = "( " + tbMantisa64.TextLength + " )";
+            lMan128Len.Text = "( " + tbMantisa128.TextLength + " )";
+            lMan256Len.Text = "( " + tbMantisa256.TextLength + " )";
+
+            // Debugging Thread States
+            lTh1.Text = Core.thread32.ThreadState.ToString();
+            lTh2.Text = Core.thread64.ThreadState.ToString();
+            lTh3.Text = Core.thread128.ThreadState.ToString();
+            lTh4.Text = Core.thread256.ThreadState.ToString();
+
+            lTh2R.Text = Core.thread64_right.ThreadState.ToString();
+            lTh3R.Text = Core.thread128_right.ThreadState.ToString();
+            lTh4R.Text = Core.thread256_right.ThreadState.ToString();
+
+            if (!isNum32Refreshed)
+            {
+                if (isThreadsRunning(0, false) == 0)
+                {
+                    bStop_Thread32.Enabled = false;
+                    progInc();
+                    isNum32Refreshed = true;
+                }
+            }
+
+            if (!isNum64Refreshed)
+            {
+                if (inputStringFormat == 0)
+                {
+                    if (isThreadsRunning(1, false) == 0)
+                    {
+                        bStop_Thread64.Enabled = false;
+                        progInc();
+                        isNum64Refreshed = true;
+                    }
+                }
+                else
+                {
+                    if (isThreadsRunning(1, true) == 0)
+                    {
+                        bStop_Thread64.Enabled = false;
+                        progInc();
+                        isNum64Refreshed = true;
+                    }
+                }
+            }
+
+            if (!isNum128Refreshed)
+            {
+                if (inputStringFormat == 0)
+                {
+                    if (isThreadsRunning(2, false) == 0)
+                    {
+                        bStop_Thread128.Enabled = false;
+                        progInc();
+                        isNum128Refreshed = true;
+                    }
+                }
+                else
+                {
+                    if (isThreadsRunning(2, true) == 0)
+                    {
+                        bStop_Thread128.Enabled = false;
+                        progInc();
+                        isNum128Refreshed = true;
+                    }
+                }
+            }
+
+            if (!isNum256Refreshed)
+            {
+                if (inputStringFormat == 0)
+                {
+                    if (isThreadsRunning(3, false) == 0)
+                    {
+                        progInc();
+                        isNum256Refreshed = true;
+                        calcFinished = true;
+                        bStop_Thread256.Enabled = false;
+                        timeOnForm("Paint 256 Finished");
+                    }
+                }
+                else
+                {
+                    if (isThreadsRunning(3, true) == 0)
+                    {
+                        progInc();
+                        isNum256Refreshed = true;
+                        calcFinished = true;
+                        bStop_Thread256.Enabled = false;
+                        timeOnForm("Paint 256 Finished + Right");
+                    }
+                }
+            }
+
+            if ((isNum256Refreshed) && (calcFinished))
+            {
+                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
+                {
+                    progressBar1.Value = 0;
+                    progressBar1.UseWaitCursor = false;
+                    progressBar1.Refresh();
+                    bStart.Enabled = true;
+                    //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
+                    calcResultsAndErrors(null);
+                    bCancelStart.Visible = false;
+                    calcFinished = false;
+                    UnLockComponents();
+                    timeOnForm("Paint CalcFinished");
+                }
+            }
+            else
+            {
+                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
+                {
+                    progressBar1.Value = 0;
+                    progressBar1.Refresh();
+                }
+
+            }
+        }
+
+      
         public bool checkKnownProblems()
         {
             int i,j,r,exFound;
@@ -977,8 +1172,8 @@ namespace Flexible_computing
             
         }
 
-        public delegate void TimerCountDel(Object threadContext);
-        public void TimerCount(Object threadContext)
+        //public delegate void TimerCountDel(Object threadContext);
+        private void TimerCount(object sender, EventArgs e)
         {
             String elapsedTime = "";
             //stlStatus.Text = "Статус : Работаю... Осталось 32,64,128,256";
@@ -987,16 +1182,17 @@ namespace Flexible_computing
             bool i128=false;
             bool i256=false;
             stlTime.Text = "";
-            Thread.CurrentThread.IsBackground = true;
-            while (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) != 0)
-            {
-                if (isFormClosing)
-                {
-                    try
-                    { Thread.CurrentThread.Abort(); }
-                    catch (Exception ex)
-                    { return; }
-                }
+            //if (stlStatus)
+            //Thread.CurrentThread.IsBackground = true;
+            //while (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) != 0)
+            //{
+                //if (isFormClosing)
+                //{
+                //    try
+                //    { Thread.CurrentThread.Abort(); }
+                //    catch (Exception ex)
+                //    { return; }
+                //}
                 stlStatus.Text = "Статус : Работаю... ";
                 if (isThreadsRunning(0, inputStringFormat == 0 ? false : true) != 0)
                 {
@@ -1048,9 +1244,9 @@ namespace Flexible_computing
                         i256 = true;
                     }
                 }
-
-                Thread.Sleep(500);
-            }
+            
+            //    Thread.Sleep(500);
+            //}
 
             stlStatus.Text = "Статус : Завершено...";
             timeCounter.Stop();
@@ -1211,7 +1407,8 @@ namespace Flexible_computing
                     ThreadPool.QueueUserWorkItem(logResults);
                     ThreadPool.QueueUserWorkItem(FillForm);
                     ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
-                    ThreadPool.QueueUserWorkItem(TimerCount);
+                    tStatus.Start();
+                    //ThreadPool.QueueUserWorkItem(TimerCount);
                     //calcResultsAndErrors(this, null);
                     //Form1_Paint(this, null);
                     //stlStatus.Text = "Статус : Завершено...";
@@ -1241,70 +1438,210 @@ namespace Flexible_computing
             statusStrip.Refresh();
             
         }
-
- 
-        private void tabControl_Format_SelectedIndexChanged(object sender, EventArgs e)
+        private void recalculate_Click(object sender, EventArgs e)
         {
-            //changePasportFormat(inputStringFormat, tabControl_Format.SelectedIndex);
-            if (tabControl_Format.SelectedIndex == 0)
+            int i, loop_counter, temp, selectedTab;
+            loop_counter = inputStringFormat == 0 ? 1 : 2;
+            String sign, currSeparator;
+            String outputLog = "";
+            String tempStr = "";
+            Byte[] outputStr;
+            selectedTab = tabControl_Format.SelectedIndex;
+            bool was16cc = false;
+            if (currentCCOnTabs == true)
             {
-                radioFloat.Enabled = false;
-                radioInterval.Enabled = false;
-                дробьToolStripMenuItem.Enabled = false;
-                интервалToolStripMenuItem.Enabled = false;
-                числоToolStripMenuItem.Checked = true;
+                convert16to2Recalc();
+                was16cc = true;
             }
-            else 
+            stlStatus.Text = "Статус : Работаю... ";
+            try
             {
-                if (!TetraCheck)
+                LockComponents((byte)LockCommands.Recalc);
+                ThreadPool.QueueUserWorkItem(o =>
                 {
-                        radioFloat.Enabled = true;
-                        radioInterval.Enabled = true;
-                        дробьToolStripMenuItem.Enabled = true;
-                        интервалToolStripMenuItem.Enabled = true;
-                }
-                else
-                {
-                    if (tabControl_Format.SelectedIndex > 1)
+                    switch (selectedTab)
                     {
-                        radioFloat.Enabled = true;
-                        radioInterval.Enabled = true;
-                        дробьToolStripMenuItem.Enabled = true;
-                        интервалToolStripMenuItem.Enabled = true;
-                        chbTetra.Enabled = true;
-                    }
-                    else
-                    {
-                        chbTetra.Enabled = false;
-                        if (chbTetra.Checked)
-                            chbTetra.Checked = false;
-                    }
-                }
-            }
-            textChangeOnForm();
-            refreshNumberStatus();
-            //l2ccTo16cc_Click(sender,e);
-            if (!isCalcsReset)
-               ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
-        }
+                        case 0: // 32
+                            if (inputStringFormat == 0)
+                            {
+                                //result = my754.selectOut(tbSign32.Text, tbExp32.Text, tbMantisa32.Text);
+                                progInc();
+                                Core.Num32.Sign = tbSign32.Text;
+                                progInc();
+                                Core.Num32.Exponenta = tbExp32.Text;
+                                progInc();
+                                Core.Num32.Mantisa = tbMantisa32.Text;
+                                progInc();
+                                Core.changeNumberState(false, true);
+                                progInc();
+                                Core.calcRes(Core.Num32, false);
+                                progInc();
+                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num32.CorrectResult));
+                                setProgress(100);
+                            }
+                            break;
+                        case 1: // 64
+                            switch (inputStringFormat)
+                            {
+                                case 0:
+                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
+                                    Core.Num64.Sign = tbSign64.Text; progInc();
+                                    Core.Num64.Exponenta = tbExp64.Text; progInc();
+                                    Core.Num64.Mantisa = tbMantisa64.Text; progInc();
+                                    Core.changeNumberState(false, true); progInc();
+                                    Core.calcRes(Core.Num64, false); progInc();
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResult));
+                                    setProgress(100);
+                                    break;
 
-        public void changeCheckStateForRounding(byte newRounding)
-        {
-            miToZero.Checked = false;
-            miToPInf.Checked = false;
-            miToNInf.Checked = false;
-            miToInt.Checked = false;
-            miToNPInf.Checked = false;
-            switch (newRounding)
+                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
+                                case 1:
+                                case 2:
+                                    currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
+                                    if (inputStringFormat == 1)
+                                    {
+                                        Core.Num64.Sign = tbSign64.Text;
+                                        Core.Num64.SignRight = tbSign64_2.Text; progInc();
+                                    }
+                                    else
+                                        Core.Num64.Sign = tbSign64.Text;
+                                    progInc();
+                                    Core.Num64.Exponenta = tbExp64.Text;
+                                    Core.Num64.Mantisa = tbMantisa64.Text; progInc();
+                                    Core.changeNumberState(false, true); progInc();
+                                    Core.calcRes(Core.Num64, false); progInc();
+                                    //tbInput.Text = Core.Num64.CorrectResult;
+                                    progInc();
+                                    Core.Num64.ExponentaRight = tbExp64_2.Text; progInc();
+                                    Core.Num64.MantisaRight = tbMantisa64_2.Text; progInc();
+                                    Core.changeNumberState(true, true); progInc();
+                                    Core.calcRes(Core.Num64, true); progInc();
+                                    if (inputStringFormat == 1)
+                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionR));
+                                    else
+                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalR));
+                                    setProgress(100);
+                                    break;
+                            }
+                            break;
+                        case 2: // 128
+                            switch (inputStringFormat)
+                            {
+                                case 0:
+                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
+                                    Core.Num128.Sign = tbSign128.Text; progInc();
+                                    Core.Num128.Exponenta = tbExp128.Text; progInc();
+                                    Core.Num128.Mantisa = tbMantisa128.Text; progInc();
+                                    Core.changeNumberState(false, true); progInc();
+                                    Core.calcRes(Core.Num128, false); progInc();
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult));
+                                    setProgress(100);
+                                    break;
+
+                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
+                                case 1:
+                                case 2:
+                                    currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
+                                    if (inputStringFormat == 1)
+                                    {
+                                        Core.Num128.Sign = tbSign128.Text; progInc();
+                                        Core.Num128.SignRight = tbSign128_2.Text;
+                                    }
+                                    else
+                                        Core.Num128.Sign = tbSign128.Text; progInc();
+
+                                    Core.Num128.Exponenta = tbExp128.Text; progInc();
+                                    Core.Num128.Mantisa = tbMantisa128.Text; progInc();
+                                    Core.changeNumberState(false, true); progInc();
+                                    Core.calcRes(Core.Num128, false); progInc();
+                                    //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult);
+
+                                    Core.Num128.ExponentaRight = tbExp128_2.Text; progInc();
+                                    Core.Num128.MantisaRight = tbMantisa128_2.Text; progInc();
+                                    Core.changeNumberState(true, true); progInc();
+                                    Core.calcRes(Core.Num128, true); progInc();
+                                    if (inputStringFormat == 1)
+                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionR));
+                                    else
+                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalR));
+                                    setProgress(100);
+                                    break;
+                            }
+                            break;
+                        case 3: // 256
+                            switch (inputStringFormat)
+                            {
+                                case 0:
+                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
+                                    Core.Num256.Sign = tbSign256.Text; progInc();
+                                    Core.Num256.Exponenta = tbExp256.Text; progInc();
+                                    Core.Num256.Mantisa = tbMantisa256.Text; progInc();
+                                    Core.changeNumberState(false, true); progInc();
+                                    Core.calcRes(Core.Num256, false); progInc();
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult)); setProgress(100);
+                                    break;
+
+                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
+                                case 1:
+                                case 2:
+                                    currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
+                                    if (inputStringFormat == 1)
+                                    {
+                                        Core.Num256.Sign = tbSign256.Text; progInc();
+                                        Core.Num256.SignRight = tbSign256_2.Text;
+                                    }
+                                    else
+                                        Core.Num256.Sign = tbSign256.Text; progInc();
+
+                                    Core.Num256.Exponenta = tbExp256.Text; progInc();
+                                    Core.Num256.Mantisa = tbMantisa256.Text; progInc();
+                                    Core.changeNumberState(false, true); progInc();
+                                    Core.calcRes(Core.Num256, false); progInc();
+                                    //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult);
+
+                                    Core.Num256.ExponentaRight = tbExp256_2.Text; progInc();
+                                    Core.Num256.MantisaRight = tbMantisa256_2.Text; progInc();
+                                    Core.changeNumberState(true, true); progInc();
+                                    Core.calcRes(Core.Num256, true); progInc();
+                                    if (inputStringFormat == 1)
+                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionR));
+                                    else
+                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalR));
+                                    setProgress(100);
+                                    break;
+                            }
+                            break;
+                    }
+
+                    if (was16cc)
+                    {
+                        convert2to16();
+                    }
+                    stlStatus.Text = "Статус : Завершено...";
+                    setProgress(0);
+                });
+
+            }
+            catch (FCCoreArithmeticException ex)
             {
-                case 0: miToZero.Checked = true; label18.Text = miToZero.Text; roundType = 0; Core.Rounding = 0; break;
-                case 2: miToPInf.Checked = true; label18.Text = miToPInf.Text; roundType = 2; Core.Rounding = 2; break;
-                case 3: miToNInf.Checked = true; label18.Text = miToNInf.Text; roundType = 3; Core.Rounding = 3; break;
-                case 4: miToNPInf.Checked = true;label18.Text = miToNPInf.Text; break;
-                case 1: miToInt.Checked = true; label18.Text = miToInt.Text; roundType = 1; Core.Rounding = 1; break;
+                catchException(excps.FCCoreArithmeticException, ex.Message);
             }
-        }
+            catch (FCCoreGeneralException ex)
+            {
+                catchException(excps.FCCoreGeneralException, ex.Message);
+            }
+            catch (FCCoreFunctionException ex)
+            {
+                catchException(excps.FCCoreFunctionException, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                catchException(excps.Exception, ex.Message);
+            }
 
+            statusStrip.Refresh();
+        }
+     
         public void catchException(excps ex,String message)
         {
             String outputLog = "";
@@ -1720,52 +2057,7 @@ namespace Flexible_computing
             }
             
         }
-              
-        private void bClear_Click(object sender, EventArgs e)
-        {
-            tbRes.Text = "+0,0";
-            tbCalcError.Text = "0,0";
-            tbInput.Text = "0,0";
-            lNormDenorm.ForeColor = ColorsForState[2];
-            lNormDenorm.Text = numberState[2];
-
-            tbSign32.Text  = "0";
-            tbSign64.Text  = "0";
-            tbSign128.Text = "0";
-            tbSign256.Text = "0";
-
-            tbExp32.Text  = currentCCOnTabs == false? "00000000": "00"; // Done 8
-            tbExp64.Text  = currentCCOnTabs == false? inputStringFormat == 0 ? "00000000000" :"00000000" : inputStringFormat == 0 ? "000" : "00"; // Done 11
-            tbExp128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000" : "00000000000" : inputStringFormat == 0 ? "0000" : "000";
-            tbExp256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000" : "000000000000000" : inputStringFormat == 0 ? "00000" : "0000";
-
-            tbExp64_2.Text = currentCCOnTabs == false ?  "00000000" :  "00"; // Done 11
-            tbExp128_2.Text = currentCCOnTabs == false ? "00000000000" :  "000";
-            tbExp256_2.Text = currentCCOnTabs == false ? "000000000000000" : "0000";
-
-            tbMantisa32.Text = currentCCOnTabs == false? "000000000000000000000" : "000000"; // Done 21
-            tbMantisa64.Text = currentCCOnTabs == false? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat==0 ? "000000000000":"000000"; // Done 48
-            tbMantisa128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
-            tbMantisa256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
-
-            tbMantisa64_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
-            tbMantisa128_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
-            tbMantisa256_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
-
-            tbMF32.Text  = currentCCOnTabs == false ? "0":"0";
-            tbMF64.Text  = currentCCOnTabs == false ? "00":"0";
-            tbMF128.Text = currentCCOnTabs == false ? "00000":"00";
-            tbMF256.Text = currentCCOnTabs == false ? "000000000000":"000";
-            tbCF32.Text  = currentCCOnTabs == false ? "0" :"0";
-            tbCF64.Text  = currentCCOnTabs == false ? "01":"1";
-            tbCF128.Text = currentCCOnTabs == false ? "011":"3";
-            tbCF256.Text = currentCCOnTabs == false ? "0111":"7";
-
-            //richTextBox1.Clear();
-            
-           // this.clearVars();// Clears All vars in this class
-            isCalcsReset = true;
-        }
+                 
         public delegate void changetbInputTextDel(Object inputString);
         private void changetbInputText(Object inputString)
         {
@@ -1780,391 +2072,8 @@ namespace Flexible_computing
                 tbInput.Text = inputStr;
             }
         }
-        private void recalculate_Click(object sender, EventArgs e)
-        {
-            int i, loop_counter, temp,selectedTab;
-            loop_counter = inputStringFormat == 0 ? 1 : 2;
-            String sign, currSeparator;
-            String outputLog = "";
-            String tempStr = "";
-            Byte[] outputStr;
-            selectedTab = tabControl_Format.SelectedIndex;
-            bool was16cc = false;
-            if (currentCCOnTabs == true)
-            {
-                convert16to2Recalc();
-                was16cc = true;
-            }
-            stlStatus.Text = "Статус : Работаю... ";
-            try
-            {
-                LockComponents((byte)LockCommands.Recalc);
-                ThreadPool.QueueUserWorkItem(o =>
-                {
-                    switch (selectedTab)
-                    {
-                        case 0: // 32
-                            if (inputStringFormat == 0)
-                            {
-                                //result = my754.selectOut(tbSign32.Text, tbExp32.Text, tbMantisa32.Text);
-                                progInc();
-                                Core.Num32.Sign = tbSign32.Text;
-                                progInc();
-                                Core.Num32.Exponenta = tbExp32.Text;
-                                progInc();
-                                Core.Num32.Mantisa = tbMantisa32.Text;
-                                progInc();
-                                Core.changeNumberState(false, true);
-                                progInc();
-                                Core.calcRes(Core.Num32, false);
-                                progInc();
-                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num32.CorrectResult));
-                                setProgress(100);
-                            }
-                            break;
-                        case 1: // 64
-                            switch (inputStringFormat)
-                            {
-                                case 0:
-                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
-                                    Core.Num64.Sign = tbSign64.Text;progInc();
-                                    Core.Num64.Exponenta = tbExp64.Text;progInc();
-                                    Core.Num64.Mantisa = tbMantisa64.Text;progInc();
-                                    Core.changeNumberState(false, true);progInc();
-                                    Core.calcRes(Core.Num64, false);progInc();
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResult));
-                                    setProgress(100);
-                                    break;
-
-                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
-                                case 1:
-                                case 2:
-                                    currSeparator = inputStringFormat == 1 ? "/" : ";";progInc();
-                                    if (inputStringFormat == 1)
-                                    {
-                                        Core.Num64.Sign = tbSign64.Text;
-                                        Core.Num64.SignRight = tbSign64_2.Text; progInc();
-                                    }
-                                    else
-                                        Core.Num64.Sign = tbSign64.Text;
-                                    progInc();
-                                    Core.Num64.Exponenta = tbExp64.Text;
-                                    Core.Num64.Mantisa = tbMantisa64.Text;progInc();
-                                    Core.changeNumberState(false, true);progInc();
-                                    Core.calcRes(Core.Num64, false);progInc();
-                                    //tbInput.Text = Core.Num64.CorrectResult;
-                                    progInc();
-                                    Core.Num64.ExponentaRight = tbExp64_2.Text;progInc();
-                                    Core.Num64.MantisaRight = tbMantisa64_2.Text;progInc();
-                                    Core.changeNumberState(true, true);progInc();
-                                    Core.calcRes(Core.Num64, true);progInc();
-                                    if (inputStringFormat == 1)
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionR));
-                                    else
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalR));
-                                    setProgress(100);
-                                    break;
-                            }
-                            break;
-                        case 2: // 128
-                            switch (inputStringFormat)
-                            {
-                                case 0:
-                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
-                                    Core.Num128.Sign = tbSign128.Text;progInc();
-                                    Core.Num128.Exponenta = tbExp128.Text;progInc();
-                                    Core.Num128.Mantisa = tbMantisa128.Text;progInc();
-                                    Core.changeNumberState(false, true);progInc();
-                                    Core.calcRes(Core.Num128, false);progInc();
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult));
-                                    setProgress(100);
-                                    break;
-
-                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
-                                case 1:
-                                case 2:
-                                    currSeparator = inputStringFormat == 1 ? "/" : ";";progInc();
-                                    if (inputStringFormat == 1)
-                                    {
-                                        Core.Num128.Sign = tbSign128.Text; progInc();
-                                        Core.Num128.SignRight = tbSign128_2.Text;
-                                    }
-                                    else
-                                        Core.Num128.Sign = tbSign128.Text;progInc();
-
-                                    Core.Num128.Exponenta = tbExp128.Text;progInc();
-                                    Core.Num128.Mantisa = tbMantisa128.Text;progInc();
-                                    Core.changeNumberState(false, true);progInc();
-                                    Core.calcRes(Core.Num128, false);progInc();
-                                    //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult);
-
-                                    Core.Num128.ExponentaRight = tbExp128_2.Text;progInc();
-                                    Core.Num128.MantisaRight = tbMantisa128_2.Text;progInc();
-                                    Core.changeNumberState(true, true);progInc();
-                                    Core.calcRes(Core.Num128, true);progInc();
-                                    if (inputStringFormat == 1)
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionR));
-                                    else
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalR));
-                                    setProgress(100);
-                                    break;
-                            }
-                            break;
-                        case 3: // 256
-                            switch (inputStringFormat)
-                            {
-                                case 0:
-                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
-                                    Core.Num256.Sign = tbSign256.Text;progInc();
-                                    Core.Num256.Exponenta = tbExp256.Text;progInc();
-                                    Core.Num256.Mantisa = tbMantisa256.Text;progInc();
-                                    Core.changeNumberState(false, true);progInc();
-                                    Core.calcRes(Core.Num256, false);progInc();
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult));setProgress(100);
-                                    break;
-
-                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
-                                case 1:
-                                case 2:
-                                    currSeparator = inputStringFormat == 1 ? "/" : ";";progInc();
-                                    if (inputStringFormat == 1)
-                                    {
-                                        Core.Num256.Sign = tbSign256.Text; progInc();
-                                        Core.Num256.SignRight = tbSign256_2.Text;
-                                    }
-                                    else
-                                        Core.Num256.Sign = tbSign256.Text;progInc();
-
-                                    Core.Num256.Exponenta = tbExp256.Text;progInc();
-                                    Core.Num256.Mantisa = tbMantisa256.Text;progInc();
-                                    Core.changeNumberState(false, true);progInc();
-                                    Core.calcRes(Core.Num256, false);progInc();
-                                    //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult);
-
-                                    Core.Num256.ExponentaRight = tbExp256_2.Text;progInc();
-                                    Core.Num256.MantisaRight = tbMantisa256_2.Text;progInc();
-                                    Core.changeNumberState(true, true);progInc();
-                                    Core.calcRes(Core.Num256, true);progInc();
-                                    if (inputStringFormat == 1)
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionR));
-                                    else
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalR));
-                                    setProgress(100);
-                                    break;
-                            }
-                            break;
-                    }
-                    
-                    if (was16cc)
-                    {
-                        convert2to16();
-                    }
-                    stlStatus.Text = "Статус : Завершено...";
-                    setProgress(0);
-                });
-               
-            }
-            catch (FCCoreArithmeticException ex)
-            {
-                catchException(excps.FCCoreArithmeticException, ex.Message);
-            }
-            catch (FCCoreGeneralException ex)
-            {
-                catchException(excps.FCCoreGeneralException, ex.Message);
-            }
-            catch (FCCoreFunctionException ex)
-            {
-                catchException(excps.FCCoreFunctionException, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                catchException(excps.Exception, ex.Message);
-            }
-            
-            statusStrip.Refresh();
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!isFormatInfoFullView)
-            {
-                tabControlFooter.Size = new Size(tabControlFooter.Size.Width + 25, 501);
-                tabControlFooter.Location = new Point(12, 172);
-                button1.BackgroundImage = Properties.Resources.arrow_in;
-                isFormatInfoFullView = true;
-
-                // inside controls on Tabs
-                richTextBox1.Size = new Size(richTextBox1.Size.Width, 440);
-                richTextBox1.Location = new Point(12, 2);
-
-                //dataGridView1.Size = new Size(dataGridView1.Size.Width, 440);
-                //dataGridView1.Location = new Point(12, 2);
-
-                lbKnownErrors.Size = new Size(lbKnownErrors.Size.Width, 440);
-                lbKnownErrors.Location = new Point(12, 2);
-
-                treeView1.Size = new Size(treeView1.Size.Width, 440);
-                treeView1.Location = new Point(12, 2);
-            }
-            else
-            {
-                tabControlFooter.Size = new Size(tabControlFooter.Size.Width, 134);
-                tabControlFooter.Location = new Point(23, 519);
-                button1.BackgroundImage = Properties.Resources.arrow_out;
-                isFormatInfoFullView = false;
-
-                // inside controls on Tabs
-                richTextBox1.Size = new Size(richTextBox1.Size.Width, 119);
-                richTextBox1.Location = new Point(1, 2);
-
-                //dataGridView1.Size = new Size(dataGridView1.Size.Width, 105);
-                //dataGridView1.Location = new Point(2, 2);
-
-                lbKnownErrors.Size = new Size(lbKnownErrors.Size.Width, 95);
-                lbKnownErrors.Location = new Point(2, 2);
-
-                treeView1.Size = new Size(treeView1.Size.Width, 100);
-                treeView1.Location = new Point(2, 2);
-            }
-
-        }
-
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-            //FillForm();
-           // calcResultsAndErrors(this, null);
-            refreshNumberStatus();
-            if (isFirstTime)
-            {
-                tbInput.Focus();
-                isFirstTime = false;
-            }
-            lExp32Len.Text = "( "+ tbExp32.TextLength + " )";
-            lExp64Len.Text = "( " + tbExp64.TextLength + " )";
-            lExp128Len.Text = "( " + tbExp128.TextLength + " )";
-            lExp256Len.Text = "( " + tbExp256.TextLength + " )";
-
-            lMan32Len.Text = "( " + tbMantisa32.TextLength + " )";
-            lMan64Len.Text = "( " + tbMantisa64.TextLength + " )";
-            lMan128Len.Text = "( " + tbMantisa128.TextLength + " )";
-            lMan256Len.Text = "( " + tbMantisa256.TextLength + " )";
-
-            // Debugging Thread States
-            lTh1.Text = Core.thread32.ThreadState.ToString();
-            lTh2.Text = Core.thread64.ThreadState.ToString();
-            lTh3.Text = Core.thread128.ThreadState.ToString();
-            lTh4.Text = Core.thread256.ThreadState.ToString();
-
-            lTh2R.Text = Core.thread64_right.ThreadState.ToString();
-            lTh3R.Text = Core.thread128_right.ThreadState.ToString();
-            lTh4R.Text = Core.thread256_right.ThreadState.ToString();
-
-            if (!isNum32Refreshed)
-            {
-                if (isThreadsRunning(0,false)==0)
-                {
-                    bStop_Thread32.Enabled = false;
-                    progInc();
-                    isNum32Refreshed = true;
-                }
-            }
-
-            if (!isNum64Refreshed)
-            {
-                    if (inputStringFormat == 0)
-                    {
-                        if (isThreadsRunning(1, false) == 0)
-                        {
-                            bStop_Thread64.Enabled = false;
-                            progInc();
-                            isNum64Refreshed = true;
-                        }
-                    }
-                    else
-                    {
-                        if (isThreadsRunning(1, true) == 0)
-                        {
-                            bStop_Thread64.Enabled = false;
-                            progInc();
-                            isNum64Refreshed = true;
-                        }
-                    }
-            }
-
-            if (!isNum128Refreshed)
-            {
-                    if (inputStringFormat == 0)
-                    {
-                        if (isThreadsRunning(2,false)==0)
-                        {
-                            bStop_Thread128.Enabled = false;
-                            progInc();
-                            isNum128Refreshed = true;
-                        }
-                    }
-                    else
-                    {
-                        if (isThreadsRunning(2, true) == 0)
-                        {
-                            bStop_Thread128.Enabled = false;
-                            progInc();
-                            isNum128Refreshed = true;
-                        }
-                    }   
-            }
-
-            if (!isNum256Refreshed)
-            {                
-                    if (inputStringFormat == 0)
-                    {
-                        if (isThreadsRunning(3,false)==0)
-                        {
-                            progInc();
-                            isNum256Refreshed = true;
-                            calcFinished = true;
-                            bStop_Thread256.Enabled = false;
-                            timeOnForm("Paint 256 Finished");
-                        }
-                    }
-                    else
-                    {
-                        if (isThreadsRunning(3, true) == 0)
-                        {
-                            progInc();
-                            isNum256Refreshed = true;
-                            calcFinished = true;
-                            bStop_Thread256.Enabled = false;
-                            timeOnForm("Paint 256 Finished + Right");
-                        }
-                    }   
-            }
-
-            if ((isNum256Refreshed) && (calcFinished))
-            {
-                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
-                {
-                    progressBar1.Value = 0;
-                    progressBar1.UseWaitCursor = false;
-                    progressBar1.Refresh();
-                    bStart.Enabled = true;
-                    //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
-                    calcResultsAndErrors(null);
-                    bCancelStart.Visible = false;
-                    calcFinished = false;
-                    UnLockComponents();                    
-                    timeOnForm("Paint CalcFinished");
-                }
-            }
-            else
-            {
-                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
-                {
-                    progressBar1.Value = 0;
-                    progressBar1.Refresh();
-                }
-               
-            }
-        }
-
+       
+        
         /// <summary>
         /// Locking all  components when calculations
         /// </summary>
@@ -2220,233 +2129,7 @@ namespace Flexible_computing
                 bStart.Enabled = true;
                 recalculate.Enabled = true;
         }
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (MessageBox.Show(inStr[lang][8, 0], inStr[lang][2, 4] + "?", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                e.Cancel = false;
-            }
-            else
-            {
-                isFormClosing = true;
-                tTime.Stop();
-                e.Cancel = true;
-                if (Core.thread32 != null)
-                {
-
-                    if ((Core.thread32.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
-                        bStop_Thread32_Click(sender, e);
-                        //Core.thread32.Abort();
-
-                }
-                if (Core.thread64 != null)
-                {
-                    if ((Core.thread64.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
-                        bStop_Thread64_Click(sender, e);
-                        //Core.thread64.Suspend();
-                }
-                if (Core.thread128 != null)
-                {
-                    if ((Core.thread128.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
-                        bStop_Thread128_Click(sender, e);
-                        //Core.thread128.Suspend();
-                }
-                if (Core.thread256 != null)
-                {
-                    if ((Core.thread256.ThreadState & (System.Threading.ThreadState.Running | System.Threading.ThreadState.Background)) != 0)
-                        bStop_Thread256_Click(sender, e);
-                        //Core.thread256.Suspend();
-                }
-                //if (Core.thread64_right != null)
-                //{
-                //    if (Core.thread64_right.IsAlive)
-                //        Core.thread64_right.Suspend();
-                //}
-                //if (Core.thread128_right != null)
-                //{
-                //    if (Core.thread128_right.IsAlive)
-                //        Core.thread128_right.Suspend();
-                //}
-                //if (Core.thread256_right != null)
-                //{
-                //    if (Core.thread256_right.IsAlive)
-                //        Core.thread256_right.Suspend();
-                //}
-            }
-        }
-
-        private void тестовыйРежимToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TestForm tf = new TestForm();
-            tf.ShowDialog();
-        }
-        private void bTestNumber_Click(object sender, EventArgs e)
-        {
-            //tbInput.Text = my754.testExponentNumber(tbInput.Text, (int)nUpDown.Value);
-          //  NewFuncsTester();
-        }
-
-        private void числоToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            дробьToolStripMenuItem.Checked = false;
-            интервалToolStripMenuItem.Checked = false;
-            if (radioInteger.Enabled == true)
-                radioInteger.Checked = true;
-            
-        }
-        private void дробьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            числоToolStripMenuItem.Checked = false;
-            интервалToolStripMenuItem.Checked = false;
-            if (radioFloat.Enabled == true)
-                radioFloat.Checked = true;
-            
-        }
-        private void интервалToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            числоToolStripMenuItem.Checked = false;
-            дробьToolStripMenuItem.Checked = false;
-            if (radioInterval.Enabled == true)
-                radioInterval.Checked = true;
-            
-        }
-
-        private void постбинарныйToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
-        {
-            if (бинарныйToolStripMenuItem.Visible == false)
-            {
-                постбинарныйToolStripMenuItem.Visible = false;
-                бинарныйToolStripMenuItem.Visible = true;
-
-                постбинарныйToolStripMenuItem.Checked = true;
-                бинарныйToolStripMenuItem.Checked = false;
-            }
-        }
-        private void бинарныйToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
-        {
-        /*
-           if (бинарныйToolStripMenuItem.Visible == false)
-            {
-                постбинарныйToolStripMenuItem.Visible = true;
-                бинарныйToolStripMenuItem.Visible = false;
-
-                постбинарныйToolStripMenuItem.Checked = false;
-                бинарныйToolStripMenuItem.Checked = true;
-            }
-        */ 
-        }
-
-        private void changeLanguage(object sender, EventArgs e)
-        {
-            
-            switch (((ToolStripMenuItem)sender).Text)
-            {
-                case "English": lang = 0; changeLanguage(0); // Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
-                     break;
-                case "Русский": lang = 1; changeLanguage(1); // Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru"); 
-                    break;
-                case "Deutsch": lang = 0; changeLanguage(0); break;
-                case "Українска": lang = 0; changeLanguage(0); break;
-            }
-        }
-
-        private void problemStatus_Click(object sender, EventArgs e)
-        {
-            int i ;
-            String[] tempStr;
-            try
-            {
-                //FileStream fStream = File.Open("log.dat", System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite);
-                //if (fStream != null)
-                //{
-                    //richTextBox1.Text += "Add some";
-                    //tabControl1.TabPages.Add("Known Errors");
-                    //tabKnownErrors.
-                    //RichTextBox rbErrors = new RichTextBox();
-                    //tabControlFooter.TabPages["Known Errors"].Controls.Add(rbErrors);
-                    //rbErrors.Text = "Error";
-                    //richTextBox1.Text += "\r\nException :[" + ex.Message + "]\r\n";
-
-
-                tabControlFooter.SelectedIndex = 4;
-                tempStr = exceptionUtil.Messages();
-                if (tempStr != null)
-                {
-                    for (i = 0; i < tempStr.Length; i++)
-                        lbKnownErrors.Items.Add("\r\nException # " + i + " :[" + tempStr[i] + "]\r\n");
-                    FileStream fStream = File.Open("err.dat", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite);
-                    if (fStream != null)
-                    {
-                        for (i = 0; i < tempStr.Length; i++)
-                            fStream.Write(stringUtil.ToByteArray(tempStr[i]), 0, tempStr[i].Length);
-                    }
-                    else
-                        problemStatus.ToolTipText = "Исключения не были записаны!";
-                    
-                }
-                else
-                { 
-                }
-                //}
-            }
-            catch (Exception ex)
-            {
-
-                richTextBox1.Text += "\r\nException :["+ex.Message+"]\r\n";
-            }
-            finally 
-            { 
-                
-            }
-        }
-        private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            if (e.ClickedItem.Name == "toolStripMenuItem2")
-            {
-                if (lbKnownErrors.SelectedIndex != -1)
-                {
-                    Clipboard.SetText(lbKnownErrors.SelectedItem.ToString());
-                }
-                else
-                {
-                    MessageBox.Show("Выберите элемент!");
-                }
-            }
-            if (e.ClickedItem.Name == "toolStripMenuItem7")
-            {
-                if (lbKnownErrors.SelectedIndex != -1)
-                {
-                    tbInput.Text = lbKnownErrors.SelectedItem.ToString();
-                    bStart_Click(sender, e);
-                }
-                else
-                {
-                    MessageBox.Show("Выберите элемент!");
-                }
-            }
-        }
-        private void contextMenuExceptions_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            if (e.ClickedItem.Name == "toolStripMenuItem8")
-            {
-                if (mainNode.Nodes.Count>0)
-                {
-                    mainNode.Nodes.Clear();
-                }
-                else
-                {
-                    MessageBox.Show("Дерево элементов пустое!");
-                }
-            }
-        }
-        private void LogsContextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            if (e.ClickedItem.Name == "Clear_Logs")
-            {
-                richTextBox1.Text = "";
-            }
-        }
- 
+       
         public bool canAddDigit(char inChar, int bit)
         { 
             String hex_table = "0123456789ABCDEF";
@@ -2590,25 +2273,7 @@ namespace Flexible_computing
             }
         }
 
-        private void bpb32Info_Click(object sender, EventArgs e)
-        {
-            if (!TetraCheck)
-            {
-                Forms.Formpb32 pb32Info = new Forms.Formpb32();
-                pb32Info.Show();
-            }
-            else
-            {
-                Forms.Formpb32_16p pb32Info = new Forms.Formpb32_16p();
-                pb32Info.Show();
-            }
-        }
-
-        private void Form1_Enter(object sender, EventArgs e)
-        {
-            this.SetTopLevel(true);
-        }
-
+      
         private void bCancelStart_Click(object sender, EventArgs e)
         {
             if ((Core.thread32.ThreadState & (System.Threading.ThreadState.Stopped | System.Threading.ThreadState.Unstarted)) == 0)
@@ -3229,7 +2894,6 @@ namespace Flexible_computing
         {
             lTime.Text = "Time: " + System.DateTime.Now.ToString("HH:mm:ss");
             
-
             //32
             dataGridView1.Rows[0].Cells[0].Value = Core.Num32.Name;
 

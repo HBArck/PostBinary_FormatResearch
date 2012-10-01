@@ -274,13 +274,19 @@
             this.contextMenuKnownErrors = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cExp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bCopy = new System.Windows.Forms.Button();
             this.l2ccTo16cc = new System.Windows.Forms.Label();
             this.recalculate = new System.Windows.Forms.Button();
             this.lNormDenorm = new System.Windows.Forms.Label();
             this.errorTimer = new System.Windows.Forms.Timer(this.components);
             this.label12 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bMaximizeFooterTab = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.lTh1 = new System.Windows.Forms.Label();
             this.lTh2 = new System.Windows.Forms.Label();
@@ -299,12 +305,7 @@
             this.lTime = new System.Windows.Forms.Label();
             this.tTime = new System.Windows.Forms.Timer(this.components);
             this.lbTime = new System.Windows.Forms.ListBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cExp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tStatus = new System.Windows.Forms.Timer(this.components);
             this.menuStrip_Global.SuspendLayout();
             this.tabControl_Format.SuspendLayout();
             this.tabPB32.SuspendLayout();
@@ -328,9 +329,9 @@
             this.tabControlFooter.SuspendLayout();
             this.tabKnownErrors.SuspendLayout();
             this.contextMenuKnownErrors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip_Global
@@ -2932,6 +2933,54 @@
             this.toolStripMenuItem7.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem7.Text = "Расчитать";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.AutoScroll = true;
+            this.tabPage3.Controls.Add(this.dataGridView2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(728, 108);
+            this.tabPage3.TabIndex = 9;
+            this.tabPage3.Text = "Debug";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cName,
+            this.cExp,
+            this.cMan,
+            this.cManRight});
+            this.dataGridView2.Location = new System.Drawing.Point(5, 6);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(719, 150);
+            this.dataGridView2.TabIndex = 24;
+            // 
+            // cName
+            // 
+            this.cName.HeaderText = "Name";
+            this.cName.Name = "cName";
+            // 
+            // cExp
+            // 
+            this.cExp.HeaderText = "Exp";
+            this.cExp.Name = "cExp";
+            this.cExp.Width = 200;
+            // 
+            // cMan
+            // 
+            this.cMan.HeaderText = "Man";
+            this.cMan.Name = "cMan";
+            this.cMan.Width = 200;
+            // 
+            // cManRight
+            // 
+            this.cManRight.HeaderText = "Man R";
+            this.cManRight.Name = "cManRight";
+            this.cManRight.Width = 200;
+            // 
             // bCopy
             // 
             this.bCopy.Location = new System.Drawing.Point(598, 126);
@@ -2995,17 +3044,17 @@
             this.label12.Text = "label12";
             this.label12.Visible = false;
             // 
-            // button1
+            // bMaximizeFooterTab
             // 
-            this.button1.BackgroundImage = global::Flexible_computing.Properties.Resources.arrow_out;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Location = new System.Drawing.Point(0, 537);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(24, 24);
-            this.button1.TabIndex = 12;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bMaximizeFooterTab.BackgroundImage = global::Flexible_computing.Properties.Resources.arrow_out;
+            this.bMaximizeFooterTab.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bMaximizeFooterTab.Location = new System.Drawing.Point(0, 537);
+            this.bMaximizeFooterTab.Name = "bMaximizeFooterTab";
+            this.bMaximizeFooterTab.Size = new System.Drawing.Size(24, 24);
+            this.bMaximizeFooterTab.TabIndex = 12;
+            this.bMaximizeFooterTab.UseVisualStyleBackColor = true;
+            this.bMaximizeFooterTab.Visible = false;
+            this.bMaximizeFooterTab.Click += new System.EventHandler(this.bMaximizeFooterTab_Click);
             // 
             // button2
             // 
@@ -3144,53 +3193,10 @@
             this.lbTime.Size = new System.Drawing.Size(102, 95);
             this.lbTime.TabIndex = 23;
             // 
-            // dataGridView2
+            // tStatus
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cName,
-            this.cExp,
-            this.cMan,
-            this.cManRight});
-            this.dataGridView2.Location = new System.Drawing.Point(5, 6);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(719, 150);
-            this.dataGridView2.TabIndex = 24;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.AutoScroll = true;
-            this.tabPage3.Controls.Add(this.dataGridView2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(728, 108);
-            this.tabPage3.TabIndex = 9;
-            this.tabPage3.Text = "Debug";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // cName
-            // 
-            this.cName.HeaderText = "Name";
-            this.cName.Name = "cName";
-            // 
-            // cExp
-            // 
-            this.cExp.HeaderText = "Exp";
-            this.cExp.Name = "cExp";
-            this.cExp.Width = 200;
-            // 
-            // cMan
-            // 
-            this.cMan.HeaderText = "Man";
-            this.cMan.Name = "cMan";
-            this.cMan.Width = 200;
-            // 
-            // cManRight
-            // 
-            this.cManRight.HeaderText = "Man R";
-            this.cManRight.Name = "cManRight";
-            this.cManRight.Width = 200;
+            this.tStatus.Interval = 1000;
+            this.tStatus.Tick += new System.EventHandler(this.TimerCount);
             // 
             // Form1
             // 
@@ -3226,7 +3232,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tabControl_Format);
             this.Controls.Add(this.menuStrip_Global);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bMaximizeFooterTab);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
@@ -3277,9 +3283,9 @@
             this.tabControlFooter.ResumeLayout(false);
             this.tabKnownErrors.ResumeLayout(false);
             this.contextMenuKnownErrors.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3524,7 +3530,7 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bMaximizeFooterTab;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ContextMenuStrip LogsContextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem Clear_Logs;
@@ -3562,6 +3568,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cExp;
         private System.Windows.Forms.DataGridViewTextBoxColumn cMan;
         private System.Windows.Forms.DataGridViewTextBoxColumn cManRight;
+        private System.Windows.Forms.Timer tStatus;
     }
 }
 

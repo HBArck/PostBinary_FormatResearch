@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\demon's_blood.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Flexible_computing" version="3.34.0.42984" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="Flexible_computing" version="3.34.0.17306" language="neutral" processorArchitecture="x86" />
     <commandLine file="Flexible_computing.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -44,49 +44,49 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flexible_computing.exe" size="388096">
-      <assemblyIdentity name="Flexible_computing" version="3.34.0.42984" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing" version="3.34.0.17306" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>8jKszCQFmhj+8PtiGwptCgZB01k=</dsig:DigestValue>
+        <dsig:DigestValue>m6mTz82Z+0YiUjBra1YvhvoX2qk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en\Flexible_computing.resources.dll" size="62976">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.42984" language="en" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.17306" language="en" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Qu5w5/T2JxKbA1I/FsLTerOjBY8=</dsig:DigestValue>
+        <dsig:DigestValue>YndNGgDl8laqZqA4e/lQ7ZC23W4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en-US\Flexible_computing.resources.dll" size="30208">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.42984" language="en-US" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.17306" language="en-US" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>517wOAb5yOTOOKOIA9M7mW4I9rc=</dsig:DigestValue>
+        <dsig:DigestValue>sgFleizzWPovPqF1MgGEfsIYbfc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ru\Flexible_computing.resources.dll" size="31232">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.42984" language="ru" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.17306" language="ru" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>0ZGqI0zv7ToxMRpqoBiIGGnxwEg=</dsig:DigestValue>
+        <dsig:DigestValue>TNwWa1OYxE2qBd66EHsQMRMvSdw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

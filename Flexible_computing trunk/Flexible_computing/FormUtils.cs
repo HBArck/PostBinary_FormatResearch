@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Timers;
+using System.IO;
 
 namespace Flexible_computing
 {
@@ -882,6 +883,101 @@ namespace Flexible_computing
             }
             Clipboard.SetText(TextToClipBoard); // скопировал текст в буфер
         }
+        private void bClear_Click(object sender, EventArgs e)
+        {
+            tbRes.Text = "+0,0";
+            tbCalcError.Text = "0,0";
+            tbInput.Text = "0,0";
+            lNormDenorm.ForeColor = ColorsForState[2];
+            lNormDenorm.Text = numberState[2];
+
+            tbSign32.Text = "0";
+            tbSign64.Text = "0";
+            tbSign128.Text = "0";
+            tbSign256.Text = "0";
+
+            tbExp32.Text = currentCCOnTabs == false ? "00000000" : "00"; // Done 8
+            tbExp64.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000" : "00000000" : inputStringFormat == 0 ? "000" : "00"; // Done 11
+            tbExp128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000" : "00000000000" : inputStringFormat == 0 ? "0000" : "000";
+            tbExp256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000" : "000000000000000" : inputStringFormat == 0 ? "00000" : "0000";
+
+            tbExp64_2.Text = currentCCOnTabs == false ? "00000000" : "00"; // Done 11
+            tbExp128_2.Text = currentCCOnTabs == false ? "00000000000" : "000";
+            tbExp256_2.Text = currentCCOnTabs == false ? "000000000000000" : "0000";
+
+            tbMantisa32.Text = currentCCOnTabs == false ? "000000000000000000000" : "000000"; // Done 21
+            tbMantisa64.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
+            tbMantisa128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
+            tbMantisa256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
+
+            tbMantisa64_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
+            tbMantisa128_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
+            tbMantisa256_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
+
+            tbMF32.Text = currentCCOnTabs == false ? "0" : "0";
+            tbMF64.Text = currentCCOnTabs == false ? "00" : "0";
+            tbMF128.Text = currentCCOnTabs == false ? "00000" : "00";
+            tbMF256.Text = currentCCOnTabs == false ? "000000000000" : "000";
+            tbCF32.Text = currentCCOnTabs == false ? "0" : "0";
+            tbCF64.Text = currentCCOnTabs == false ? "01" : "1";
+            tbCF128.Text = currentCCOnTabs == false ? "011" : "3";
+            tbCF256.Text = currentCCOnTabs == false ? "0111" : "7";
+
+            //richTextBox1.Clear();
+
+            // this.clearVars();// Clears All vars in this class
+            isCalcsReset = true;
+        }
+        private void problemStatus_Click(object sender, EventArgs e)
+        {
+            int i;
+            String[] tempStr;
+            try
+            {
+                //FileStream fStream = File.Open("log.dat", System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite);
+                //if (fStream != null)
+                //{
+                //richTextBox1.Text += "Add some";
+                //tabControl1.TabPages.Add("Known Errors");
+                //tabKnownErrors.
+                //RichTextBox rbErrors = new RichTextBox();
+                //tabControlFooter.TabPages["Known Errors"].Controls.Add(rbErrors);
+                //rbErrors.Text = "Error";
+                //richTextBox1.Text += "\r\nException :[" + ex.Message + "]\r\n";
+
+
+                tabControlFooter.SelectedIndex = 4;
+                tempStr = exceptionUtil.Messages();
+                if (tempStr != null)
+                {
+                    for (i = 0; i < tempStr.Length; i++)
+                        lbKnownErrors.Items.Add("\r\nException # " + i + " :[" + tempStr[i] + "]\r\n");
+                    FileStream fStream = File.Open("err.dat", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite);
+                    if (fStream != null)
+                    {
+                        for (i = 0; i < tempStr.Length; i++)
+                            fStream.Write(stringUtil.ToByteArray(tempStr[i]), 0, tempStr[i].Length);
+                    }
+                    else
+                        problemStatus.ToolTipText = "Исключения не были записаны!";
+
+                }
+                else
+                {
+                }
+                //}
+            }
+            catch (Exception ex)
+            {
+
+                richTextBox1.Text += "\r\nException :[" + ex.Message + "]\r\n";
+            }
+            finally
+            {
+
+            }
+        }
+     
 
         private void числоToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
@@ -943,6 +1039,251 @@ namespace Flexible_computing
             }
             */
         }
+
+
+        private void тестовыйРежимToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TestForm tf = new TestForm();
+            tf.ShowDialog();
+        }
+        private void bTestNumber_Click(object sender, EventArgs e)
+        {
+            //tbInput.Text = my754.testExponentNumber(tbInput.Text, (int)nUpDown.Value);
+            //  NewFuncsTester();
+        }
+
+        private void числоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            дробьToolStripMenuItem.Checked = false;
+            интервалToolStripMenuItem.Checked = false;
+            if (radioInteger.Enabled == true)
+                radioInteger.Checked = true;
+
+        }
+        private void дробьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            числоToolStripMenuItem.Checked = false;
+            интервалToolStripMenuItem.Checked = false;
+            if (radioFloat.Enabled == true)
+                radioFloat.Checked = true;
+
+        }
+        private void интервалToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            числоToolStripMenuItem.Checked = false;
+            дробьToolStripMenuItem.Checked = false;
+            if (radioInterval.Enabled == true)
+                radioInterval.Checked = true;
+
+        }
+
+        private void постбинарныйToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (бинарныйToolStripMenuItem.Visible == false)
+            {
+                постбинарныйToolStripMenuItem.Visible = false;
+                бинарныйToolStripMenuItem.Visible = true;
+
+                постбинарныйToolStripMenuItem.Checked = true;
+                бинарныйToolStripMenuItem.Checked = false;
+            }
+        }
+        private void бинарныйToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            /*
+               if (бинарныйToolStripMenuItem.Visible == false)
+                {
+                    постбинарныйToolStripMenuItem.Visible = true;
+                    бинарныйToolStripMenuItem.Visible = false;
+
+                    постбинарныйToolStripMenuItem.Checked = false;
+                    бинарныйToolStripMenuItem.Checked = true;
+                }
+            */
+        }
+
+        private void changeLanguage(object sender, EventArgs e)
+        {
+
+            switch (((ToolStripMenuItem)sender).Text)
+            {
+                case "English": lang = 0; changeLanguage(0); // Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+                    break;
+                case "Русский": lang = 1; changeLanguage(1); // Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru"); 
+                    break;
+                case "Deutsch": lang = 0; changeLanguage(0); break;
+                case "Українска": lang = 0; changeLanguage(0); break;
+            }
+        }
+
+
+        private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Name == "toolStripMenuItem2")
+            {
+                if (lbKnownErrors.SelectedIndex != -1)
+                {
+                    Clipboard.SetText(lbKnownErrors.SelectedItem.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Выберите элемент!");
+                }
+            }
+            if (e.ClickedItem.Name == "toolStripMenuItem7")
+            {
+                if (lbKnownErrors.SelectedIndex != -1)
+                {
+                    tbInput.Text = lbKnownErrors.SelectedItem.ToString();
+                    bStart_Click(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Выберите элемент!");
+                }
+            }
+        }
+        private void contextMenuExceptions_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Name == "toolStripMenuItem8")
+            {
+                if (mainNode.Nodes.Count > 0)
+                {
+                    mainNode.Nodes.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("Дерево элементов пустое!");
+                }
+            }
+        }
+        private void LogsContextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Name == "Clear_Logs")
+            {
+                richTextBox1.Text = "";
+            }
+        }
+
+
+        private void tabControl_Format_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //changePasportFormat(inputStringFormat, tabControl_Format.SelectedIndex);
+            if (tabControl_Format.SelectedIndex == 0)
+            {
+                radioFloat.Enabled = false;
+                radioInterval.Enabled = false;
+                дробьToolStripMenuItem.Enabled = false;
+                интервалToolStripMenuItem.Enabled = false;
+                числоToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                if (!TetraCheck)
+                {
+                    radioFloat.Enabled = true;
+                    radioInterval.Enabled = true;
+                    дробьToolStripMenuItem.Enabled = true;
+                    интервалToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    if (tabControl_Format.SelectedIndex > 1)
+                    {
+                        radioFloat.Enabled = true;
+                        radioInterval.Enabled = true;
+                        дробьToolStripMenuItem.Enabled = true;
+                        интервалToolStripMenuItem.Enabled = true;
+                        chbTetra.Enabled = true;
+                    }
+                    else
+                    {
+                        chbTetra.Enabled = false;
+                        if (chbTetra.Checked)
+                            chbTetra.Checked = false;
+                    }
+                }
+            }
+            textChangeOnForm();
+            refreshNumberStatus();
+            //l2ccTo16cc_Click(sender,e);
+            if (!isCalcsReset)
+                ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
+        }
+        public void changeCheckStateForRounding(byte newRounding)
+        {
+            miToZero.Checked = false;
+            miToPInf.Checked = false;
+            miToNInf.Checked = false;
+            miToInt.Checked = false;
+            miToNPInf.Checked = false;
+            switch (newRounding)
+            {
+                case 0: miToZero.Checked = true; label18.Text = miToZero.Text; roundType = 0; Core.Rounding = 0; break;
+                case 2: miToPInf.Checked = true; label18.Text = miToPInf.Text; roundType = 2; Core.Rounding = 2; break;
+                case 3: miToNInf.Checked = true; label18.Text = miToNInf.Text; roundType = 3; Core.Rounding = 3; break;
+                case 4: miToNPInf.Checked = true; label18.Text = miToNPInf.Text; break;
+                case 1: miToInt.Checked = true; label18.Text = miToInt.Text; roundType = 1; Core.Rounding = 1; break;
+            }
+        }
+
+
+        // Information Forms of current format
+        private void bpb32Info_Click(object sender, EventArgs e)
+        {
+            if (!TetraCheck)
+            {
+                Forms.Formpb32 pb32Info = new Forms.Formpb32();
+                pb32Info.Show();
+            }
+            else
+            {
+                Forms.Formpb32_16p pb32Info = new Forms.Formpb32_16p();
+                pb32Info.Show();
+            }
+        }
+
+
+        /*------------------------------------------- JUNK  ------------------------------------------------*/
+        private void bMaximizeFooterTab_Click(object sender, EventArgs e)
+        {
+            if (!isFormatInfoFullView)
+            {
+                tabControlFooter.Size = new Size(tabControlFooter.Size.Width + 25, 501);
+                tabControlFooter.Location = new Point(12, 172);
+                bMaximizeFooterTab.BackgroundImage = Properties.Resources.arrow_in;
+                isFormatInfoFullView = true;
+
+                // inside controls on Tabs
+                richTextBox1.Size = new Size(richTextBox1.Size.Width, 440);
+                richTextBox1.Location = new Point(12, 2);
+
+                lbKnownErrors.Size = new Size(lbKnownErrors.Size.Width, 440);
+                lbKnownErrors.Location = new Point(12, 2);
+
+                treeView1.Size = new Size(treeView1.Size.Width, 440);
+                treeView1.Location = new Point(12, 2);
+            }
+            else
+            {
+                tabControlFooter.Size = new Size(tabControlFooter.Size.Width, 134);
+                tabControlFooter.Location = new Point(23, 519);
+                bMaximizeFooterTab.BackgroundImage = Properties.Resources.arrow_out;
+                isFormatInfoFullView = false;
+
+                // inside controls on Tabs
+                richTextBox1.Size = new Size(richTextBox1.Size.Width, 119);
+                richTextBox1.Location = new Point(1, 2);
+
+                lbKnownErrors.Size = new Size(lbKnownErrors.Size.Width, 95);
+                lbKnownErrors.Location = new Point(2, 2);
+
+                treeView1.Size = new Size(treeView1.Size.Width, 100);
+                treeView1.Location = new Point(2, 2);
+            }
+
+        }
+
     }// Form class
 }// namespace
 

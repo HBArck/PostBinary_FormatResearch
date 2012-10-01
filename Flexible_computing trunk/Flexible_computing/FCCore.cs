@@ -281,6 +281,10 @@ namespace Flexible_computing
         public String DenormalizedRight;
         public String IntPartDenormalized;
         public String FloatPartDenormalized;
+
+        public String IntPartDenormalizedFI;
+        public String FloatPartDenormalizedFI;
+
         public int Offset;
         public int OffsetFI;
         public int OffsetTetra;
@@ -501,8 +505,12 @@ namespace Flexible_computing
         public String DenormalizedNumberRight;
         public String IntPartDenormalized;
         public String FloatPartDenormalized;
+        public String IntPartDenormalizedFI;
+        public String FloatPartDenormalizedFI;
         public String DenormIntPart;
         public String DenormFloatPart;
+        public String DenormIntPartFI;
+        public String DenormFloatPartFI;
         public String BinaryIntPart;
         public String BinaryFloatPart;
         public String BinaryIntPartFI;
@@ -843,12 +851,12 @@ namespace Flexible_computing
                     Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizeNumber(NormalizedNumberRight);
                     // Convert from 10cc to 2cc
                     
-                        tempNumber = convertToExp(DenormalizedNumber);
+                        tempNumber = convertToExp(DenormalizedNumberRight);
                         defineNumberState(tempNumber,true);
                         if (Num256.NumberStateRight != stateOfNumber.error)
                         {
-                            this.BinaryIntPartFI = convert10to2IPart(IntPartDenormalized);
-                            this.BinaryFloatPartFI = convert10to2FPart(FloatPartDenormalized);
+                            this.BinaryIntPartFI = convert10to2IPart(IntPartDenormalizedFI);
+                            this.BinaryFloatPartFI = convert10to2FPart(FloatPartDenormalizedFI);
                             FillBinaryVars();
                             // Fill SEM 
                         }
@@ -1244,7 +1252,8 @@ namespace Flexible_computing
             // iPart         -> IntPartDenormalized
             // fPart         -> FloatPartDenormalized
             // inputString   -> Denormalized
-
+            String denormNumber = "";
+            String denormIntPart = "", denormFloatPart = "";
             String[] tempArray;
             try
             {
@@ -1275,63 +1284,77 @@ namespace Flexible_computing
 
                 int iExp = Math.Abs(int.Parse(E));
                 /*iPart */
-                DenormIntPart = dataString.Substring(1, dataString.IndexOf(',') - 1);
+                denormIntPart = dataString.Substring(1, dataString.IndexOf(',') - 1);
                 index = dataString.IndexOf(',') + 1;
 
                 /*fPart*/
-                DenormFloatPart = dataString.Substring(index, dataString.IndexOf('e') - index);////+1
+                denormFloatPart = dataString.Substring(index, dataString.IndexOf('e') - index);////+1
                 if (ExpSign == "+")
                 {
-                    String fPartTemp = DenormFloatPart;
+                    String fPartTemp = denormFloatPart;
                     if (iExp > 0)
                     {
-                        tempArray = new String[Math.Abs( iExp - DenormFloatPart.Length)];
-                        for (int i = 0; i < (Math.Abs( iExp - DenormFloatPart.Length)); i++)
+                        tempArray = new String[Math.Abs( iExp - denormFloatPart.Length)];
+                        for (int i = 0; i < (Math.Abs( iExp - denormFloatPart.Length)); i++)
                             tempArray[i] = "0";
                         fPartTemp = fPartTemp + String.Join("",tempArray) ;
-                        DenormFloatPart = "0";
+                        denormFloatPart = "0";
                     }
-                    DenormIntPart = DenormIntPart + fPartTemp.Substring(0, iExp);
-                    DenormFloatPart = fPartTemp.Substring(iExp);
-                    if (DenormFloatPart.Length == 0)
-                        DenormFloatPart = "0";
+                    denormIntPart = denormIntPart + fPartTemp.Substring(0, iExp);
+                    denormFloatPart = fPartTemp.Substring(iExp);
+                    if (denormFloatPart.Length == 0)
+                        denormFloatPart = "0";
                 }
                 else
                 {
-                    String iPartTemp = DenormIntPart;
-                    tempArray = new String[Math.Abs(iExp - DenormIntPart.Length)];
-                    for (int i = 0; i < Math.Abs((iExp - DenormIntPart.Length)); i++)
+                    String iPartTemp = denormIntPart;
+                    tempArray = new String[Math.Abs(iExp - denormIntPart.Length)];
+                    for (int i = 0; i < Math.Abs((iExp - denormIntPart.Length)); i++)
                         tempArray[i] = "0";
                         iPartTemp = String.Join("", tempArray) + iPartTemp;
-                    if (iExp > DenormIntPart.Length)
+                    if (iExp > denormIntPart.Length)
                     {
-                        DenormFloatPart = iPartTemp + DenormFloatPart;
-                        DenormIntPart = "0";
+                        denormFloatPart = iPartTemp + denormFloatPart;
+                        denormIntPart = "0";
                     }
                     else
                     {
-                        DenormFloatPart = iPartTemp.Substring(iPartTemp.Length - iExp) + DenormFloatPart;
+                        denormFloatPart = iPartTemp.Substring(iPartTemp.Length - iExp) + denormFloatPart;
                         if (iPartTemp.Length != iExp)
-                            DenormIntPart = iPartTemp.Substring(0, iPartTemp.Length - iExp);
+                            denormIntPart = iPartTemp.Substring(0, iPartTemp.Length - iExp);
                         else
-                            DenormIntPart = "0";
+                            denormIntPart = "0";
                     }
                 }
                 // iPart = myUtil.deleteZeroFromNumber(iPart);
                 // if (iPart[0] == '0')
                 //    iPart = iPart.Substring(1);
-                while ((DenormIntPart[0] == '0') && (DenormIntPart.Length > 1))
+                while ((denormIntPart[0] == '0') && (denormIntPart.Length > 1))
                 {
-                    DenormIntPart = DenormIntPart.Substring(1);
+                    denormIntPart = denormIntPart.Substring(1);
                 }
                 // Compact to one statement num32 = num64 = num128 = num256 = denorm
 
-                this.DenormalizedNumber = SignCharacter + DenormIntPart + "," + DenormFloatPart;
+                denormNumber = SignCharacter + denormIntPart + "," + denormFloatPart;
                 
                 //Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = 
-                Num32.IntPartDenormalized = Num64.IntPartDenormalized = Num128.IntPartDenormalized = Num256.IntPartDenormalized = IntPartDenormalized = DenormIntPart;
-                Num32.FloatPartDenormalized = Num64.FloatPartDenormalized = Num128.FloatPartDenormalized = Num256.FloatPartDenormalized = FloatPartDenormalized = DenormFloatPart;
-                return DenormalizedNumber;
+                if (NumberFormat == 0)
+                {
+                    Num32.IntPartDenormalized = Num64.IntPartDenormalized = Num128.IntPartDenormalized = Num256.IntPartDenormalized = IntPartDenormalized = denormIntPart;
+                    Num32.FloatPartDenormalized = Num64.FloatPartDenormalized = Num128.FloatPartDenormalized = Num256.FloatPartDenormalized = FloatPartDenormalized = denormFloatPart;
+                    DenormIntPart = denormIntPart;
+                    DenormFloatPart = denormFloatPart;
+                    DenormalizedNumber = denormNumber;
+                }
+                else
+                {
+                    Num32.IntPartDenormalizedFI = Num64.IntPartDenormalizedFI = Num128.IntPartDenormalizedFI = Num256.IntPartDenormalizedFI = IntPartDenormalizedFI = denormIntPart;
+                    Num32.FloatPartDenormalizedFI = Num64.FloatPartDenormalizedFI = Num128.FloatPartDenormalizedFI = Num256.FloatPartDenormalizedFI = FloatPartDenormalizedFI = denormFloatPart;
+                    DenormIntPartFI = denormIntPart;
+                    DenormFloatPartFI = denormFloatPart;
+                    DenormalizedNumberRight = denormNumber;
+                }
+                return denormNumber;
             }
             catch (Exception ex)
             {

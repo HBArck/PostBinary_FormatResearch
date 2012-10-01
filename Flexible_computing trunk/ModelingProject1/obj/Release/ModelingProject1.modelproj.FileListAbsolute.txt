@@ -4,3 +4,9 @@ C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_comput
 C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\ModelingProject1\bin\Release\en-US\Flexible_computing.resources.dll
 C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\ModelingProject1\bin\Release\ru\Flexible_computing.resources.dll
 C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\ModelingProject1\obj\Release\ResolveAssemblyReference.cache
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\ModelingProject1\bin\Release\Flexible_computing.exe
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\ModelingProject1\bin\Release\Flexible_computing.pdb
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\ModelingProject1\bin\Release\en\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\ModelingProject1\bin\Release\en-US\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\ModelingProject1\bin\Release\ru\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\ModelingProject1\obj\Release\ResolveAssemblyReference.cache

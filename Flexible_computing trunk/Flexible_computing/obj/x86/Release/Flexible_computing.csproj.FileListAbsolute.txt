@@ -37,3 +37,33 @@ C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_comput
 C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Forms.Formpb32.resources
 C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Forms.Formpb64.resources
 C:\Users\arck\Documents\Visual Studio 2010\Projects\pBinaryCalcs\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Forms.Formpb64_32f.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\Flexible_computing.exe.config
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.exe
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.pdb
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\Flexible_computing.exe.manifest
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\Flexible_computing.application
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\Flexible_computing.exe
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\Flexible_computing.pdb
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\en-US\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\en\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\bin\Release\ru\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.About.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Form1.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Forms.Formpb32_16p.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Forms.Formpb32.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Forms.Formpb64.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Forms.Formpb64_32f.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Properties.Resources.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.TestForm.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Form1.en-US.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Form1.en.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.Form1.ru.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\en-US\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\en\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\ru\Flexible_computing.resources.dll
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.TrustInfo.xml
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.exe.manifest
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Release\Flexible_computing.application
