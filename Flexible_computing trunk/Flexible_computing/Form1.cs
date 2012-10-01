@@ -141,6 +141,7 @@ namespace Flexible_computing
             this.MinimumSize = new Size(this.Size.Width - 100, this.Size.Height);
             currentType[0] = true;
             Version v = Assembly.GetExecutingAssembly().GetName().Version;
+            //Version vv = Assembly.GetAssembly().GetName().Version;
             version = new int[] {v.Major, v.Minor, v.Build };
             tbMenuVer.Text = "Версия [" + v.Major + "." + v.Minor + "." + v.Build + "]";
             // clearVars();
