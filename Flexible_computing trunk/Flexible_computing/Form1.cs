@@ -977,7 +977,7 @@ namespace Flexible_computing
                 }
                 if (currentCCOnTabs == true)
                 {
-                    convert2to16();
+                    convert2to16(null);
                 }
         }
 
@@ -1253,7 +1253,7 @@ namespace Flexible_computing
             timeCounter.Reset();
         }
 
-        public delegate void dMakeCalculations();
+        //public delegate void dMakeCalculations();
         public void Calculation(Object threadContext)
         {
             String datastr = "";
@@ -1609,7 +1609,7 @@ namespace Flexible_computing
 
                     if (was16cc)
                     {
-                        convert2to16();
+                        convert2to16(null);
                     }
                     stlStatus.Text = "Статус : Завершено...";
                     setProgress(0);
@@ -1708,6 +1708,8 @@ namespace Flexible_computing
             }
         }
 
+
+        public delegate void convert2to16Del(Object threadContext);
         /// <summary>
         /// Function depending on tabControl converts all Format Fields (exp,mantisa, if necesery MF & CF)
         /// from 2cc to 16cc & back.
@@ -1715,7 +1717,7 @@ namespace Flexible_computing
         /// и если необходимо Код_Формата и Модификатор_формата) из 2сс в 16сс и обратно
         /// </summary>
         /// <param name="inputSize">one of 4 options : 32, 64, 128, 256</param>
-        public void convert2to16()
+        public void convert2to16(Object threadContext)
         {
             String temp_str;
             String result;
@@ -1727,51 +1729,60 @@ namespace Flexible_computing
             try
             {
                 int currMBits = 0;
-                //int inputStrForm = inputStringFormat == 0 ? 0 : 1;
-                for (int j = 0; j < 4; j++)
+                //int inputStrForm = inputStringFormat == 0 ? 0 : 1;]
+
+                if (tabControl_Format.InvokeRequired)
                 {
-                    size = 32 << j;
-                    for (i = 0; i < 4; i++)
+                    convert2to16Del d = new convert2to16Del(convert2to16);
+                    this.Invoke(d, new object[] { threadContext });
+                }
+                else
+                {
+                    for (int j = 0; j < 4; j++)
                     {
-                        if ((tabControl_Format.SelectedIndex == 0) && (i > 1))
-                            continue;
-                        temp_str = FormatFileds[i] + size.ToString();
-
-                        temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
-
-                        result = Core.convert2to16(((TextBox)temp_tb).Text);
-                        switch (inputStringFormat)
+                        size = 32 << j;
+                        for (i = 0; i < 4; i++)
                         {
-                            case 0:
-                                currMBits = Core.Numbers[j].MBits;
-                                break;
-                            case 1:
-                            case 2:
-                                currMBits = Core.Numbers[j].MBitsFI;
-                                break;
-                        }
-                        if (i > 1)
-                            ((TextBox)temp_tb).Text = result;//.Substring(0, currMBits);
-                        else
-                            ((TextBox)temp_tb).Text = result;//.Substring(0, currMBits);
+                            if ((tabControl_Format.SelectedIndex == 0) && (i > 1))
+                                continue;
+                            temp_str = FormatFileds[i] + size.ToString();
 
-                    }
-                    if ((tabControl_Format.SelectedIndex > 0) && (size > 32))
-                    {
-                        if (getIndexType() != 0)
-                        {
-                            for (i = 0; i < 2; i++)
+                            temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
+
+                            result = Core.convert2to16(((TextBox)temp_tb).Text);
+                            switch (inputStringFormat)
                             {
-                                temp_str = FormatFileds[i] + size.ToString() + "_2";
+                                case 0:
+                                    currMBits = Core.Numbers[j].MBits;
+                                    break;
+                                case 1:
+                                case 2:
+                                    currMBits = Core.Numbers[j].MBitsFI;
+                                    break;
+                            }
+                            if (i > 1)
+                                ((TextBox)temp_tb).Text = result;//.Substring(0, currMBits);
+                            else
+                                ((TextBox)temp_tb).Text = result;//.Substring(0, currMBits);
 
-                                temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
+                        }
+                        if ((tabControl_Format.SelectedIndex > 0) && (size > 32))
+                        {
+                            if (getIndexType() != 0)
+                            {
+                                for (i = 0; i < 2; i++)
+                                {
+                                    temp_str = FormatFileds[i] + size.ToString() + "_2";
 
-                                result = Core.convert2to16(((TextBox)temp_tb).Text);
+                                    temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
 
-                                if (i > 1)
-                                    ((TextBox)temp_tb).Text = result;
-                                else
-                                    ((TextBox)temp_tb).Text = result;
+                                    result = Core.convert2to16(((TextBox)temp_tb).Text);
+
+                                    if (i > 1)
+                                        ((TextBox)temp_tb).Text = result;
+                                    else
+                                        ((TextBox)temp_tb).Text = result;
+                                }
                             }
                         }
                     }
@@ -1961,7 +1972,7 @@ namespace Flexible_computing
                 {
                     l2ccTo16cc.Text = "16cc";
                     currentCCOnTabs = true;
-                    convert2to16();
+                    convert2to16(null);
                     changeBitLength(1);
                     tbMantisa128.ScrollBars = ScrollBars.None;
                     tbMantisa128.TextAlign = HorizontalAlignment.Center;
