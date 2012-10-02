@@ -1,32 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1">
-  <asmv1:assemblyIdentity name="Flexible_computing.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
+<asmv1:assembly manifestVersion="1.0" xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1">
+  <asmv1:assemblyIdentity version="1.0.0.1" name="Flexible_computing.exe" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
   <description asmv2:iconFile="Resources\demon's_blood.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Flexible_computing" version="3.34.2.33796" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="Flexible_computing" version="3.34.0.16370" language="neutral" processorArchitecture="x86" />
     <commandLine file="Flexible_computing.exe" parameters="" />
   </entryPoint>
   <trustInfo>
     <security>
       <applicationRequestMinimum>
-        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="LocalIntranet" Description="Default rights given to applications on the local intranet" ID="Custom" SameSite="site">
-          <IPermission Read="USERNAME" version="1" class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-          <IPermission version="1" class="System.Security.Permissions.FileDialogPermission, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Unrestricted="true" />
-          <IPermission version="1" Permanent="True" Expiry="9223372036854775807" UserQuota="9223372036854775807" Allowed="AssemblyIsolationByUser" class="System.Security.Permissions.IsolatedStorageFilePermission, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-          <IPermission version="1" class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Flags="ReflectionEmit, RestrictedMemberAccess" />
-          <IPermission version="1" class="System.Security.Permissions.SecurityPermission, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Flags="Assertion, Execution, BindingRedirects" />
-          <IPermission version="1" class="System.Security.Permissions.UIPermission, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Unrestricted="true" />
-          <IPermission version="1" class="System.Drawing.Printing.PrintingPermission, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" Level="DefaultPrinting" />
-          <IPermission version="1" class="System.Security.Permissions.MediaPermission, WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Audio="SafeAudio" Image="SafeImage" Video="SafeVideo" />
-          <IPermission version="1" class="System.Security.Permissions.WebBrowserPermission, WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Level="Safe" />
-          <IPermission version="1" class="System.Net.DnsPermission, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Unrestricted="true" />
-        </PermissionSet>
+        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="LocalIntranet" Description="Default rights given to applications on the local intranet" Unrestricted="true" ID="Custom" SameSite="site" />
         <defaultAssemblyRequest permissionSetReference="Custom" />
       </applicationRequestMinimum>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
-        <!--
-          Параметры манифеста UAC
+        <!-- Параметры манифеста UAC
           При необходимости изменить уровень управления учетными записями Windows замените 
           узел requestedExecutionLevel одним из следующих значений.
 
@@ -34,9 +22,10 @@
         <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
         <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-        Если вы хотите использовать виртуализацию файлов и реестра для обратной
-             совместимости, удалите узел requestedExecutionLevel.
- -->
+            Задание узла requestedExecutionLevel отключит виртуализацию файла и реестра.
+            Если виртуализацию файла и реестра нужно использовать для обратной 
+            совместимости, удалите узел requestedExecutionLevel.
+        -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
     </security>
@@ -54,53 +43,62 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flexible_computing.exe" size="374272">
-      <assemblyIdentity name="Flexible_computing" version="3.34.2.33796" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Flexible_computing.exe" size="388608">
+      <assemblyIdentity name="Flexible_computing" version="3.34.0.16370" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>9zQDhbOLWDB+mticlfyNYq5vd8s=</dsig:DigestValue>
+        <dsig:DigestValue>DgXu1QKnU38odbJsomAro/BOf14=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en\Flexible_computing.resources.dll" size="62976">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.2.33796" language="en" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.16370" language="en" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>JptE5xXCS1O87l03fUPWlyhpv1w=</dsig:DigestValue>
+        <dsig:DigestValue>7uPa+ko/SDs4ig6DcMk8e71A4BY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en-US\Flexible_computing.resources.dll" size="30208">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.2.33796" language="en-US" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.16370" language="en-US" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>DE4Po62/fxDp83LQZDGPUSozW2c=</dsig:DigestValue>
+        <dsig:DigestValue>DO6h8FpqFlj1dUjYCwx7Nn5QsGs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ru\Flexible_computing.resources.dll" size="31232">
-      <assemblyIdentity name="Flexible_computing.resources" version="3.34.2.33796" language="ru" processorArchitecture="x86" />
+      <assemblyIdentity name="Flexible_computing.resources" version="3.34.0.16370" language="ru" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>xbQVG84DlmB8hE0Hgg+fgJrJmsA=</dsig:DigestValue>
+        <dsig:DigestValue>47j512v0iaC8VX381aNQgvFqS4c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="Flexible_computing.exe.config" size="77">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>w7WNgu5MxCvL4DAgISBxgwmhDzU=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Resources\arrow_right.png" size="687">
     <hash>
       <dsig:Transforms>
@@ -119,4 +117,11 @@
       <dsig:DigestValue>Y0gQL3PWgUBP3JMLEm2eUaZxtQc=</dsig:DigestValue>
     </hash>
   </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- Список всех версий Windows, с которыми это приложение предназначено работать. Windows автоматически выберет наиболее совместимую среду.-->
+      <!-- Если приложение предназначено для работы с Windows 7, раскомментируйте следующий узел supportedOS-->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>-->
+    </application>
+  </compatibility>
 </asmv1:assembly>

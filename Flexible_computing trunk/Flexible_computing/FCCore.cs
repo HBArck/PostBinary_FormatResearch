@@ -845,7 +845,7 @@ namespace Flexible_computing
                     thread256_right = new Thread(Calculate256);
 
                     /*>>>>>>>>>>>>>>>>>>>>> LEFT PART BEGIN <<<<<<<<<<<<<<<<<<<<<<<*/
-                    RightPartCalculating = false;
+                    //RightPartCalculating = false;
                     if (NumberFormat == 1)
                     {
                         inputStringR = inputString.Substring(inputString.IndexOf("/") + 1);
@@ -910,7 +910,7 @@ namespace Flexible_computing
 
                     /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART BEGIN <<<<<<<<<<<<<<<<<<<<<<<*/
                         
-                    RightPartCalculating = true;
+                    //RightPartCalculating = true;
                     NormalizedNumberRight = NormalizeNumber(inputStringR, 2000);
                     // Denormalize Number
                     Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizedNumberRight = DenormalizeNumber(NormalizedNumberRight, PartOfNumber.Right);
@@ -1141,7 +1141,7 @@ namespace Flexible_computing
                 progIncThreadSafe();
                 Num32.Mantisa = selectMantissa(Num32, NumberFormat, PartOfNumber.Left);
                 progIncThreadSafe();
-                changeNumberState(32, PartOfNumber.Left);
+                Num32.NumberState = changeNumberState(32, PartOfNumber.Left);
                 calcRes(Num32, PartOfNumber.Left);
                 calcError(Num32, PartOfNumber.Left);
                 progIncThreadSafe();
@@ -1164,11 +1164,16 @@ namespace Flexible_computing
                     Num64.ExponentaRight = selectExp(Num64, PartOfNumber.Right);
                 progIncThreadSafe();
                 if (!RightPart)
+                {
                     Num64.Mantisa = selectMantissa(Num64, NumberFormat, PartOfNumber.Left);
+                    Num64.NumberState = changeNumberState(64, tempPart);
+                }
                 else
+                {
                     Num64.MantisaRight = selectMantissa(Num64, NumberFormat, PartOfNumber.Right);
+                    Num64.NumberStateRight = changeNumberState(64, tempPart);
+                }
                 progIncThreadSafe();
-                changeNumberState(64, tempPart);
                 calcRes(Num64, tempPart);
                 calcError(Num64, tempPart);
                 progIncThreadSafe();
@@ -1191,16 +1196,18 @@ namespace Flexible_computing
                     Num128.ExponentaRight = selectExp(Num128, PartOfNumber.Right);
                 progIncThreadSafe();
                 if (!RightPart)
+                {
                     Num128.Mantisa = selectMantissa(Num128, NumberFormat, PartOfNumber.Left);
+                    Num128.NumberState = changeNumberState(128, tempPart);
+                }
                 else
+                {
                     Num128.MantisaRight = selectMantissa(Num128, NumberFormat, PartOfNumber.Right);
+                    Num128.NumberStateRight = changeNumberState(128, tempPart);
+                }
                 progIncThreadSafe();
-                changeNumberState(128, tempPart);
-                //if ((Format == 0) || (RightPartCalculating))
-                //{
                 calcRes(Num128, tempPart);
                 calcError(Num128, tempPart);
-                //}
                 progIncThreadSafe();
             }
             catch (Exception ex)
@@ -1219,20 +1226,21 @@ namespace Flexible_computing
                     Num256.Exponenta = selectExp(Num256, PartOfNumber.Left);
                 else
                     Num256.ExponentaRight = selectExp(Num256, PartOfNumber.Right);
-
                 progIncThreadSafe();
                 if (!RightPart)
+                {
                     Num256.Mantisa = selectMantissa(Num256, NumberFormat, PartOfNumber.Left);
+                    Num256.NumberState = changeNumberState(256, tempPart);
+                }
                 else
+                {
                     Num256.MantisaRight = selectMantissa(Num256, NumberFormat, PartOfNumber.Right);
-
+                    Num256.NumberStateRight = changeNumberState(256, tempPart);
+                }
                 progIncThreadSafe();
                 changeNumberState(256, tempPart);
-                //if ((Format == 0) || (RightPartCalculating))
-                //{
                 calcRes(Num256, tempPart);
                 calcError(Num256, tempPart);
-                //}
                 progIncThreadSafe();
             }
             catch (Exception ex)
@@ -1495,8 +1503,8 @@ namespace Flexible_computing
                     {
                         if (Left_Right == PartOfNumber.Left)
                         {
-                            Num128.BinaryIntPartFIRight = this.BinaryIntPartFILeft;
-                            Num128.BinaryFloatPartFIRight = this.BinaryFloatPartFILeft;
+                            Num128.BinaryIntPartFILeft = this.BinaryIntPartFILeft;
+                            Num128.BinaryFloatPartFILeft = this.BinaryFloatPartFILeft;
                         }
                         else
                         {
@@ -1516,13 +1524,13 @@ namespace Flexible_computing
                     {
                         if (Left_Right == PartOfNumber.Left)
                         {
-                            Num256.BinaryIntPartFIRight = this.BinaryIntPartFILeft;
-                            Num256.BinaryFloatPartFIRight = this.BinaryFloatPartFILeft;
+                            Num256.BinaryIntPartFILeft = this.BinaryIntPartFILeft;
+                            Num256.BinaryFloatPartFILeft = this.BinaryFloatPartFILeft;
                         }
                         else
                         {
-                            Num256.BinaryIntPartFIRight = this.BinaryIntPartFILeft;
-                            Num256.BinaryFloatPartFIRight = this.BinaryFloatPartFILeft;
+                            Num256.BinaryIntPartFIRight = this.BinaryIntPartFIRight;
+                            Num256.BinaryFloatPartFIRight = this.BinaryFloatPartFIRight;
                         }
                     }
                 }
@@ -1613,7 +1621,7 @@ namespace Flexible_computing
         /// Defines states for all numbers in FCCore.
         /// If Exp or Mantisa in number are empty , number state won't be calculated.
         /// </summary>
-        public void changeNumberState(int inputNumCapacity,PartOfNumber Left_Right)
+        public stateOfNumber changeNumberState(int inputNumCapacity,PartOfNumber Left_Right)
         {
             bool expZero, manZero, numZero, expFull;
             expZero = manZero = numZero = expFull = false;
@@ -1623,15 +1631,15 @@ namespace Flexible_computing
                     numZero = isStringZero(inputString);
                 else
                     if (Left_Right == PartOfNumber.Left)
-                        numZero = isStringZero(inputStringR);
-                    else
                         numZero = isStringZero(inputString);
+                    else
+                        numZero = isStringZero(inputStringR);
 
                 switch (inputNumCapacity)
                 {
                     case 32:
                         {
-                            if ((NumberFormat == 0) || (Left_Right == PartOfNumber.Left))
+                            if ((NumberFormat == 0) && (Left_Right == PartOfNumber.Left))
                             {
                                 if ((Num32.Exponenta != "") && (Num32.Mantisa != ""))
                                 {
@@ -1639,14 +1647,15 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num32.Mantisa);
                                     expFull = checkExpFull(Num32.Exponenta);
                                     if (Num32.NumberState != stateOfNumber.error)
-                                        Num32.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    //    Num32.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 }
-                            }
-                            break;
+                            } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 32 Exponenta or Mantissa is empty.'");
+                        break;
                         }
                     case 64:
                         {
-                            if ((NumberFormat != 0) && (Left_Right == PartOfNumber.Right))
+                            if ((NumberFormat > 0) && (Left_Right == PartOfNumber.Right))
                             {
                                 if ((Num64.ExponentaRight != "") && (Num64.MantisaRight != ""))
                                 {
@@ -1654,8 +1663,9 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num64.MantisaRight);
                                     expFull = checkExpFull(Num64.ExponentaRight);
                                     if (Num64.NumberStateRight != stateOfNumber.error)
-                                        Num64.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                }
+                                    //    Num64.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 64 ExponentaR or MantissaR is empty.'");
                             }
                             else
                             {
@@ -1665,14 +1675,15 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num64.Mantisa);
                                     expFull = checkExpFull(Num64.Exponenta);
                                     if (Num64.NumberState != stateOfNumber.error)
-                                        Num64.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                }
+                                    //    Num64.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 64 Exponenta or Mantissa is empty.'");
                             }
                             break;
                         }
                     case 128:
                         {
-                            if ((NumberFormat != 0) && (Left_Right == PartOfNumber.Right))
+                            if ((NumberFormat > 0) && (Left_Right == PartOfNumber.Right))
                             {
                                 if ((Num128.ExponentaRight != "") && (Num128.MantisaRight != ""))
                                 {
@@ -1680,8 +1691,9 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num128.MantisaRight);
                                     expFull = checkExpFull(Num128.ExponentaRight);
                                     if (Num128.NumberStateRight != stateOfNumber.error)
-                                        Num128.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                }
+                                    //    Num128.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 128 ExponentaR or MantissaR is empty.'");
                             }
                             else
                             {
@@ -1691,14 +1703,15 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num128.Mantisa);
                                     expFull = checkExpFull(Num128.Exponenta);
                                     if (Num128.NumberState != stateOfNumber.error)
-                                        Num128.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                }
+                                    //    Num128.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 128 Exponenta or Mantissa is empty.'");
                             }
                             break;
                         }
                     case 256:
                         {
-                            if ((NumberFormat != 0) && (Left_Right == PartOfNumber.Right))
+                            if ((NumberFormat > 0) && (Left_Right == PartOfNumber.Right))
                             {
                                 if ((Num256.ExponentaRight != "") && (Num256.MantisaRight != ""))
                                 {
@@ -1706,8 +1719,9 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num256.MantisaRight);
                                     expFull = checkExpFull(Num256.ExponentaRight);
                                     if (Num256.NumberStateRight != stateOfNumber.error)
-                                        Num256.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                }
+                                    //    Num256.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 256 ExponentaR or MantissaR is empty.'");
                             }
                             else
                             {
@@ -1717,18 +1731,21 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num256.Mantisa);
                                     expFull = checkExpFull(Num256.Exponenta);
                                     if (Num256.NumberState != stateOfNumber.error)
-                                        Num256.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                }
+                                    //    Num256.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                } throw new FCCoreArithmeticException("Func changeNumberState (int,PartofNumber)=['Format 256 Exponenta or Mantissa is empty.'");
                             }
                             break;
                         }
                     default:
+                        //return stateOfNumber.error;
+                        throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Such format doesn't exists.']");
                         break;
                 }
             }
             catch (Exception ex)
             {
-                throw new FCCoreGeneralException("Func 'changeNumberState(int inputNumCapacity,bool RightPart)' = [ " + ex.Message + " ]");
+                throw new FCCoreGeneralException("Func changeNumberState(int inputNumCapacity,PartOfNumber RightPart) = [ " + ex.Message + " ]");
             }
         }
         /// <summary>
@@ -2526,7 +2543,7 @@ namespace Flexible_computing
         public String selectExp(Number inNumber, PartOfNumber Left_Right)
         {
 
-            int i, z = 0;
+            int z = 0;
             int Offset = 0;
             String temp, result = "";
             String bynaryStringInt = "", bynaryStringFloat = "";
@@ -2558,14 +2575,27 @@ namespace Flexible_computing
                 else
                 {
                     inNumber.CalcStatus = Flexible_computing.CalculationStatus.Exception;
-                    inNumber.NumberState = stateOfNumber.error;
+                    if (NumberFormat == 0)
+                    { inNumber.NumberState = stateOfNumber.error; }
+                    else
+                        if (Left_Right == PartOfNumber.Left)
+                        { inNumber.NumberState = stateOfNumber.error; }
+                        else
+                        { inNumber.NumberStateRight = stateOfNumber.error; }
                     throw new FCCoreArithmeticException("Exception in Func ['selectExp'] Mess=[ Empty String - BynaryIntPart ] (" + inNumber.Name + ")");
                 }
             }
             else
             {
                 inNumber.CalcStatus = Flexible_computing.CalculationStatus.Exception;
-                inNumber.NumberState = stateOfNumber.error;
+
+                if (NumberFormat == 0)
+                { inNumber.NumberState = stateOfNumber.error; }
+                else
+                    if (Left_Right == PartOfNumber.Left)
+                    { inNumber.NumberState = stateOfNumber.error; }
+                    else
+                    { inNumber.NumberStateRight = stateOfNumber.error; }
                 throw new FCCoreArithmeticException("Exception in Func ['selectExp'] Mess=[ Null - BynaryIntPart ] (" + inNumber.Name + ")");
             }
             try
@@ -2895,7 +2925,12 @@ namespace Flexible_computing
                             if (NumberFormat==0)
                                 calcResForNorm(inNumber, M, E, Offset, precision, z);
                             else
-                                calcResForNorm(inNumber, Mr, Er, Offset, precision, z);
+                            {
+                                if (RightPart == PartOfNumber.Left)
+                                    calcResForNorm(inNumber, M, E, Offset, precision, z);
+                                else
+                                    calcResForNorm(inNumber, Mr, Er, Offset, precision, z);
+                            }
                           
                             break;
 
@@ -2903,7 +2938,12 @@ namespace Flexible_computing
                             if (NumberFormat == 0)
                                 calcResForDenorm(inNumber, M, E, Offset, precision, z);
                             else
-                                calcResForDenorm(inNumber, Mr, Er, Offset, precision, z);
+                            {
+                                if (RightPart == PartOfNumber.Left)
+                                    calcResForDenorm(inNumber, M, E, Offset, precision, z);
+                                else
+                                    calcResForDenorm(inNumber, Mr, Er, Offset, precision, z);
+                            }
 
                             break;
 

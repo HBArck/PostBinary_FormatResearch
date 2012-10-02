@@ -15,7 +15,6 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
 
-
 namespace Flexible_computing
 {
     public delegate void progIncCallback();
@@ -52,14 +51,14 @@ namespace Flexible_computing
         //StringMath stringMath = new StringMath();
         StringUtil stringUtil = new StringUtil();
         static ExceptionUtil exceptionUtil = new ExceptionUtil();
-        String tempInput, tempOutput;
+        //String tempInput, tempOutput;
 
         FCCore Core ;
         ImageList il = new ImageList();
         TreeNode mainNode;
         bool isFormatInfoFullView = false;       
 
-        String[] textRes; // tbRes
+        //String[] textRes; // tbRes
         String[] textCalcError;   // tbCalcError
         // Left & Right part of Float & Interval
         String LeftPart;
@@ -2393,7 +2392,7 @@ namespace Flexible_computing
                             }else return 1;
                         }else return 1;
                     }else return 1;
-                    break;
+                    //break;
                 case 0:
                     if (Core.thread32 == null)
                         return -1;
@@ -2403,7 +2402,7 @@ namespace Flexible_computing
                     }
                     else
                         return 1;
-                    break;
+                    //break;
                 case 1:
                     if (Core.thread64 == null)
                     {
@@ -2429,7 +2428,7 @@ namespace Flexible_computing
                             return 0;
                     }
                     else return 1;
-                    break;
+                   // break;
 
                 case 2:
                     if (Core.thread128 == null)
@@ -2457,7 +2456,7 @@ namespace Flexible_computing
                             return 0;
                     }
                     else return 1;
-                    break;
+                    //break;
 
                 case 3:
                     if (Core.thread256 == null)
@@ -2484,7 +2483,7 @@ namespace Flexible_computing
                             return 0;
                     }
                     else return 1;
-                    break;
+                    //break;
 
                 default:
                     return -1;
@@ -2943,7 +2942,7 @@ namespace Flexible_computing
                 // Man L 
                 dataGridView2.Rows[1].Cells[2].Value = Core.Num64.Mantisa;
                 // Exp R
-                dataGridView2.Rows[1].Cells[2].Value = Core.Num64.ExponentaRight;
+                dataGridView2.Rows[1].Cells[3].Value = Core.Num64.ExponentaRight;
                 // Man R
                 dataGridView2.Rows[1].Cells[4].Value = Core.Num64.MantisaRight;
 
@@ -2954,7 +2953,7 @@ namespace Flexible_computing
                 // Men L
                 dataGridView2.Rows[2].Cells[2].Value = Core.Num128.Mantisa;
                 // Exp R
-                dataGridView2.Rows[2].Cells[2].Value = Core.Num128.ExponentaRight;
+                dataGridView2.Rows[2].Cells[3].Value = Core.Num128.ExponentaRight;
                 // Man R
                 dataGridView2.Rows[2].Cells[4].Value = Core.Num128.MantisaRight;
 
@@ -2965,7 +2964,7 @@ namespace Flexible_computing
                 // Man L
                 dataGridView2.Rows[3].Cells[2].Value = Core.Num256.Mantisa;
                 // Exp R
-                dataGridView2.Rows[3].Cells[2].Value = Core.Num256.ExponentaRight;
+                dataGridView2.Rows[3].Cells[3].Value = Core.Num256.ExponentaRight;
                 // Man R
                 dataGridView2.Rows[3].Cells[4].Value = Core.Num256.MantisaRight;
 
