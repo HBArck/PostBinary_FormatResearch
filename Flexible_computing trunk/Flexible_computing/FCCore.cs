@@ -581,8 +581,10 @@ namespace Flexible_computing
         public String BinaryFloatPartFIRight;
 
         public String ExpSign;
-        private String Sign;
-        public String SignCharacter;
+        private String SignLeft;
+        public String SignCharacterLeft;
+        private String SignRight;
+        public String SignCharacterRight;
         public String E;
         public String iPart;  // Выходной перенос для сложения
         public int Accurancy; // This value should : 1) Readed from init.xml 2) Check correctness -> less then 4 billion (int)
@@ -699,7 +701,7 @@ namespace Flexible_computing
 
             if (NumberFormat == 0)
             {
-                NormalizedNumber = NormalizeNumber(inputString, 1000);
+                NormalizedNumber = NormalizeNumber(inputString, 1000, PartOfNumber.Left);
                 // Denormalize Number
                 Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                 // Convert from 10cc to 2cc
@@ -774,7 +776,7 @@ namespace Flexible_computing
                 // Normalize Number
                 if (NumberFormat == 0)
                 {
-                    NormalizedNumber = NormalizeNumber(inputString, 2000);
+                    NormalizedNumber = NormalizeNumber(inputString, 2000, PartOfNumber.Left);
                     // Denormalize Number
                     Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizedNumber = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
@@ -857,7 +859,7 @@ namespace Flexible_computing
                         inputString = inputString.Substring(0, inputString.IndexOf(";"));
                     }
 
-                    NormalizedNumber = NormalizeNumber(inputString, 2000);
+                    NormalizedNumber = NormalizeNumber(inputString, 2000, PartOfNumber.Left);
                     // Denormalize Number
                     Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizedNumberLeft = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
@@ -911,7 +913,7 @@ namespace Flexible_computing
                     /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART BEGIN <<<<<<<<<<<<<<<<<<<<<<<*/
                         
                     //RightPartCalculating = true;
-                    NormalizedNumberRight = NormalizeNumber(inputStringR, 2000);
+                    NormalizedNumberRight = NormalizeNumber(inputStringR, 2000, PartOfNumber.Right);
                     // Denormalize Number
                     Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizedNumberRight = DenormalizeNumber(NormalizedNumberRight, PartOfNumber.Right);
                     // Convert from 10cc to 2cc
@@ -996,7 +998,7 @@ namespace Flexible_computing
                 // Normalize Number
                 if (NumberFormat == 0)
                 {
-                    NormalizedNumber = NormalizeNumber(inputString, 2000);
+                    NormalizedNumber = NormalizeNumber(inputString, 2000, PartOfNumber.Left);
                     // Denormalize Number
                     Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
@@ -1049,7 +1051,7 @@ namespace Flexible_computing
                         inputString = inputString.Substring(0, inputString.IndexOf(";"));
                     }
 
-                    NormalizedNumber = NormalizeNumber(inputString, 2000);
+                    NormalizedNumber = NormalizeNumber(inputString, 2000, PartOfNumber.Left);
                     // Denormalize Number
                     Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
@@ -1088,7 +1090,7 @@ namespace Flexible_computing
 
                     /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART BEGIN <<<<<<<<<<<<<<<<<<<<<<<*/
                         RightPartCalculating = true;
-                    NormalizedNumber = NormalizeNumber(inputStringR, 2000);
+                    NormalizedNumber = NormalizeNumber(inputStringR, 2000, PartOfNumber.Right);
                     // Denormalize Number
                     Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizeNumber(NormalizedNumber, PartOfNumber.Right);
                     // Convert from 10cc to 2cc
@@ -1273,7 +1275,7 @@ namespace Flexible_computing
             return calcStatus;
         }
 
-        public String NormalizeNumber(String dataString, int inAccuracy)
+        public String NormalizeNumber(String dataString, int inAccuracy,PartOfNumber Left_Right)
         {
             try
             {
@@ -1296,10 +1298,26 @@ namespace Flexible_computing
                 if ((dataString[0] != '-') && (dataString[0] != '+'))
                 {
                     dataString = "+" + dataString;
-                    Sign = "+";
+                    if (NumberFormat == 0)
+                        SignLeft = "0";
+                    else
+                    {
+                        if (Left_Right == PartOfNumber.Left)
+                            SignLeft = "0";
+                        else
+                            SignRight = "0";
+                    }
                 }
                 else {
-                    Sign = "-";
+                    if (NumberFormat == 0)
+                        SignLeft = "1";
+                    else
+                    {
+                        if (Left_Right == PartOfNumber.Left)
+                            SignLeft = "1";
+                        else
+                            SignRight = "1";
+                    }
                 }
 
 
@@ -1323,6 +1341,15 @@ namespace Flexible_computing
             return dataString;
         }
 
+        /* 
+            * signExp       -> ExpSign
+            * sign          -> Sign
+            * signCharacter -> SignCharacter
+            * exp           -> E
+            * iPart         -> IntPartDenormalized
+            * fPart         -> FloatPartDenormalized
+            * inputString   -> Denormalized
+            */
         /// <summary>
         /// Denormolizes number
         /// </summary>
@@ -1331,14 +1358,6 @@ namespace Flexible_computing
         /// <returns>Denormolized number as String</returns>
         public String DenormalizeNumber(String dataString ,PartOfNumber Left_Right)
         {   
-            /*/ signExp       -> ExpSign
-            // sign          -> Sign
-            // signCharacter -> SignCharacter
-            // exp           -> E
-            // iPart         -> IntPartDenormalized
-            // fPart         -> FloatPartDenormalized
-            // inputString   -> Denormalized
-             */
             String denormNumber = "";
             String denormIntPart = "", denormFloatPart = "";
             String[] tempArray;
@@ -1347,19 +1366,67 @@ namespace Flexible_computing
                 ExpSign = dataString.Substring(dataString.IndexOf('e') + 1, 1);
                 if (dataString[0] == '+')
                 {
-                    Sign = "0";
-                    SignCharacter = "+";
+                    if (NumberFormat == 0)
+                    {
+                        SignLeft = "0";
+                        SignCharacterLeft = "+";
+                    }
+                    else
+                    {
+                        if (Left_Right == PartOfNumber.Left)
+                        {
+                            SignLeft = "0";
+                            SignCharacterLeft = "+";
+                        }
+                        else
+                        {
+                            SignRight = "0";
+                            SignCharacterRight = "+";
+                        }
+                    }
                 }
                 else
                     if (dataString[0] == '-')
                     {
-                        Sign = "1";
-                        SignCharacter = "-";
+                        if (NumberFormat == 0)
+                        {
+                            SignLeft = "1";
+                            SignCharacterLeft = "-";
+                        }
+                        else
+                        {
+                            if (Left_Right == PartOfNumber.Left)
+                            {
+                                SignLeft = "1";
+                                SignCharacterLeft = "-";
+                            }
+                            else
+                            {
+                                SignRight = "1";
+                                SignCharacterRight = "-";
+                            }
+                        }
                     }
                     else
                     {
-                        Sign = "0";
-                        SignCharacter = "+";
+                        if (NumberFormat == 0)
+                        {
+                            SignLeft = "0";
+                            SignCharacterLeft = "+";
+                        }
+                        else
+                        {
+                            if (Left_Right == PartOfNumber.Left)
+                            {
+                                SignLeft = "0";
+                                SignCharacterLeft = "+";
+                            }
+                            else
+                            {
+                                SignRight = "0";
+                                SignCharacterRight = "+";
+                            }
+                        }
                     }
                         //throw new Exception("Func [selectSEM]:= NoSignException.");
 
@@ -1421,9 +1488,10 @@ namespace Flexible_computing
                     denormIntPart = denormIntPart.Substring(1);
                 }
                 // Compact to one statement num32 = num64 = num128 = num256 = denorm
-
-                denormNumber = SignCharacter + denormIntPart + "," + denormFloatPart;
-                
+                if (Left_Right == PartOfNumber.Left)
+                    denormNumber = SignCharacterLeft + denormIntPart + "," + denormFloatPart;
+                else
+                    denormNumber = SignCharacterRight + denormIntPart + "," + denormFloatPart;
                 //Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = 
                 if (NumberFormat == 0)
                 {
@@ -2657,8 +2725,15 @@ namespace Flexible_computing
             String M = "";
             String[] tempArray;
             int offsetDot = 1;
-
+            String Sign;
             String bynaryStringInt = "", bynaryStringFloat = "";
+
+            /* Sign */
+            if ((NumberFormat == 0) || (Left_Right == PartOfNumber.Left))
+                Sign = SignCharacterLeft;
+            else
+                Sign = SignCharacterRight;
+
             if (this.NumberFormat == 0)
             {
                 bynaryStringInt = inNumber.BinaryIntPart;
@@ -2758,7 +2833,7 @@ namespace Flexible_computing
                         }
                         else
                             M = result.Substring(0, currMBits + 0);
-                        if ((result[currMBits] == '1') && (this.SignCharacter[0] == '+'))
+                        if ((result[currMBits] == '1') && (Sign[0] == '+'))
                         {
                             if (!checkStringFull(M))
                             {
@@ -2801,7 +2876,7 @@ namespace Flexible_computing
 
                     case 2:// +Inf 
                         M = result.Substring(1, currMBits);
-                            if (this.SignCharacter[0] == '+')
+                            if (Sign[0] == '+')
                             {
                                 if (!checkStringFull(M))
                                 {
@@ -2831,7 +2906,7 @@ namespace Flexible_computing
                     case 3:
                         // -Inf
                         M = result.Substring(1, currMBits);
-                        if (this.SignCharacter[0] == '-')
+                        if (Sign[0] == '-')
                         {
                             if (!checkStringFull(M))
                             {
@@ -2881,6 +2956,7 @@ namespace Flexible_computing
                 int z,cycle;
                 int Offset = 0;
                 int precision = 1900;
+                String Sign = "";
                 // temp Vars
                 stateOfNumber currentState;
                 String[] tempArray;
@@ -2959,6 +3035,13 @@ namespace Flexible_computing
 
                     }//switch
                     stateOfNumber tempState = RightPart == PartOfNumber.Right ? inNumber.NumberStateRight : inNumber.NumberState;
+
+                    /* Sign */
+                    if (RightPart == PartOfNumber.Left)
+                        Sign = SignCharacterLeft;
+                    else
+                        Sign = SignCharacterRight;
+
                     if ((tempState == stateOfNumber.normalized) || (tempState == stateOfNumber.denormalized))
                     {
                         switch(NumberFormat)
@@ -3003,7 +3086,7 @@ namespace Flexible_computing
         }
         public void calcResForNorm(Number inNumber, String M, String E, int Offset, int precision, int z)
         {
-            String binIPartOut, binFPartOut;
+            String binIPartOut, binFPartOut, Sign;
             String[] tempArray;
             try
             {
@@ -3052,34 +3135,40 @@ namespace Flexible_computing
                     binFPartOut = M;
                 }
 
+                /* Sign */
+                if ((z == 0)||(NumberFormat == 0))
+                    Sign = SignCharacterLeft;
+                else
+                    Sign = SignCharacterRight;
+
                 switch (NumberFormat)
                 {
                     case 0:
-                        inNumber.CorrectResult = inNumber.SignCharacter + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
-                        inNumber.CorrectResult2cc = inNumber.SignCharacter + binIPartOut + "," + binFPartOut;
+                        inNumber.CorrectResult = Sign + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
+                        inNumber.CorrectResult2cc = Sign + binIPartOut + "," + binFPartOut;
                         break;
                     case 1:
                         if (z == 0)
                         {
-                            inNumber.CorrectResultFractionL = inNumber.SignCharacter + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
-                            inNumber.CorrectResultFraction2ccL = inNumber.SignCharacter + binIPartOut + "," + binFPartOut;
+                            inNumber.CorrectResultFractionL = Sign + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
+                            inNumber.CorrectResultFraction2ccL = Sign + binIPartOut + "," + binFPartOut;
                         }
                         else
                         {
-                            inNumber.CorrectResultFractionR = inNumber.SignCharacter + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
-                            inNumber.CorrectResultFraction2ccR = inNumber.SignCharacter + binIPartOut + "," + binFPartOut;
+                            inNumber.CorrectResultFractionR = Sign + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
+                            inNumber.CorrectResultFraction2ccR = Sign + binIPartOut + "," + binFPartOut;
                         }
                         break;
                     case 2:
                         if (z == 0)
                         {
-                            inNumber.CorrectResultIntervalL = inNumber.SignCharacter + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
-                            inNumber.CorrectResultInterval2ccL = inNumber.SignCharacter + binIPartOut + "," + binFPartOut;
+                            inNumber.CorrectResultIntervalL = Sign + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
+                            inNumber.CorrectResultInterval2ccL = Sign + binIPartOut + "," + binFPartOut;
                         }
                         else
                         {
-                            inNumber.CorrectResultIntervalR = inNumber.SignCharacter + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
-                            inNumber.CorrectResultInterval2ccR = inNumber.SignCharacter + binIPartOut + "," + binFPartOut;
+                            inNumber.CorrectResultIntervalR = Sign + convert2to10IPart(binIPartOut) + "," + convert2to10FPart(binFPartOut, precision);
+                            inNumber.CorrectResultInterval2ccR = Sign + binIPartOut + "," + binFPartOut;
                         }
                         break;
                 }
@@ -3093,6 +3182,7 @@ namespace Flexible_computing
         public void calcResForDenorm(Number inNumber, String M, String E, int Offset, int precision, int z)
         {
             String[] tempArray;
+            String Sign;
             try
             {
                 tempArray = new String[Math.Abs(Offset) + 1];
@@ -3100,34 +3190,40 @@ namespace Flexible_computing
                     tempArray[i] = "0";
                 M = String.Join("", tempArray) + M;
 
+                /* Sign */
+                if ((z == 0) || (NumberFormat == 0))
+                    Sign = SignCharacterLeft;
+                else
+                    Sign = SignCharacterRight;
+
                 switch (NumberFormat)
                 {
                     case 0:
-                        inNumber.CorrectResult = inNumber.SignCharacter + "0," + convert2to10FPart(M, precision);
-                        inNumber.CorrectResult2cc = inNumber.SignCharacter + "0," + M;
+                        inNumber.CorrectResult = Sign + "0," + convert2to10FPart(M, precision);
+                        inNumber.CorrectResult2cc = Sign + "0," + M;
                         break;
                     case 1:
                         if (z == 0)
                         {
-                            inNumber.CorrectResultFractionL = inNumber.SignCharacter + "0," + convert2to10FPart(M, precision);
-                            inNumber.CorrectResultFraction2ccL = inNumber.SignCharacter + "0," + M;
+                            inNumber.CorrectResultFractionL = Sign + "0," + convert2to10FPart(M, precision);
+                            inNumber.CorrectResultFraction2ccL = Sign + "0," + M;
                         }
                         else
                         {
-                            inNumber.CorrectResultFractionR = inNumber.SignCharacter + "0," + convert2to10FPart(M, precision);
-                            inNumber.CorrectResultFraction2ccR = inNumber.SignCharacter + "0," + M;
+                            inNumber.CorrectResultFractionR = Sign + "0," + convert2to10FPart(M, precision);
+                            inNumber.CorrectResultFraction2ccR = Sign + "0," + M;
                         }
                         break;
                     case 2:
                         if (z == 0)
                         {
-                            inNumber.CorrectResultIntervalL = inNumber.SignCharacter + "0," + convert2to10FPart(M, precision);
-                            inNumber.CorrectResultInterval2ccL = inNumber.SignCharacter + "0," + M;
+                            inNumber.CorrectResultIntervalL = Sign + "0," + convert2to10FPart(M, precision);
+                            inNumber.CorrectResultInterval2ccL = Sign + "0," + M;
                         }
                         else
                         {
-                            inNumber.CorrectResultIntervalR = inNumber.SignCharacter + "0," + convert2to10FPart(M, precision);
-                            inNumber.CorrectResultInterval2ccR = inNumber.SignCharacter + "0," + M;
+                            inNumber.CorrectResultIntervalR = Sign + "0," + convert2to10FPart(M, precision);
+                            inNumber.CorrectResultInterval2ccR = Sign + "0," + M;
                         }
                         break;
                 }
@@ -3141,6 +3237,7 @@ namespace Flexible_computing
         {
             try
             {
+                String Sign;
                 switch (inNumber.Name)
                 {
                     case "Num32":
@@ -3185,32 +3282,38 @@ namespace Flexible_computing
                         break;
                 }
 
+                /* Sign */
+                if ((z == 0) || (NumberFormat == 0))
+                    Sign = SignCharacterLeft;
+                else
+                    Sign = SignCharacterRight;
+
                 if (NumberFormat == 0)
                 {
-                    inNumber.CorrectResult = "0,0";
-                    inNumber.CorrectResultExp = "0,0";
-                    inNumber.CorrectResult2cc = "0,0";
-                    inNumber.CorrectResult2ccExp = "0,0";
-                    inNumber.Error = "0,0";
+                    inNumber.CorrectResult = Sign + "0,0";
+                    inNumber.CorrectResultExp = Sign + "0,0";
+                    inNumber.CorrectResult2cc = Sign + "0,0";
+                    inNumber.CorrectResult2ccExp = Sign + "0,0";
+                    inNumber.Error = Sign + "0,0";
                 }
 
                 if (cycle == 2 && NumberFormat == 1)
                 {
                     if (z == 0)
                     {
-                        inNumber.CorrectResultFractionL = "0,0";
-                        inNumber.CorrectResultFractionExpL = "0,0";
-                        inNumber.CorrectResultFraction2ccL = "0,0";
-                        inNumber.CorrectResultFraction2ccExpL = "0,0";
-                        inNumber.ErrorFractionLeft = "0,0";
+                        inNumber.CorrectResultFractionL = Sign + "0,0";
+                        inNumber.CorrectResultFractionExpL = Sign + "0,0";
+                        inNumber.CorrectResultFraction2ccL = Sign + "0,0";
+                        inNumber.CorrectResultFraction2ccExpL = Sign + "0,0";
+                        inNumber.ErrorFractionLeft = Sign + "0,0";
                     }
                     if (z == 1)
                     {
-                        inNumber.CorrectResultFractionR = "0,0";
-                        inNumber.CorrectResultFractionExpR = "0,0";
-                        inNumber.CorrectResultFraction2ccR = "0,0";
-                        inNumber.CorrectResultFraction2ccExpR = "0,0";
-                        inNumber.ErrorIntervalRight = "0,0";
+                        inNumber.CorrectResultFractionR = Sign + "0,0";
+                        inNumber.CorrectResultFractionExpR = Sign + "0,0";
+                        inNumber.CorrectResultFraction2ccR = Sign + "0,0";
+                        inNumber.CorrectResultFraction2ccExpR = Sign + "0,0";
+                        inNumber.ErrorIntervalRight = Sign + "0,0";
                     }
                 }
 
@@ -3218,19 +3321,19 @@ namespace Flexible_computing
                 {
                     if (z == 0)
                     {
-                        inNumber.CorrectResultIntervalL = "0,0";
-                        inNumber.CorrectResultIntervalExpL = "0,0";
-                        inNumber.CorrectResultInterval2ccL = "0,0";
-                        inNumber.CorrectResultInterval2ccExpL = "0,0";
-                        inNumber.ErrorIntervalLeft = "0,0";
+                        inNumber.CorrectResultIntervalL = Sign + "0,0";
+                        inNumber.CorrectResultIntervalExpL = Sign + "0,0";
+                        inNumber.CorrectResultInterval2ccL = Sign + "0,0";
+                        inNumber.CorrectResultInterval2ccExpL = Sign + "0,0";
+                        inNumber.ErrorIntervalLeft = Sign + "0,0";
                     }
                     if (z == 1)
                     {
-                        inNumber.CorrectResultIntervalR = "0,0";
-                        inNumber.CorrectResultIntervalExpR = "0,0";
-                        inNumber.CorrectResultInterval2ccR = "0,0";
-                        inNumber.CorrectResultInterval2ccExpR = "0,0";
-                        inNumber.ErrorIntervalRight = "0,0";
+                        inNumber.CorrectResultIntervalR = Sign + "0,0";
+                        inNumber.CorrectResultIntervalExpR = Sign + "0,0";
+                        inNumber.CorrectResultInterval2ccR = Sign + "0,0";
+                        inNumber.CorrectResultInterval2ccExpR = Sign + "0,0";
+                        inNumber.ErrorIntervalRight = Sign + "0,0";
                     }
                 }
             }
@@ -3241,15 +3344,21 @@ namespace Flexible_computing
         }
         public void calcResForInf(Number inNumber, String M, String E, int Offset, int precision, int z)
         {
+            String Sign;
             try
             {
+                /* Sign */
+                if ((z == 0) || (NumberFormat == 0))
+                    Sign = SignCharacterLeft;
+                else
+                    Sign = SignCharacterRight;
                 inNumber.CorrectResult = DenormalizedNumber;
                 inNumber.CorrectResultExp = NormalizedNumber;
 
-                inNumber.CorrectResult2cc = inNumber.SignCharacter + convert10to2IPart(DenormIntPart) + "," + convert10to2FPart(DenormFloatPart);
-                inNumber.CorrectResult2ccExp = inNumber.SignCharacter + convertToExp(convert10to2IPart(DenormIntPart) + "," + convert10to2FPart(DenormFloatPart));
+                inNumber.CorrectResult2cc = Sign + convert10to2IPart(DenormIntPart) + "," + convert10to2FPart(DenormFloatPart);
+                inNumber.CorrectResult2ccExp = Sign + convertToExp(convert10to2IPart(DenormIntPart) + "," + convert10to2FPart(DenormFloatPart));
 
-                inNumber.Error = "0,0";
+                inNumber.Error = Sign + "0,0";
             }
             catch (Exception ex)
             {

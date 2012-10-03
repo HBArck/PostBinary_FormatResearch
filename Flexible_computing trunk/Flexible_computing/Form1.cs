@@ -17,8 +17,11 @@ using System.IO;
 
 namespace Flexible_computing
 {
+    
     public delegate void progIncCallback();
     public delegate void progIncThreadHeandler();
+    
+    
     public partial class Form1 : Form
     {
         bool TetraCheck = false;
@@ -56,9 +59,11 @@ namespace Flexible_computing
         FCCore Core ;
         ImageList il = new ImageList();
         TreeNode mainNode;
-        bool isFormatInfoFullView = false;       
+        bool isFormatInfoFullView = false;
 
-        //String[] textRes; // tbRes
+        public TextBox[] textBoxes;/*= { tbExp32, tbExp64, tbExp64_2, tbExp128, tbExp128_2, tbExp256, tbExp256_2, 
+                            tbMantisa32, tbMantisa64, tbMantisa64_2, tbMantisa128, tbMantisa128_2, tbMantisa256, tbMantisa256_2,
+                            tbCF32, tbCF64, tbCF128, tbCF256, tbMF32, tbMF64, tbMF128, tbMF256}; // This Array stores all tbExponents & tbMantissas from Form*/
         String[] textCalcError;   // tbCalcError
         // Left & Right part of Float & Interval
         String LeftPart;
@@ -106,7 +111,7 @@ namespace Flexible_computing
         public enum LockCommands { Start = 1, Recalc = 2 };
         public enum excps  
         {
-            FCCoreGeneralException, FCCoreFunctionException, Exception, FCCoreArithmeticException
+            FCCoreGeneralException, FCCoreFunctionException, Exception, FCCoreArithmeticException, FCFormGeneralException, FCFormArithmeticException
         };
 
         public Form1()
@@ -361,7 +366,13 @@ namespace Flexible_computing
             }
         }
 
-      
+        public void Load_Form_Components()
+        {
+            // [4 tabs * 4 textBoxes(exp, man , mc , mf)] + [2 (exp2 , man2) * 3 tabs]
+            //textBoxes = { tbExp32, tbExp64, tbExp64_2, tbExp128, tbExp128_2, tbExp256, tbExp256_2, 
+            //                tbMantisa32, tbMantisa64, tbMantisa64_2, tbMantisa128, tbMantisa128_2, tbMantisa256, tbMantisa256_2,
+            //                tbCF32, tbCF64, tbCF128, tbCF256, tbMF32, tbMF64, tbMF128, tbMF256};
+        }
         public bool checkKnownProblems()
         {
             int i,j,r,exFound;
@@ -933,19 +944,21 @@ namespace Flexible_computing
         /// </summary>
         public void FillForm(Object threadContext)
         {
-            Thread.CurrentThread.IsBackground = true;
-            while (isThreadsRunning(3, inputStringFormat == 0 ? false : true) != 0)
+            try
             {
-                if (isFormClosing)
+                Thread.CurrentThread.IsBackground = true;
+                while (isThreadsRunning(3, inputStringFormat == 0 ? false : true) != 0)
                 {
-                    try
-                    { Thread.CurrentThread.Abort(); }
-                    catch (Exception ex)
-                    { return; }
+                    if (isFormClosing)
+                    {
+                        try
+                        { Thread.CurrentThread.Abort(); }
+                        catch (Exception ex)
+                        { return; }
+                    }
+                    Thread.Sleep(1000);
                 }
-                Thread.Sleep(1000);
-            }
-          
+
                 settbS32Text(Core.Num32.Sign == "-" ? "1" : "0");
                 settbS64Text(Core.Num64.Sign == "-" ? "1" : "0");
                 settbS128Text(Core.Num128.Sign == "-" ? "1" : "0");
@@ -979,6 +992,16 @@ namespace Flexible_computing
                 {
                     convert2to16(null);
                 }
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == excps.FCFormArithmeticException.GetType())
+                    catchException(excps.FCCoreArithmeticException, ex.Message);
+                if (ex.GetType() == excps.FCFormGeneralException.GetType())
+                    catchException(excps.FCCoreGeneralException, ex.Message);
+                else
+                    catchException(excps.Exception, ex.Message);
+            }
         }
 
         public delegate void calcResultsAndErrorsDel(Object threadContext);
@@ -1421,9 +1444,21 @@ namespace Flexible_computing
             {
                 catchException(excps.FCCoreGeneralException, ex.Message);
             }
+            catch (FCCoreArithmeticException ex)
+            {
+                catchException(excps.FCCoreArithmeticException, ex.Message);
+            }
             catch (FCCoreFunctionException ex)
             {
                 catchException(excps.FCCoreFunctionException, ex.Message);
+            }
+            catch (FCFormGeneralException ex)
+            {
+                catchException(excps.FCCoreGeneralException, ex.Message);
+            }
+            catch (FCFormArithmeticException ex)
+            {
+                catchException(excps.FCCoreArithmeticException, ex.Message);
             }
             catch (Exception ex)
             {
@@ -1628,11 +1663,19 @@ namespace Flexible_computing
             {
                 catchException(excps.FCCoreFunctionException, ex.Message);
             }
+            catch (FCFormArithmeticException ex)
+            {
+                catchException(excps.FCCoreArithmeticException, ex.Message);
+            }
+            catch (FCFormGeneralException ex)
+            {
+                catchException(excps.FCCoreGeneralException, ex.Message);
+            }
             catch (Exception ex)
             {
                 catchException(excps.Exception, ex.Message);
             }
-
+            
             statusStrip.Refresh();
         }
      
@@ -1643,13 +1686,13 @@ namespace Flexible_computing
             Stream str;
             TreeNode tempNode;
             int i,selInd;
-            selInd = tabControl_Format.SelectedIndex;
-            String currSelectedTab = selInd == 0 ? " 32p " : selInd==1 ? " 64p " :selInd == 2? " 128p ": " 256p ";
+            //selInd = tabControl_Format.SelectedIndex;
+            //String currSelectedTab = selInd == 0 ? " 32p " : selInd==1 ? " 64p " :selInd == 2? " 128p ": " 256p ";
             String currSN = currentCCOnTabs == false ? " 2cc " : " 16cc ";
             String currNF = inputStringFormat == 0 ? " Integer " : inputStringFormat == 1 ? " Fratcion " : " Interval ";
             richTextBox1.Text += "\r\nException Handler: Number=" + tbInput.Text;
 
-            outputLog = tbInput.Text + currSN + currNF + currSelectedTab + " \r\n";
+            outputLog = tbInput.Text + currSN + currNF +  " \r\n";//currSelectedTab +
             switch (ex)
             {
                 case excps.FCCoreArithmeticException:
@@ -1731,66 +1774,62 @@ namespace Flexible_computing
                 int currMBits = 0;
                 //int inputStrForm = inputStringFormat == 0 ? 0 : 1;]
 
-                if (tabControl_Format.InvokeRequired)
+                if (tbExp32.InvokeRequired)
                 {
                     convert2to16Del d = new convert2to16Del(convert2to16);
                     this.Invoke(d, new object[] { threadContext });
                 }
                 else
                 {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        size = 32 << j;
-                        for (i = 0; i < 4; i++)
-                        {
-                            if ((tabControl_Format.SelectedIndex == 0) && (i > 1))
-                                continue;
-                            temp_str = FormatFileds[i] + size.ToString();
 
-                            temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
+                 TextBox[] textBoxes = { tbExp32, tbExp64, tbExp64_2, tbExp128, tbExp128_2, tbExp256, tbExp256_2, 
+                            tbMantisa32, tbMantisa64, tbMantisa64_2, tbMantisa128, tbMantisa128_2, tbMantisa256, tbMantisa256_2,
+                            tbCF32, tbCF64, tbCF128, tbCF256, tbMF32, tbMF64, tbMF128, tbMF256};
+                    
+                 foreach (TextBox currTextBox in textBoxes)
+                 {
+                     currTextBox.Text = Core.convert2to16(currTextBox.Text);
+                 }
+                 //for (int j = 0; j < 4; j++)
+                 //{
+                 //    size = 32 << j;
+                 //    for (i = 0; i < 4; i++)
+                 //    {
+                 //        if ((tabControl_Format.SelectedIndex == 0) && (i > 1))
+                 //            continue;
+                 //        temp_str = FormatFileds[i] + size.ToString();
 
-                            result = Core.convert2to16(((TextBox)temp_tb).Text);
-                            switch (inputStringFormat)
-                            {
-                                case 0:
-                                    currMBits = Core.Numbers[j].MBits;
-                                    break;
-                                case 1:
-                                case 2:
-                                    currMBits = Core.Numbers[j].MBitsFI;
-                                    break;
-                            }
-                            if (i > 1)
-                                ((TextBox)temp_tb).Text = result;//.Substring(0, currMBits);
-                            else
-                                ((TextBox)temp_tb).Text = result;//.Substring(0, currMBits);
+                 //        temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
 
-                        }
-                        if ((tabControl_Format.SelectedIndex > 0) && (size > 32))
-                        {
-                            if (getIndexType() != 0)
-                            {
-                                for (i = 0; i < 2; i++)
-                                {
-                                    temp_str = FormatFileds[i] + size.ToString() + "_2";
+                 //        result = Core.convert2to16(((TextBox)temp_tb).Text);
+                 //        ((TextBox)temp_tb).Text = result;
+                 //    }
+                 //    if ((tabControl_Format.SelectedIndex > 0) && (size > 32))
+                 //    {
+                 //        if (getIndexType() != 0)
+                 //        {
+                 //            for (i = 0; i < 2; i++)
+                 //            {
+                 //                temp_str = FormatFileds[i] + size.ToString() + "_2";
 
-                                    temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
+                 //                temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
 
-                                    result = Core.convert2to16(((TextBox)temp_tb).Text);
+                 //                result = Core.convert2to16(((TextBox)temp_tb).Text);
 
-                                    if (i > 1)
-                                        ((TextBox)temp_tb).Text = result;
-                                    else
-                                        ((TextBox)temp_tb).Text = result;
-                                }
-                            }
-                        }
-                    }
+                 //                if (i > 1)
+                 //                    ((TextBox)temp_tb).Text = result;
+                 //                else
+                 //                    ((TextBox)temp_tb).Text = result;
+                 //            }
+                 //        }
+                 //    }
+                 //}
+               
                 }
             }
             catch (Exception ex)
             {
-                throw new FCCoreGeneralException("Func 'convert2to16'=["+ex.Message+"]");
+                //throw new FCFormGeneralException("Func 'convert2to16'=["+ex.Message+"]");
             }
         }
         /// <summary>
@@ -2016,7 +2055,7 @@ namespace Flexible_computing
             }
             catch(Exception ex)
             {
-                throw new FCCoreArithmeticException("Func 'l2ccTo16cc_Click'=["+ex.Message+"]");
+                throw new FCFormArithmeticException("Func 'l2ccTo16cc_Click'=["+ex.Message+"]");
             }
         }
         /// <summary>
@@ -3000,6 +3039,34 @@ namespace Flexible_computing
         }
     
     }//class Form1
+    public class FCFormGeneralException : System.Exception
+    {
+        public FCFormGeneralException()
+        {
+        }
+        public FCFormGeneralException(string message)
+            : base(message)
+        {
+        }
+        public FCFormGeneralException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
+    public class FCFormArithmeticException : System.Exception
+    {
+        public FCFormArithmeticException()
+        {
+        }
+        public FCFormArithmeticException(string message)
+            : base(message)
+        {
+        }
+        public FCFormArithmeticException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }// namespace
 
 //  число не число над мантисой BEGIN
