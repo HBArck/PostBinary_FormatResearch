@@ -275,6 +275,11 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cExp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cExpR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bCopy = new System.Windows.Forms.Button();
             this.l2ccTo16cc = new System.Windows.Forms.Label();
             this.recalculate = new System.Windows.Forms.Button();
@@ -292,20 +297,15 @@
             this.lTh2R = new System.Windows.Forms.Label();
             this.lbEvent = new System.Windows.Forms.ListBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.lTime = new System.Windows.Forms.Label();
-            this.tTime = new System.Windows.Forms.Timer(this.components);
-            this.lbTime = new System.Windows.Forms.ListBox();
-            this.tStatus = new System.Windows.Forms.Timer(this.components);
             this.ThreadN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StateLeft = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StateR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cExp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cExpR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lTime = new System.Windows.Forms.Label();
+            this.tTime = new System.Windows.Forms.Timer(this.components);
+            this.lbTime = new System.Windows.Forms.ListBox();
+            this.tStatus = new System.Windows.Forms.Timer(this.components);
             this.menuStrip_Global.SuspendLayout();
             this.tabControl_Format.SuspendLayout();
             this.tabPB32.SuspendLayout();
@@ -2803,6 +2803,7 @@
             this.cbDebug.TabIndex = 15;
             this.toolTip1.SetToolTip(this.cbDebug, "Debug CB");
             this.cbDebug.UseVisualStyleBackColor = true;
+            this.cbDebug.Visible = false;
             this.cbDebug.CheckedChanged += new System.EventHandler(this.cbDebug_CheckedChanged);
             // 
             // tabPage1
@@ -2944,6 +2945,34 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(500, 216);
             this.dataGridView2.TabIndex = 24;
+            // 
+            // cName
+            // 
+            this.cName.HeaderText = "Name";
+            this.cName.Name = "cName";
+            // 
+            // cExp
+            // 
+            this.cExp.HeaderText = "Exp";
+            this.cExp.Name = "cExp";
+            this.cExp.Width = 130;
+            // 
+            // cMan
+            // 
+            this.cMan.HeaderText = "Man";
+            this.cMan.Name = "cMan";
+            this.cMan.Width = 200;
+            // 
+            // cExpR
+            // 
+            this.cExpR.HeaderText = "Exp R";
+            this.cExpR.Name = "cExpR";
+            // 
+            // cManRight
+            // 
+            this.cManRight.HeaderText = "Man R";
+            this.cManRight.Name = "cManRight";
+            this.cManRight.Width = 200;
             // 
             // bCopy
             // 
@@ -3109,33 +3138,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(500, 151);
             this.dataGridView1.TabIndex = 21;
             // 
-            // lTime
-            // 
-            this.lTime.AutoSize = true;
-            this.lTime.Location = new System.Drawing.Point(802, 185);
-            this.lTime.Name = "lTime";
-            this.lTime.Size = new System.Drawing.Size(41, 13);
-            this.lTime.TabIndex = 22;
-            this.lTime.Text = "label38";
-            // 
-            // tTime
-            // 
-            this.tTime.Interval = 3000;
-            this.tTime.Tick += new System.EventHandler(this.tTime_Tick);
-            // 
-            // lbTime
-            // 
-            this.lbTime.FormattingEnabled = true;
-            this.lbTime.Location = new System.Drawing.Point(781, 201);
-            this.lbTime.Name = "lbTime";
-            this.lbTime.Size = new System.Drawing.Size(102, 95);
-            this.lbTime.TabIndex = 23;
-            // 
-            // tStatus
-            // 
-            this.tStatus.Interval = 1000;
-            this.tStatus.Tick += new System.EventHandler(this.TimerCount);
-            // 
             // ThreadN
             // 
             this.ThreadN.FillWeight = 80F;
@@ -3164,33 +3166,32 @@
             this.ResultR.HeaderText = "ResultR";
             this.ResultR.Name = "ResultR";
             // 
-            // cName
+            // lTime
             // 
-            this.cName.HeaderText = "Name";
-            this.cName.Name = "cName";
+            this.lTime.AutoSize = true;
+            this.lTime.Location = new System.Drawing.Point(802, 185);
+            this.lTime.Name = "lTime";
+            this.lTime.Size = new System.Drawing.Size(41, 13);
+            this.lTime.TabIndex = 22;
+            this.lTime.Text = "label38";
             // 
-            // cExp
+            // tTime
             // 
-            this.cExp.HeaderText = "Exp";
-            this.cExp.Name = "cExp";
-            this.cExp.Width = 130;
+            this.tTime.Interval = 3000;
+            this.tTime.Tick += new System.EventHandler(this.tTime_Tick);
             // 
-            // cMan
+            // lbTime
             // 
-            this.cMan.HeaderText = "Man";
-            this.cMan.Name = "cMan";
-            this.cMan.Width = 200;
+            this.lbTime.FormattingEnabled = true;
+            this.lbTime.Location = new System.Drawing.Point(781, 201);
+            this.lbTime.Name = "lbTime";
+            this.lbTime.Size = new System.Drawing.Size(102, 95);
+            this.lbTime.TabIndex = 23;
             // 
-            // cExpR
+            // tStatus
             // 
-            this.cExpR.HeaderText = "Exp R";
-            this.cExpR.Name = "cExpR";
-            // 
-            // cManRight
-            // 
-            this.cManRight.HeaderText = "Man R";
-            this.cManRight.Name = "cManRight";
-            this.cManRight.Width = 200;
+            this.tStatus.Interval = 1000;
+            this.tStatus.Tick += new System.EventHandler(this.TimerCount);
             // 
             // Form1
             // 
