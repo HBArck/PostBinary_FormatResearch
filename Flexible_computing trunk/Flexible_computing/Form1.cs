@@ -1751,7 +1751,6 @@ namespace Flexible_computing
             }
         }
 
-
         public delegate void convert2to16Del(Object threadContext);
         /// <summary>
         /// Function depending on tabControl converts all Format Fields (exp,mantisa, if necesery MF & CF)
@@ -2117,7 +2116,6 @@ namespace Flexible_computing
             }
         }
        
-        
         /// <summary>
         /// Locking all  components when calculations
         /// </summary>
@@ -2317,7 +2315,6 @@ namespace Flexible_computing
             }
         }
 
-      
         private void bCancelStart_Click(object sender, EventArgs e)
         {
             if ((Core.thread32.ThreadState & (System.Threading.ThreadState.Stopped | System.Threading.ThreadState.Unstarted)) == 0)
