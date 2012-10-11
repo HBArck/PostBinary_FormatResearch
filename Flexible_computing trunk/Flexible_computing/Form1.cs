@@ -149,9 +149,10 @@ namespace Flexible_computing
             version = new int[] {v.Major, v.Minor, v.Build };
             tbMenuVer.Text = "Версия [" + v.Major + "." + v.Minor + "." + v.Build + "]";
             // clearVars();
-            bClear_Click(sender, e);
+            
             stlStatus.Text = "";
             Core = new FCCore(1, exceptionUtil, this.progressBar1, progInc);
+            bClear_Click(sender, e);
             // -0,3e-1 - Exception
             // Load XML INIT PARAMS HERE
             //
@@ -1056,7 +1057,7 @@ namespace Flexible_computing
                             //case 0: tbCalcError.Text = Errors[1]; break; 
                             case 0: tbCalcError.Text = Core.Num64.Error; break;
                             case 1: tbCalcError.Text = Core.Num64.ErrorFractionLeft + " / " + Core.Num64.ErrorFractionRight; break;
-                            case 2: tbCalcError.Text = Core.Num64.ErrorIntervalLeft + " ; " + Core.Num64.ErrorFractionRight; break;
+                            case 2: tbCalcError.Text = Core.Num64.ErrorIntervalLeft + " ; " + Core.Num64.ErrorIntervalRight; break;
                         }
                         if (rB10cc32.Checked)
                             if (!cBExp32.Checked)
@@ -1101,7 +1102,7 @@ namespace Flexible_computing
                             //case 0: tbCalcError.Text = Errors[2]; break;
                             case 0: tbCalcError.Text = Core.Num128.Error; break;
                             case 1: tbCalcError.Text = Core.Num128.ErrorFractionLeft + " / " + Core.Num128.ErrorFractionRight; break;
-                            case 2: tbCalcError.Text = Core.Num128.ErrorIntervalLeft + " ; " + Core.Num128.ErrorFractionRight; break;
+                            case 2: tbCalcError.Text = Core.Num128.ErrorIntervalLeft + " ; " + Core.Num128.ErrorIntervalRight; break;
                         }
                         if (rB10cc32.Checked)
                             if (!cBExp32.Checked)
@@ -1142,7 +1143,7 @@ namespace Flexible_computing
                             //case 0: tbCalcError.Text = Errors[3]; break;
                             case 0: tbCalcError.Text = Core.Num256.Error; break;
                             case 1: tbCalcError.Text = Core.Num256.ErrorFractionLeft + " / " + Core.Num256.ErrorFractionRight; break;
-                            case 2: tbCalcError.Text = Core.Num256.ErrorIntervalLeft + " ; " + Core.Num256.ErrorFractionRight; break;
+                            case 2: tbCalcError.Text = Core.Num256.ErrorIntervalLeft + " ; " + Core.Num256.ErrorIntervalRight; break;
                         }
                         if (rB10cc32.Checked)
                             if (!cBExp32.Checked)
@@ -1175,7 +1176,7 @@ namespace Flexible_computing
                                     switch (inputStringFormat)
                                     {
                                         case 0: tbRes.Text = Core.Num256.CorrectResult2ccExp; break;
-                                        case 1: tbRes.Text = Core.Num256.CorrectResultFraction2ccExpL + " / " + Core.Num256.CorrectResultInterval2ccExpR; break;
+                                        case 1: tbRes.Text = Core.Num256.CorrectResultFraction2ccExpL + " / " + Core.Num256.CorrectResultFraction2ccExpR; break;
                                         case 2: tbRes.Text = Core.Num256.CorrectResultInterval2ccExpL + " ; " + Core.Num256.CorrectResultInterval2ccExpL; break;
                                     }
                         //tbRes.Text = out256BinE;
@@ -2098,9 +2099,97 @@ namespace Flexible_computing
                     tbMantisa256_2.MaxLength = Core.Num256.MBitsFI % factor > 0 ? Core.Num256.MBitsFI / factor + 1 : Core.Num256.MBitsFI / factor;
                     break;
             }
-            
         }
-                 
+
+        /// <summary>
+        /// Cheks if Exp or Mantissa of Numbers are greater or lesser than it should be.
+        /// Changes values if needed.
+        /// </summary>
+        public void checkBitLenght()
+        {
+            // Exp
+
+            if (tbExp32.Text.Length > tbExp32.MaxLength)
+                tbExp32.Text = tbExp32.Text.Substring(tbExp32.Text.Length - tbExp32.MaxLength);
+
+            if (tbExp256.Text.Length > tbExp256.MaxLength)
+                tbExp256.Text = tbExp128.Text;
+            else
+                if (tbExp256.Text.Length < tbExp256.MaxLength)
+                    tbExp256.Text = Core.Num256.Exponenta;
+
+            if (tbExp128.Text.Length > tbExp128.MaxLength)
+                tbExp128.Text = tbExp64.Text;
+            else
+                if (tbExp128.Text.Length < tbExp128.MaxLength)
+                    tbExp128.Text = Core.Num128.Exponenta;
+
+            if (tbExp64.Text.Length > tbExp64.MaxLength)
+                tbExp64.Text = tbExp32.Text;
+            else
+                if (tbExp64.Text.Length < tbExp64.MaxLength)
+                    tbExp64.Text = Core.Num64.Exponenta;
+
+            if (tbExp256_2.Text.Length > tbExp256_2.MaxLength)
+                tbExp256_2.Text = tbExp128_2.Text;
+            else
+                if (tbExp256_2.Text.Length < tbExp256_2.MaxLength)
+                    tbExp256_2.Text = Core.Num256.ExponentaRight;
+
+            if (tbExp128_2.Text.Length > tbExp128_2.MaxLength)
+                tbExp128_2.Text = tbExp64_2.Text;
+            else
+                if (tbExp128_2.Text.Length < tbExp128_2.MaxLength)
+                    tbExp128_2.Text = Core.Num128.ExponentaRight;
+
+            //if (tbExp64_2.Text.Length > tbExp64_2.MaxLength)
+                tbExp64_2.Text = tbExp32.Text;
+            //else
+            //    if (tbExp64_2.Text.Length < tbExp64_2.MaxLength)
+            //        tbExp64_2.Text = Core.Num64.ExponentaRight;
+
+            //Mantissa
+            if (tbMantisa32.Text.Length > tbMantisa32.MaxLength)
+                tbMantisa32.Text = tbMantisa32.Text.Substring(tbMantisa32.Text.Length - tbMantisa32.MaxLength);
+
+            if (tbMantisa256.Text.Length > tbMantisa256.MaxLength)
+                tbMantisa256.Text = tbMantisa128.Text;
+            else
+                if (tbMantisa256.Text.Length < tbMantisa256.MaxLength)
+                    tbMantisa256.Text = Core.Num256.Mantisa;
+
+            if (tbMantisa128.Text.Length > tbMantisa128.MaxLength)
+                tbMantisa128.Text = tbMantisa64.Text;
+            else
+                if (tbMantisa128.Text.Length < tbMantisa128.MaxLength)
+                    tbMantisa128.Text = Core.Num128.Mantisa;
+
+            if (tbMantisa64.Text.Length > tbMantisa64.MaxLength)
+                tbMantisa64.Text = tbMantisa32.Text;
+            else
+                if (tbMantisa64.Text.Length < tbMantisa64.MaxLength)
+                    tbMantisa64.Text = Core.Num64.Mantisa;
+
+
+            if (tbMantisa256_2.Text.Length > tbMantisa256_2.MaxLength)
+                tbMantisa256_2.Text = tbMantisa128_2.Text;
+            else
+                if (tbMantisa256_2.Text.Length < tbMantisa256_2.MaxLength)
+                    tbMantisa256_2.Text = Core.Num256.MantisaRight;
+
+            if (tbMantisa128_2.Text.Length > tbMantisa128_2.MaxLength)
+                tbMantisa128_2.Text = tbMantisa64_2.Text;
+            else
+                if (tbMantisa128_2.Text.Length < tbMantisa128_2.MaxLength)
+                    tbMantisa128_2.Text = Core.Num128.MantisaRight;
+
+            if (tbMantisa64_2.Text.Length > tbMantisa64_2.MaxLength)
+                tbMantisa64_2.Text = tbMantisa32.Text;
+            else
+                if (tbMantisa64_2.Text.Length < tbMantisa64_2.MaxLength)
+                    tbMantisa64_2.Text = Core.Num64.MantisaRight;
+
+        }
         public delegate void changetbInputTextDel(Object inputString);
         private void changetbInputText(Object inputString)
         {

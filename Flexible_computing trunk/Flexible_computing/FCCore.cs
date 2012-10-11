@@ -4292,7 +4292,7 @@ namespace Flexible_computing
                         index = Result.Length;
                         if (BiggerLen > index)
                         {
-                            for (i = 0; i < BiggerLen - index - 1; i++) // After Research Modification NEEDED !
+                            for (i = 0; i < BiggerLen - index ; i++) // After Research Modification NEEDED !
                                 Result = "0" + Result;
                             Result = "0," + Result;
                         }

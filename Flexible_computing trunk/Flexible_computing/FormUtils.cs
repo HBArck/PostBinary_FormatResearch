@@ -565,12 +565,12 @@ namespace Flexible_computing
                             {
                                 if (temp.Length > 0)
                                 {
-                                    tbInput.Text = temp + ";0,0";
+                                    tbInput.Text = temp + ";" + temp;
                                     break;
                                 }
                                 else
                                 {
-                                    tbInput.Text = "1,0;0,0";
+                                    tbInput.Text = "1,0;1,0";
                                     break;
                                 }
                             }
@@ -617,7 +617,7 @@ namespace Flexible_computing
                                 tbInput.Text += temp.Substring(temp.IndexOf(";") + 1, temp.Length - temp.IndexOf(";") - 1);
                             }
                             else
-                                tbInput.Text = "1,0;0,0";
+                                tbInput.Text = "1,0;1,0";
                         }
                         break;
                 }
@@ -684,6 +684,131 @@ namespace Flexible_computing
 
         }
 
+        public void setConstanta(int cc)
+        {
+            // INTEGER
+            if (inputStringFormat == 0)
+            {
+                if (tbRes.Text.IndexOf(";") != -1)
+                {
+                    tbRes.Text = tbRes.Text.Substring(0, tbRes.Text.IndexOf(";"));
+                }
+                if (tbRes.Text.IndexOf("/") != -1)
+                {
+                    tbRes.Text = tbRes.Text.Substring(0, tbRes.Text.IndexOf("/"));
+                }
+
+                if (tbCalcError.Text.IndexOf(";") != -1)
+                {
+                    tbCalcError.Text = tbCalcError.Text.Substring(0, tbCalcError.Text.IndexOf(";"));
+                }
+                if (tbCalcError.Text.IndexOf("/") != -1)
+                {
+                    tbCalcError.Text = tbCalcError.Text.Substring(0, tbCalcError.Text.IndexOf("/"));
+                }
+            }
+
+            // FRACTION
+            if (inputStringFormat == 1)
+            {
+                // clearing TextBoxes
+                if (tbRes.Text.IndexOf(";") != -1)
+                    tbRes.Text = tbRes.Text.Replace(";", "/");
+                else
+                    tbRes.Text += "/" + "1,0";
+                
+                if (tbCalcError.Text.IndexOf(";") != -1)
+                    tbCalcError.Text = tbCalcError.Text.Replace(";", "/");
+                else
+                   tbCalcError.Text += "/" + "0,0";
+
+                if (tbRes.Text.IndexOf("/") != -1)
+                {
+                    // Filling TextBoxes
+                    Core.Num64.ExponentaRight = tbExp64_2.Text = currentCCOnTabs == false ? "01111111" : "7F"; // Done 11
+                    Core.Num128.ExponentaRight = tbExp128_2.Text = currentCCOnTabs == false ? "01111111111" : "3FF";
+                    Core.Num256.ExponentaRight = tbExp256_2.Text = currentCCOnTabs == false ? "011111111111111" : "3FFF";
+
+                    Core.Num64.MantisaRight = tbMantisa64_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
+                    Core.Num128.MantisaRight = tbMantisa128_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
+                    Core.Num256.MantisaRight = tbMantisa256_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
+
+                    Core.Num64.CorrectResultIntervalL = Core.Num64.CorrectResult;
+                    Core.Num64.CorrectResultIntervalR = "+1,0";
+                    Core.Num64.CorrectResultInterval2ccL = Core.Num64.CorrectResult2cc;
+                    Core.Num64.CorrectResultInterval2ccR = "+1,0";
+                    Core.Num64.CorrectResultIntervalExpL = Core.Num64.CorrectResultExp;
+                    Core.Num64.CorrectResultIntervalExpR = "+1,0e+0";
+                    Core.Num64.CorrectResultInterval2ccExpL = Core.Num64.CorrectResult2ccExp;
+                    Core.Num64.CorrectResultInterval2ccExpR = "+1,0e+0";
+
+                    Core.Num128.CorrectResultIntervalL = Core.Num128.CorrectResult;
+                    Core.Num128.CorrectResultIntervalR = "+1,0";
+                    Core.Num128.CorrectResultInterval2ccL = Core.Num128.CorrectResult2cc;
+                    Core.Num128.CorrectResultInterval2ccR = "+1,0";
+                    Core.Num128.CorrectResultIntervalExpL = Core.Num128.CorrectResultExp;
+                    Core.Num128.CorrectResultIntervalExpR = "+1,0e+0";
+                    Core.Num128.CorrectResultInterval2ccExpL = Core.Num128.CorrectResult2ccExp;
+                    Core.Num128.CorrectResultInterval2ccExpR = "+1,0e+0";
+
+                    Core.Num256.CorrectResultIntervalL = Core.Num256.CorrectResult;
+                    Core.Num256.CorrectResultIntervalR = "+1,0";
+                    Core.Num256.CorrectResultInterval2ccL = Core.Num256.CorrectResult2cc;
+                    Core.Num256.CorrectResultInterval2ccR = "+1,0";
+                    Core.Num256.CorrectResultIntervalExpL = Core.Num256.CorrectResultExp;
+                    Core.Num256.CorrectResultIntervalExpR = "+1,0e+0";
+                    Core.Num256.CorrectResultInterval2ccExpL = Core.Num256.CorrectResult2ccExp;
+                    Core.Num256.CorrectResultInterval2ccExpR = "+1,0e+0";
+                }
+            }
+
+            // INTERVAL
+            if (inputStringFormat == 2)
+            {
+                // clearing TextBoxes
+                if (tbRes.Text.IndexOf("/") != -1)
+                    tbRes.Text = tbRes.Text.Replace("/", ";");
+                else
+                    tbRes.Text += ";" + tbRes.Text;
+                
+                if (tbCalcError.Text.IndexOf("/") != -1)
+                    tbCalcError.Text = tbCalcError.Text.Replace("/", ";");
+                else
+                    tbCalcError.Text += ";" + tbCalcError.Text;
+
+                if (tbRes.Text.IndexOf(";") != -1)
+                {
+                    // Filling TextBoxes
+                    Core.Num64.ExponentaRight = tbExp64_2.Text = Core.Num32.Exponenta;
+                    Core.Num128.ExponentaRight = tbExp128_2.Text = Core.Num64.Exponenta;
+                    Core.Num256.ExponentaRight = tbExp256_2.Text = Core.Num128.Exponenta;
+
+                    Core.Num64.MantisaRight = tbMantisa64_2.Text = Core.Num32.Mantisa;
+                    Core.Num128.MantisaRight = tbMantisa128_2.Text = Core.Num64.Mantisa;
+                    Core.Num256.MantisaRight = tbMantisa256_2.Text = Core.Num128.Mantisa;
+                    
+                    Core.Num64.CorrectResultIntervalL = Core.Num64.CorrectResultIntervalR = Core.Num32.CorrectResult;
+                    Core.Num64.CorrectResultInterval2ccL = Core.Num64.CorrectResultInterval2ccR = Core.Num32.CorrectResult2cc;
+                    Core.Num64.CorrectResultIntervalExpL = Core.Num64.CorrectResultIntervalExpR = Core.Num32.CorrectResultExp;
+                    Core.Num64.CorrectResultInterval2ccExpL = Core.Num64.CorrectResultInterval2ccExpR = Core.Num32.CorrectResult2ccExp;
+
+                    Core.Num128.CorrectResultIntervalL = Core.Num128.CorrectResultIntervalR = Core.Num64.CorrectResult;
+                    Core.Num128.CorrectResultInterval2ccL = Core.Num128.CorrectResultInterval2ccR = Core.Num64.CorrectResult2cc;
+                    Core.Num128.CorrectResultIntervalExpL = Core.Num128.CorrectResultIntervalExpR = Core.Num64.CorrectResultExp;
+                    Core.Num128.CorrectResultInterval2ccExpL = Core.Num128.CorrectResultInterval2ccExpR = Core.Num64.CorrectResult2ccExp;
+
+                    Core.Num256.CorrectResultIntervalL = Core.Num256.CorrectResultIntervalR = Core.Num128.CorrectResult;
+                    Core.Num256.CorrectResultInterval2ccL = Core.Num256.CorrectResultInterval2ccR = Core.Num128.CorrectResult2cc;
+                    Core.Num256.CorrectResultIntervalExpL = Core.Num256.CorrectResultIntervalExpR = Core.Num128.CorrectResultExp;
+                    Core.Num256.CorrectResultInterval2ccExpL = Core.Num256.CorrectResultInterval2ccExpR = Core.Num128.CorrectResult2ccExp;
+
+                    Core.Num64.ErrorIntervalLeft = Core.Num64.ErrorIntervalRight = Core.Num32.Error;
+                    Core.Num128.ErrorIntervalLeft = Core.Num128.ErrorIntervalRight = Core.Num64.Error;
+                    Core.Num256.ErrorIntervalLeft = Core.Num256.ErrorIntervalRight = Core.Num128.Error;
+                }
+            }
+        }
+
         private void radioInteger_Click(object sender, EventArgs e)
         {
             if (Core.NumberFormat != 0)
@@ -701,7 +826,9 @@ namespace Flexible_computing
                 changeTypeFormat(0);
                 Core.NumberFormat = 0;
                 changeTextBoxMaxSymbols();
-                changeBitLength(currentCCOnTabs == true ? 1:0 );
+                changeBitLength(currentCCOnTabs == true ? 1 : 0);
+                checkBitLenght();
+                setConstanta(currentCCOnTabs == true ? 1 : 0);
                 chbTetra.Enabled = true;
                // bStart_Click(sender, e);
               
@@ -730,6 +857,10 @@ namespace Flexible_computing
                 Core.NumberFormat = 1;
                 changeTextBoxMaxSymbols();
                 changeBitLength(currentCCOnTabs == true ? 1 : 0);
+
+                checkBitLenght();
+                setConstanta(currentCCOnTabs == true ? 1 : 0);
+
                 if (tabControl_Format.SelectedIndex <= 1)
                     chbTetra.Enabled = false;
                 else
@@ -760,6 +891,9 @@ namespace Flexible_computing
                 Core.NumberFormat = 2;
                 changeTextBoxMaxSymbols();
                 changeBitLength(currentCCOnTabs == true ? 1 : 0);
+                checkBitLenght();
+                setConstanta(currentCCOnTabs == true ? 1 : 0);
+
                 if (tabControl_Format.SelectedIndex <= 1)
                     chbTetra.Enabled = false;
                 else
@@ -778,6 +912,7 @@ namespace Flexible_computing
         }
         private void rB2cc32_Click(object sender, EventArgs e){
             //bStart_Click(sender, e);
+
             ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
         }
         private void cBExp32_CheckedChanged(object sender, EventArgs e){
@@ -896,23 +1031,23 @@ namespace Flexible_computing
             tbSign128.Text = "0";
             tbSign256.Text = "0";
 
-            tbExp32.Text = currentCCOnTabs == false ? "00000000" : "00"; // Done 8
-            tbExp64.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000" : "00000000" : inputStringFormat == 0 ? "000" : "00"; // Done 11
-            tbExp128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000" : "00000000000" : inputStringFormat == 0 ? "0000" : "000";
-            tbExp256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000" : "000000000000000" : inputStringFormat == 0 ? "00000" : "0000";
+            Core.Num32.Exponenta = tbExp32.Text = currentCCOnTabs == false ? "00000000" : "00"; // Done 8
+            Core.Num64.Exponenta = tbExp64.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000" : "00000000" : inputStringFormat == 0 ? "000" : "00"; // Done 11
+            Core.Num128.Exponenta = tbExp128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000" : "00000000000" : inputStringFormat == 0 ? "0000" : "000";
+            Core.Num256.Exponenta = tbExp256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000" : "000000000000000" : inputStringFormat == 0 ? "00000" : "0000";
 
-            tbExp64_2.Text = currentCCOnTabs == false ? "00000000" : "00"; // Done 11
-            tbExp128_2.Text = currentCCOnTabs == false ? "00000000000" : "000";
-            tbExp256_2.Text = currentCCOnTabs == false ? "000000000000000" : "0000";
+            Core.Num64.ExponentaRight = tbExp64_2.Text = currentCCOnTabs == false ? "00000000" : "00"; // Done 11
+            Core.Num128.ExponentaRight = tbExp128_2.Text = currentCCOnTabs == false ? "00000000000" : "000";
+            Core.Num256.ExponentaRight = tbExp256_2.Text = currentCCOnTabs == false ? "000000000000000" : "0000";
 
-            tbMantisa32.Text = currentCCOnTabs == false ? "000000000000000000000" : "000000"; // Done 21
-            tbMantisa64.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
-            tbMantisa128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
-            tbMantisa256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
+            Core.Num32.Mantisa = tbMantisa32.Text = currentCCOnTabs == false ? "000000000000000000000" : "000000"; // Done 21
+            Core.Num64.Mantisa = tbMantisa64.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
+            Core.Num128.Mantisa = tbMantisa128.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
+            Core.Num256.Mantisa = tbMantisa256.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
 
-            tbMantisa64_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
-            tbMantisa128_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
-            tbMantisa256_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
+            Core.Num64.MantisaRight = tbMantisa64_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
+            Core.Num128.MantisaRight = tbMantisa128_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
+            Core.Num256.MantisaRight = tbMantisa256_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
 
             tbMF32.Text = currentCCOnTabs == false ? "0" : "0";
             tbMF64.Text = currentCCOnTabs == false ? "00" : "0";
@@ -922,6 +1057,12 @@ namespace Flexible_computing
             tbCF64.Text = currentCCOnTabs == false ? "01" : "1";
             tbCF128.Text = currentCCOnTabs == false ? "011" : "3";
             tbCF256.Text = currentCCOnTabs == false ? "0111" : "7";
+
+            // clearing Obkects in Core
+            Core.Num32.CorrectResult = "0,0";
+            Core.Num32.CorrectResult2cc = "0,0";
+            Core.Num32.CorrectResult2ccExp = "0,0";
+            Core.Num32.CorrectResultExp = "0,0";
 
             //richTextBox1.Clear();
 
