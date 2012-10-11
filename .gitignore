@@ -3,3 +3,9 @@
 /Flexible_computing trunk/Flexible_computing/obj
 /Flexible_computing trunk/Flexible_computing/bin/Debug/*.exe
 /Flexible_computing trunk/Flexible_computing/bin/Release/*.exe
+/Flexible_computing trunk/Flexible_computing/bin/Debug/err.dat
+/Flexible_computing trunk/Flexible_computing/bin/Debug/init.xml
+/Flexible_computing trunk/Flexible_computing/bin/Debug/log.dat
+/Flexible_computing trunk/Flexible_computing/bin/Release/err.dat
+/Flexible_computing trunk/Flexible_computing/bin/Release/init.xml
+/Flexible_computing trunk/Flexible_computing/bin/Release/log.dat
