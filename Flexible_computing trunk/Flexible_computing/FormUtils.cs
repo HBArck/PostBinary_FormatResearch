@@ -100,8 +100,8 @@ namespace Flexible_computing
         public void changeLanguage(int lang)
         {
 
-            bStart.Text = стартToolStripMenuItem.Text = inStr[lang][0, 0];
-            recalculate.Text = перерасчетToolStripMenuItem.Text = inStr[lang][0, 1];
+            bStartCalculation.Text = стартToolStripMenuItem.Text = inStr[lang][0, 0];
+            bStartRecalculation.Text = перерасчетToolStripMenuItem.Text = inStr[lang][0, 1];
             bLoad.Text = загрузитьToolStripMenuItem1.Text = inStr[lang][0, 2];
             сохранитьToolStripMenuItem.Text = inStr[lang][0, 3];
             bCopy.Text = копироватьToolStripMenuItem.Text = inStr[lang][0, 4];
@@ -207,10 +207,10 @@ namespace Flexible_computing
         private void tbInput_TextChanged(object sender, EventArgs e)
         {
             if (this.tbInput.Text.Count() > 0)
-                bStart.Enabled = true;
+                bStartCalculation.Enabled = true;
             else
                 if (this.tbInput.Text.Count() == 0)
-                    bStart.Enabled = false;
+                    bStartCalculation.Enabled = false;
         }
         public void setErrorOnInput()
         {// 
@@ -522,17 +522,6 @@ namespace Flexible_computing
             }
         }
 
-        public byte getIndexType()
-        {
-            if (currentType[0] == true)
-                return 0;
-            if (currentType[1] == true)
-                return 1;
-            if (currentType[2] == true)
-                return 2;
-            return 4;
-        }
-
         public void addCharsToInput(int nextType)
         {
             String temp = tbInput.Text;
@@ -636,6 +625,16 @@ namespace Flexible_computing
             }
 
         }
+        public byte getIndexType()
+        {
+            if (currentType[0] == true)
+                return 0;
+            if (currentType[1] == true)
+                return 1;
+            if (currentType[2] == true)
+                return 2;
+            return 4;
+        }
 
         /// <summary>
         /// This function changes for different formats it's Bit Count
@@ -684,128 +683,245 @@ namespace Flexible_computing
 
         }
 
-        public void setConstanta(int cc)
+        public void setConstanta(int nextType)
         {
+            int iTemp = getIndexType();
             // INTEGER
             if (inputStringFormat == 0)
             {
                 if (tbRes.Text.IndexOf(";") != -1)
                 {
-                    tbRes.Text = tbRes.Text.Substring(0, tbRes.Text.IndexOf(";"));
+                    tbRes.Text = tbRes.Text.Substring(0, tbRes.Text.IndexOf(";") -1);
                 }
                 if (tbRes.Text.IndexOf("/") != -1)
                 {
-                    tbRes.Text = tbRes.Text.Substring(0, tbRes.Text.IndexOf("/"));
+                    tbRes.Text = tbRes.Text.Substring(0, tbRes.Text.IndexOf("/") -1);
                 }
 
                 if (tbCalcError.Text.IndexOf(";") != -1)
                 {
-                    tbCalcError.Text = tbCalcError.Text.Substring(0, tbCalcError.Text.IndexOf(";"));
+                    tbCalcError.Text = tbCalcError.Text.Substring(0, tbCalcError.Text.IndexOf(";") -1);
                 }
                 if (tbCalcError.Text.IndexOf("/") != -1)
                 {
-                    tbCalcError.Text = tbCalcError.Text.Substring(0, tbCalcError.Text.IndexOf("/"));
+                    tbCalcError.Text = tbCalcError.Text.Substring(0, tbCalcError.Text.IndexOf("/") -1);
                 }
             }
 
             // FRACTION
             if (inputStringFormat == 1)
             {
-                // clearing TextBoxes
-                if (tbRes.Text.IndexOf(";") != -1)
-                    tbRes.Text = tbRes.Text.Replace(";", "/");
-                else
-                    tbRes.Text += "/" + "1,0";
-                
-                if (tbCalcError.Text.IndexOf(";") != -1)
-                    tbCalcError.Text = tbCalcError.Text.Replace(";", "/");
-                else
-                   tbCalcError.Text += "/" + "0,0";
-
-                if (tbRes.Text.IndexOf("/") != -1)
+                if (iTemp == 0)
                 {
-                    // Filling TextBoxes
-                    Core.Num64.ExponentaRight = tbExp64_2.Text = currentCCOnTabs == false ? "01111111" : "7F"; // Done 11
-                    Core.Num128.ExponentaRight = tbExp128_2.Text = currentCCOnTabs == false ? "01111111111" : "3FF";
-                    Core.Num256.ExponentaRight = tbExp256_2.Text = currentCCOnTabs == false ? "011111111111111" : "3FFF";
+                    // clearing TextBoxes
+                    if (tbRes.Text.IndexOf(";") != -1)
+                        tbRes.Text = tbRes.Text.Replace(";", "/");
+                    else
+                        tbRes.Text += " / " + "+1,0";
 
-                    Core.Num64.MantisaRight = tbMantisa64_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
-                    Core.Num128.MantisaRight = tbMantisa128_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
-                    Core.Num256.MantisaRight = tbMantisa256_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
+                    if (tbCalcError.Text.IndexOf(";") != -1)
+                        tbCalcError.Text = tbCalcError.Text.Replace(";", "/");
+                    else
+                        tbCalcError.Text += " / " + "0,0";
 
-                    Core.Num64.CorrectResultIntervalL = Core.Num64.CorrectResult;
-                    Core.Num64.CorrectResultIntervalR = "+1,0";
-                    Core.Num64.CorrectResultInterval2ccL = Core.Num64.CorrectResult2cc;
-                    Core.Num64.CorrectResultInterval2ccR = "+1,0";
-                    Core.Num64.CorrectResultIntervalExpL = Core.Num64.CorrectResultExp;
-                    Core.Num64.CorrectResultIntervalExpR = "+1,0e+0";
-                    Core.Num64.CorrectResultInterval2ccExpL = Core.Num64.CorrectResult2ccExp;
-                    Core.Num64.CorrectResultInterval2ccExpR = "+1,0e+0";
+                    if (tbRes.Text.IndexOf("/") != -1)
+                    {
+                        // Filling TextBoxes
+                        Core.Num64.ExponentaRight = tbExp64_2.Text = currentCCOnTabs == false ? "01111111" : "7F"; // Done 11
+                        Core.Num128.ExponentaRight = tbExp128_2.Text = currentCCOnTabs == false ? "01111111111" : "3FF";
+                        Core.Num256.ExponentaRight = tbExp256_2.Text = currentCCOnTabs == false ? "011111111111111" : "3FFF";
 
-                    Core.Num128.CorrectResultIntervalL = Core.Num128.CorrectResult;
-                    Core.Num128.CorrectResultIntervalR = "+1,0";
-                    Core.Num128.CorrectResultInterval2ccL = Core.Num128.CorrectResult2cc;
-                    Core.Num128.CorrectResultInterval2ccR = "+1,0";
-                    Core.Num128.CorrectResultIntervalExpL = Core.Num128.CorrectResultExp;
-                    Core.Num128.CorrectResultIntervalExpR = "+1,0e+0";
-                    Core.Num128.CorrectResultInterval2ccExpL = Core.Num128.CorrectResult2ccExp;
-                    Core.Num128.CorrectResultInterval2ccExpR = "+1,0e+0";
+                        Core.Num64.MantisaRight = tbMantisa64_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000" : "000000000000000000000" : inputStringFormat == 0 ? "000000000000" : "000000"; // Done 48
+                        Core.Num128.MantisaRight = tbMantisa128_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "00000000000000000000000000" : "000000000000"; // Done 104
+                        Core.Num256.MantisaRight = tbMantisa256_2.Text = currentCCOnTabs == false ? inputStringFormat == 0 ? "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" : inputStringFormat == 0 ? "0000000000000000000000000000000000000000000000000000000" : "00000000000000000000000000";// Done 219
 
-                    Core.Num256.CorrectResultIntervalL = Core.Num256.CorrectResult;
-                    Core.Num256.CorrectResultIntervalR = "+1,0";
-                    Core.Num256.CorrectResultInterval2ccL = Core.Num256.CorrectResult2cc;
-                    Core.Num256.CorrectResultInterval2ccR = "+1,0";
-                    Core.Num256.CorrectResultIntervalExpL = Core.Num256.CorrectResultExp;
-                    Core.Num256.CorrectResultIntervalExpR = "+1,0e+0";
-                    Core.Num256.CorrectResultInterval2ccExpL = Core.Num256.CorrectResult2ccExp;
-                    Core.Num256.CorrectResultInterval2ccExpR = "+1,0e+0";
-                }
+                        Core.Num64.CorrectResultFractionL = Core.Num64.CorrectResult;
+                        Core.Num64.CorrectResultFractionR = "+1,0";
+                        Core.Num64.CorrectResultFraction2ccL = Core.Num64.CorrectResult2cc;
+                        Core.Num64.CorrectResultFraction2ccR = "+1,0";
+                        Core.Num64.CorrectResultFractionExpL = Core.Num64.CorrectResultExp;
+                        Core.Num64.CorrectResultFractionExpR = "+1,0e+0";
+                        Core.Num64.CorrectResultFraction2ccExpL = Core.Num64.CorrectResult2ccExp;
+                        Core.Num64.CorrectResultFraction2ccExpR = "+1,0e+0";
+
+                        Core.Num128.CorrectResultFractionL = Core.Num128.CorrectResult;
+                        Core.Num128.CorrectResultFractionR = "+1,0";
+                        Core.Num128.CorrectResultFraction2ccL = Core.Num128.CorrectResult2cc;
+                        Core.Num128.CorrectResultFraction2ccR = "+1,0";
+                        Core.Num128.CorrectResultFractionExpL = Core.Num128.CorrectResultExp;
+                        Core.Num128.CorrectResultFractionExpR = "+1,0e+0";
+                        Core.Num128.CorrectResultFraction2ccExpL = Core.Num128.CorrectResult2ccExp;
+                        Core.Num128.CorrectResultFraction2ccExpR = "+1,0e+0";
+
+                        Core.Num256.CorrectResultFractionL = Core.Num256.CorrectResult;
+                        Core.Num256.CorrectResultFractionR = "+1,0";
+                        Core.Num256.CorrectResultFraction2ccL = Core.Num256.CorrectResult2cc;
+                        Core.Num256.CorrectResultFraction2ccR = "+1,0";
+                        Core.Num256.CorrectResultFractionExpL = Core.Num256.CorrectResultExp;
+                        Core.Num256.CorrectResultFractionExpR = "+1,0e+0";
+                        Core.Num256.CorrectResultFraction2ccExpL = Core.Num256.CorrectResult2ccExp;
+                        Core.Num256.CorrectResultFraction2ccExpR = "+1,0e+0";
+
+                        Core.Num64.ErrorFractionLeft =  Core.Num32.Error;
+                        Core.Num64.ErrorFractionRight = "0,0";
+                        Core.Num128.ErrorFractionLeft = Core.Num64.Error;
+                        Core.Num128.ErrorFractionRight = "0,0";
+                        Core.Num256.ErrorFractionLeft = Core.Num128.Error;
+                        Core.Num256.ErrorFractionRight = "0,0";
+                    }
+                }else
+                    if (iTemp == 2)
+                    {
+                        if (tbRes.Text.IndexOf("/") == -1)
+                        {
+                            if (tbRes.Text.IndexOf(";") != -1)
+                                tbRes.Text = tbRes.Text.Replace(";", "/");
+
+                            if (tbCalcError.Text.IndexOf(";") != -1)
+                                tbCalcError.Text = tbCalcError.Text.Replace(";", "/");
+                        }   
+                            // Filling TextBoxes
+                            tbExp64_2.Text = Core.Num64.ExponentaRight;
+                            tbExp128_2.Text = Core.Num128.ExponentaRight;
+                            tbExp256_2.Text = Core.Num256.ExponentaRight;
+
+                            tbMantisa64_2.Text = Core.Num64.MantisaRight;
+                            tbMantisa128_2.Text = Core.Num128.MantisaRight;
+                            tbMantisa256_2.Text = Core.Num256.MantisaRight;
+
+                            Core.Num64.CorrectResultFractionL =  Core.Num64.CorrectResult;
+                            Core.Num64.CorrectResultFractionR = Core.Num64.CorrectResultIntervalR;
+                            Core.Num64.CorrectResultFraction2ccL = Core.Num64.CorrectResult2cc;
+                            Core.Num64.CorrectResultFraction2ccR = Core.Num64.CorrectResultInterval2ccR; 
+                            Core.Num64.CorrectResultFractionExpL = Core.Num64.CorrectResultExp;
+                            Core.Num64.CorrectResultFractionExpR = Core.Num64.CorrectResultIntervalExpR;
+                            Core.Num64.CorrectResultFraction2ccExpL = Core.Num64.CorrectResult2ccExp;
+                            Core.Num64.CorrectResultFraction2ccExpR = Core.Num64.CorrectResultInterval2ccExpR;
+
+                            Core.Num128.CorrectResultFractionL = Core.Num128.CorrectResult;
+                            Core.Num128.CorrectResultFractionR = Core.Num128.CorrectResultIntervalR;
+                            Core.Num128.CorrectResultFraction2ccL = Core.Num128.CorrectResult2cc;
+                            Core.Num128.CorrectResultFraction2ccR = Core.Num128.CorrectResultInterval2ccR;
+                            Core.Num128.CorrectResultFractionExpL = Core.Num128.CorrectResultExp;
+                            Core.Num128.CorrectResultFractionExpR = Core.Num128.CorrectResultIntervalExpR;
+                            Core.Num128.CorrectResultFraction2ccExpL = Core.Num128.CorrectResult2ccExp;
+                            Core.Num128.CorrectResultFraction2ccExpR = Core.Num128.CorrectResultInterval2ccExpR;
+
+                            Core.Num256.CorrectResultFractionL = Core.Num256.CorrectResult;
+                            Core.Num256.CorrectResultFractionR = Core.Num256.CorrectResultIntervalR;
+                            Core.Num256.CorrectResultFraction2ccL = Core.Num256.CorrectResult2cc;
+                            Core.Num256.CorrectResultFraction2ccR = Core.Num256.CorrectResultInterval2ccR;
+                            Core.Num256.CorrectResultFractionExpL = Core.Num256.CorrectResultExp;
+                            Core.Num256.CorrectResultFractionExpR = Core.Num256.CorrectResultIntervalExpR;
+                            Core.Num256.CorrectResultFraction2ccExpL = Core.Num256.CorrectResult2ccExp;
+                            Core.Num256.CorrectResultFraction2ccExpR = Core.Num256.CorrectResultInterval2ccExpR;
+
+                            Core.Num64.ErrorFractionLeft = Core.Num32.Error;
+                            Core.Num64.ErrorFractionRight = Core.Num64.ErrorIntervalRight;
+                            Core.Num128.ErrorFractionLeft = Core.Num64.Error;
+                            Core.Num128.ErrorFractionRight = Core.Num128.ErrorIntervalRight;
+                            Core.Num256.ErrorFractionLeft = Core.Num128.Error;
+                            Core.Num256.ErrorFractionRight = Core.Num256.ErrorIntervalRight;                        
+                    }
             }
 
             // INTERVAL
             if (inputStringFormat == 2)
             {
-                // clearing TextBoxes
-                if (tbRes.Text.IndexOf("/") != -1)
-                    tbRes.Text = tbRes.Text.Replace("/", ";");
-                else
-                    tbRes.Text += ";" + tbRes.Text;
-                
-                if (tbCalcError.Text.IndexOf("/") != -1)
-                    tbCalcError.Text = tbCalcError.Text.Replace("/", ";");
-                else
-                    tbCalcError.Text += ";" + tbCalcError.Text;
-
-                if (tbRes.Text.IndexOf(";") != -1)
+                if (iTemp == 0)
                 {
-                    // Filling TextBoxes
-                    Core.Num64.ExponentaRight = tbExp64_2.Text = Core.Num32.Exponenta;
-                    Core.Num128.ExponentaRight = tbExp128_2.Text = Core.Num64.Exponenta;
-                    Core.Num256.ExponentaRight = tbExp256_2.Text = Core.Num128.Exponenta;
+                    // clearing TextBoxes
+                    if (tbRes.Text.IndexOf("/") != -1)
+                        tbRes.Text = tbRes.Text.Replace("/", ";");
+                    else
+                        tbRes.Text += " ; " + tbRes.Text;
 
-                    Core.Num64.MantisaRight = tbMantisa64_2.Text = Core.Num32.Mantisa;
-                    Core.Num128.MantisaRight = tbMantisa128_2.Text = Core.Num64.Mantisa;
-                    Core.Num256.MantisaRight = tbMantisa256_2.Text = Core.Num128.Mantisa;
-                    
-                    Core.Num64.CorrectResultIntervalL = Core.Num64.CorrectResultIntervalR = Core.Num32.CorrectResult;
-                    Core.Num64.CorrectResultInterval2ccL = Core.Num64.CorrectResultInterval2ccR = Core.Num32.CorrectResult2cc;
-                    Core.Num64.CorrectResultIntervalExpL = Core.Num64.CorrectResultIntervalExpR = Core.Num32.CorrectResultExp;
-                    Core.Num64.CorrectResultInterval2ccExpL = Core.Num64.CorrectResultInterval2ccExpR = Core.Num32.CorrectResult2ccExp;
+                    if (tbCalcError.Text.IndexOf("/") != -1)
+                        tbCalcError.Text = tbCalcError.Text.Replace("/", ";");
+                    else
+                        tbCalcError.Text += " ; " + tbCalcError.Text;
 
-                    Core.Num128.CorrectResultIntervalL = Core.Num128.CorrectResultIntervalR = Core.Num64.CorrectResult;
-                    Core.Num128.CorrectResultInterval2ccL = Core.Num128.CorrectResultInterval2ccR = Core.Num64.CorrectResult2cc;
-                    Core.Num128.CorrectResultIntervalExpL = Core.Num128.CorrectResultIntervalExpR = Core.Num64.CorrectResultExp;
-                    Core.Num128.CorrectResultInterval2ccExpL = Core.Num128.CorrectResultInterval2ccExpR = Core.Num64.CorrectResult2ccExp;
+                    if (tbRes.Text.IndexOf(";") != -1)
+                    {
+                        // Filling TextBoxes
+                        Core.Num64.ExponentaRight = tbExp64_2.Text = Core.Num32.Exponenta;
+                        Core.Num128.ExponentaRight = tbExp128_2.Text = Core.Num64.Exponenta;
+                        Core.Num256.ExponentaRight = tbExp256_2.Text = Core.Num128.Exponenta;
 
-                    Core.Num256.CorrectResultIntervalL = Core.Num256.CorrectResultIntervalR = Core.Num128.CorrectResult;
-                    Core.Num256.CorrectResultInterval2ccL = Core.Num256.CorrectResultInterval2ccR = Core.Num128.CorrectResult2cc;
-                    Core.Num256.CorrectResultIntervalExpL = Core.Num256.CorrectResultIntervalExpR = Core.Num128.CorrectResultExp;
-                    Core.Num256.CorrectResultInterval2ccExpL = Core.Num256.CorrectResultInterval2ccExpR = Core.Num128.CorrectResult2ccExp;
+                        Core.Num64.MantisaRight = tbMantisa64_2.Text = Core.Num32.Mantisa;
+                        Core.Num128.MantisaRight = tbMantisa128_2.Text = Core.Num64.Mantisa;
+                        Core.Num256.MantisaRight = tbMantisa256_2.Text = Core.Num128.Mantisa;
 
-                    Core.Num64.ErrorIntervalLeft = Core.Num64.ErrorIntervalRight = Core.Num32.Error;
-                    Core.Num128.ErrorIntervalLeft = Core.Num128.ErrorIntervalRight = Core.Num64.Error;
-                    Core.Num256.ErrorIntervalLeft = Core.Num256.ErrorIntervalRight = Core.Num128.Error;
-                }
+                        Core.Num64.CorrectResultIntervalL = Core.Num64.CorrectResultIntervalR = Core.Num32.CorrectResult;
+                        Core.Num64.CorrectResultInterval2ccL = Core.Num64.CorrectResultInterval2ccR = Core.Num32.CorrectResult2cc;
+                        Core.Num64.CorrectResultIntervalExpL = Core.Num64.CorrectResultIntervalExpR = Core.Num32.CorrectResultExp;
+                        Core.Num64.CorrectResultInterval2ccExpL = Core.Num64.CorrectResultInterval2ccExpR = Core.Num32.CorrectResult2ccExp;
+
+                        Core.Num128.CorrectResultIntervalL = Core.Num128.CorrectResultIntervalR = Core.Num64.CorrectResult;
+                        Core.Num128.CorrectResultInterval2ccL = Core.Num128.CorrectResultInterval2ccR = Core.Num64.CorrectResult2cc;
+                        Core.Num128.CorrectResultIntervalExpL = Core.Num128.CorrectResultIntervalExpR = Core.Num64.CorrectResultExp;
+                        Core.Num128.CorrectResultInterval2ccExpL = Core.Num128.CorrectResultInterval2ccExpR = Core.Num64.CorrectResult2ccExp;
+
+                        Core.Num256.CorrectResultIntervalL = Core.Num256.CorrectResultIntervalR = Core.Num128.CorrectResult;
+                        Core.Num256.CorrectResultInterval2ccL = Core.Num256.CorrectResultInterval2ccR = Core.Num128.CorrectResult2cc;
+                        Core.Num256.CorrectResultIntervalExpL = Core.Num256.CorrectResultIntervalExpR = Core.Num128.CorrectResultExp;
+                        Core.Num256.CorrectResultInterval2ccExpL = Core.Num256.CorrectResultInterval2ccExpR = Core.Num128.CorrectResult2ccExp;
+
+                        Core.Num64.ErrorIntervalLeft = Core.Num64.ErrorIntervalRight = Core.Num32.Error;
+                        Core.Num128.ErrorIntervalLeft = Core.Num128.ErrorIntervalRight = Core.Num64.Error;
+                        Core.Num256.ErrorIntervalLeft = Core.Num256.ErrorIntervalRight = Core.Num128.Error;
+                    }
+                }else
+                    if (iTemp == 1)
+                    {
+                        if (tbRes.Text.IndexOf("/") != -1)
+                            tbRes.Text = tbRes.Text.Replace("/", ";");
+                        
+                        if (tbCalcError.Text.IndexOf("/") != -1)
+                            tbCalcError.Text = tbCalcError.Text.Replace("/", ";");
+                        
+                        tbExp64_2.Text = Core.Num64.ExponentaRight;
+                        tbExp128_2.Text = Core.Num128.ExponentaRight;
+                        tbExp256_2.Text = Core.Num256.ExponentaRight;
+
+                        tbMantisa64_2.Text = Core.Num64.MantisaRight;
+                        tbMantisa128_2.Text = Core.Num128.MantisaRight;
+                        tbMantisa256_2.Text = Core.Num256.MantisaRight;
+
+                        Core.Num64.CorrectResultIntervalL = Core.Num64.CorrectResult;
+                        Core.Num64.CorrectResultIntervalR = Core.Num64.CorrectResultFractionR;
+                        Core.Num64.CorrectResultInterval2ccL = Core.Num64.CorrectResult2cc;
+                        Core.Num64.CorrectResultInterval2ccR = Core.Num64.CorrectResultFraction2ccR;
+                        Core.Num64.CorrectResultIntervalExpL = Core.Num64.CorrectResultExp;
+                        Core.Num64.CorrectResultIntervalExpR = Core.Num64.CorrectResultFractionExpR;
+                        Core.Num64.CorrectResultInterval2ccExpL = Core.Num64.CorrectResult2ccExp;
+                        Core.Num64.CorrectResultInterval2ccExpR = Core.Num64.CorrectResultFraction2ccExpR;
+
+                        Core.Num128.CorrectResultIntervalL = Core.Num128.CorrectResult; 
+                        Core.Num128.CorrectResultIntervalR = Core.Num128.CorrectResultFractionR;
+                        Core.Num128.CorrectResultInterval2ccL = Core.Num128.CorrectResult2cc;
+                        Core.Num128.CorrectResultInterval2ccR = Core.Num128.CorrectResultFraction2ccR;
+                        Core.Num128.CorrectResultIntervalExpL = Core.Num128.CorrectResultExp;
+                        Core.Num128.CorrectResultIntervalExpR = Core.Num128.CorrectResultFractionExpR;
+                        Core.Num128.CorrectResultInterval2ccExpL = Core.Num128.CorrectResult2ccExp;
+                        Core.Num128.CorrectResultInterval2ccExpR = Core.Num128.CorrectResultFraction2ccExpR;
+
+                        Core.Num256.CorrectResultIntervalL = Core.Num256.CorrectResult;
+                        Core.Num256.CorrectResultIntervalR = Core.Num256.CorrectResultFractionR;
+                        Core.Num256.CorrectResultInterval2ccL = Core.Num256.CorrectResult2cc;
+                        Core.Num256.CorrectResultInterval2ccR = Core.Num256.CorrectResultFraction2ccR;
+                        Core.Num256.CorrectResultIntervalExpL = Core.Num256.CorrectResultExp;
+                        Core.Num256.CorrectResultIntervalExpR = Core.Num256.CorrectResultFractionExpR;
+                        Core.Num256.CorrectResultInterval2ccExpL = Core.Num256.CorrectResult2ccExp;
+                        Core.Num256.CorrectResultInterval2ccExpR = Core.Num256.CorrectResultFraction2ccExpR;
+
+                        Core.Num64.ErrorIntervalLeft =  Core.Num32.Error;
+                        Core.Num64.ErrorIntervalRight = Core.Num64.ErrorFractionRight ;
+                        Core.Num128.ErrorIntervalLeft =  Core.Num64.Error;
+                        Core.Num128.ErrorIntervalRight = Core.Num128.ErrorFractionRight;
+                        Core.Num256.ErrorIntervalLeft = Core.Num128.Error;
+                        Core.Num256.ErrorIntervalRight = Core.Num256.ErrorFractionRight;
+                    }
             }
         }
 
@@ -816,21 +932,21 @@ namespace Flexible_computing
                 changeFiledsFormat(0);
                 inputStringFormat = 0;
                 textChangeOnForm();
-                //changePasportFormat(inputStringFormat, tabControl_Format.SelectedIndex);
 
                 miToNPInf.Visible = false;
                 miToPInf.Visible = true;
                 miToNInf.Visible = true;
                 addCharsToInput(0);
                 changeCheckStateForRounding(1);
-                changeTypeFormat(0);
+                
                 Core.NumberFormat = 0;
                 changeTextBoxMaxSymbols();
                 changeBitLength(currentCCOnTabs == true ? 1 : 0);
                 checkBitLenght();
-                setConstanta(currentCCOnTabs == true ? 1 : 0);
+                setConstanta(0);
+
+                changeTypeFormat(0);
                 chbTetra.Enabled = true;
-               // bStart_Click(sender, e);
               
                 tbExp32.Enabled = true;
                 tbMantisa32.Enabled = true;              
@@ -839,27 +955,24 @@ namespace Flexible_computing
         private void radioFloat_Click(object sender, EventArgs e)
         {
             if (Core.NumberFormat != 1)
-            {
-                
+            {                
                 inputStringFormat = 1;
                 changeFiledsFormat(1);
                 textChangeOnForm();
-                //changePasportFormat(inputStringFormat, tabControl_Format.SelectedIndex);
 
                 miToNPInf.Visible = false;
                 miToPInf.Visible = true;
                 miToNInf.Visible = true;
 
                 addCharsToInput(1);
-
-                changeTypeFormat(1);
+                
                 changeCheckStateForRounding(1);
                 Core.NumberFormat = 1;
                 changeTextBoxMaxSymbols();
                 changeBitLength(currentCCOnTabs == true ? 1 : 0);
-
                 checkBitLenght();
-                setConstanta(currentCCOnTabs == true ? 1 : 0);
+                setConstanta(1);
+                changeTypeFormat(1);
 
                 if (tabControl_Format.SelectedIndex <= 1)
                     chbTetra.Enabled = false;
@@ -878,7 +991,6 @@ namespace Flexible_computing
                 inputStringFormat = 2;
                 changeFiledsFormat(2);
                 textChangeOnForm();
-               // changePasportFormat(inputStringFormat, tabControl_Format.SelectedIndex);
 
                 miToNPInf.Visible = true;
                 miToPInf.Visible = false;
@@ -887,18 +999,19 @@ namespace Flexible_computing
                 addCharsToInput(2);
 
                 changeCheckStateForRounding(4);
-                changeTypeFormat(2);
+                
                 Core.NumberFormat = 2;
                 changeTextBoxMaxSymbols();
                 changeBitLength(currentCCOnTabs == true ? 1 : 0);
                 checkBitLenght();
-                setConstanta(currentCCOnTabs == true ? 1 : 0);
+                setConstanta(2);
+
+                changeTypeFormat(2);
 
                 if (tabControl_Format.SelectedIndex <= 1)
                     chbTetra.Enabled = false;
                 else
                     chbTetra.Enabled = true;
-               // bStart_Click(sender, e);
 
                 tbExp32.Enabled = false;
                 tbMantisa32.Enabled = false;

@@ -241,9 +241,9 @@
             this.stlTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.problemStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox_Input = new System.Windows.Forms.GroupBox();
-            this.bCancelStart = new System.Windows.Forms.Button();
+            this.bStopCalculation = new System.Windows.Forms.Button();
             this.tbInput = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.gBFormatChanger = new System.Windows.Forms.GroupBox();
             this.radioInteger = new System.Windows.Forms.RadioButton();
             this.radioFloat = new System.Windows.Forms.RadioButton();
             this.chbTetra = new System.Windows.Forms.CheckBox();
@@ -252,7 +252,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.bLoad = new System.Windows.Forms.Button();
             this.bClear = new System.Windows.Forms.Button();
-            this.bStart = new System.Windows.Forms.Button();
+            this.bStartCalculation = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.cbClearLog = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -282,12 +282,12 @@
             this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bCopy = new System.Windows.Forms.Button();
             this.l2ccTo16cc = new System.Windows.Forms.Label();
-            this.recalculate = new System.Windows.Forms.Button();
+            this.bStartRecalculation = new System.Windows.Forms.Button();
             this.lNormDenorm = new System.Windows.Forms.Label();
             this.errorTimer = new System.Windows.Forms.Timer(this.components);
             this.label12 = new System.Windows.Forms.Label();
             this.bMaximizeFooterTab = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bStopRecalculation = new System.Windows.Forms.Button();
             this.lTh1 = new System.Windows.Forms.Label();
             this.lTh2 = new System.Windows.Forms.Label();
             this.lTh3 = new System.Windows.Forms.Label();
@@ -320,7 +320,7 @@
             this.gbRes.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.groupBox_Input.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.gBFormatChanger.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDown)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.contextMenuExceptions.SuspendLayout();
@@ -2560,14 +2560,14 @@
             // groupBox_Input
             // 
             this.groupBox_Input.BackColor = System.Drawing.Color.Lavender;
-            this.groupBox_Input.Controls.Add(this.bCancelStart);
+            this.groupBox_Input.Controls.Add(this.bStopCalculation);
             this.groupBox_Input.Controls.Add(this.tbInput);
-            this.groupBox_Input.Controls.Add(this.groupBox3);
+            this.groupBox_Input.Controls.Add(this.gBFormatChanger);
             this.groupBox_Input.Controls.Add(this.nUpDown);
             this.groupBox_Input.Controls.Add(this.label19);
             this.groupBox_Input.Controls.Add(this.bLoad);
             this.groupBox_Input.Controls.Add(this.bClear);
-            this.groupBox_Input.Controls.Add(this.bStart);
+            this.groupBox_Input.Controls.Add(this.bStartCalculation);
             this.groupBox_Input.Location = new System.Drawing.Point(12, 27);
             this.groupBox_Input.Name = "groupBox_Input";
             this.groupBox_Input.Size = new System.Drawing.Size(740, 98);
@@ -2575,21 +2575,21 @@
             this.groupBox_Input.TabStop = false;
             this.groupBox_Input.Text = "Ввод исходных данных";
             // 
-            // bCancelStart
+            // bStopCalculation
             // 
-            this.bCancelStart.BackColor = System.Drawing.Color.DarkOrange;
-            this.bCancelStart.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.bCancelStart.FlatAppearance.BorderSize = 2;
-            this.bCancelStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.bCancelStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.bCancelStart.Location = new System.Drawing.Point(6, 65);
-            this.bCancelStart.Name = "bCancelStart";
-            this.bCancelStart.Size = new System.Drawing.Size(75, 23);
-            this.bCancelStart.TabIndex = 14;
-            this.bCancelStart.Text = "Отмена";
-            this.bCancelStart.UseVisualStyleBackColor = false;
-            this.bCancelStart.Visible = false;
-            this.bCancelStart.Click += new System.EventHandler(this.bCancelStart_Click);
+            this.bStopCalculation.BackColor = System.Drawing.Color.DarkOrange;
+            this.bStopCalculation.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.bStopCalculation.FlatAppearance.BorderSize = 2;
+            this.bStopCalculation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.bStopCalculation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.bStopCalculation.Location = new System.Drawing.Point(6, 65);
+            this.bStopCalculation.Name = "bStopCalculation";
+            this.bStopCalculation.Size = new System.Drawing.Size(75, 23);
+            this.bStopCalculation.TabIndex = 14;
+            this.bStopCalculation.Text = "Отмена";
+            this.bStopCalculation.UseVisualStyleBackColor = false;
+            this.bStopCalculation.Visible = false;
+            this.bStopCalculation.Click += new System.EventHandler(this.bCancelStart_Click);
             // 
             // tbInput
             // 
@@ -2610,17 +2610,17 @@
             this.tbInput.TextChanged += new System.EventHandler(this.tbInput_TextChanged);
             this.tbInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbInput_KeyPress);
             // 
-            // groupBox3
+            // gBFormatChanger
             // 
-            this.groupBox3.Controls.Add(this.radioInteger);
-            this.groupBox3.Controls.Add(this.radioFloat);
-            this.groupBox3.Controls.Add(this.chbTetra);
-            this.groupBox3.Controls.Add(this.radioInterval);
-            this.groupBox3.Location = new System.Drawing.Point(169, 57);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(305, 36);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
+            this.gBFormatChanger.Controls.Add(this.radioInteger);
+            this.gBFormatChanger.Controls.Add(this.radioFloat);
+            this.gBFormatChanger.Controls.Add(this.chbTetra);
+            this.gBFormatChanger.Controls.Add(this.radioInterval);
+            this.gBFormatChanger.Location = new System.Drawing.Point(169, 57);
+            this.gBFormatChanger.Name = "gBFormatChanger";
+            this.gBFormatChanger.Size = new System.Drawing.Size(305, 36);
+            this.gBFormatChanger.TabIndex = 5;
+            this.gBFormatChanger.TabStop = false;
             // 
             // radioInteger
             // 
@@ -2717,16 +2717,16 @@
             this.bClear.UseVisualStyleBackColor = true;
             this.bClear.Click += new System.EventHandler(this.bClear_Click);
             // 
-            // bStart
+            // bStartCalculation
             // 
-            this.bStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bStart.Location = new System.Drawing.Point(7, 66);
-            this.bStart.Name = "bStart";
-            this.bStart.Size = new System.Drawing.Size(75, 23);
-            this.bStart.TabIndex = 0;
-            this.bStart.Text = "Старт";
-            this.bStart.UseVisualStyleBackColor = true;
-            this.bStart.Click += new System.EventHandler(this.bStart_Click);
+            this.bStartCalculation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bStartCalculation.Location = new System.Drawing.Point(7, 66);
+            this.bStartCalculation.Name = "bStartCalculation";
+            this.bStartCalculation.Size = new System.Drawing.Size(75, 23);
+            this.bStartCalculation.TabIndex = 0;
+            this.bStartCalculation.Text = "Старт";
+            this.bStartCalculation.UseVisualStyleBackColor = true;
+            this.bStartCalculation.Click += new System.EventHandler(this.bStart_Click);
             // 
             // toolTip1
             // 
@@ -2997,16 +2997,16 @@
             this.l2ccTo16cc.Text = "2cc";
             this.l2ccTo16cc.Click += new System.EventHandler(this.l2ccTo16cc_Click);
             // 
-            // recalculate
+            // bStartRecalculation
             // 
-            this.recalculate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.recalculate.Location = new System.Drawing.Point(19, 126);
-            this.recalculate.Name = "recalculate";
-            this.recalculate.Size = new System.Drawing.Size(156, 23);
-            this.recalculate.TabIndex = 8;
-            this.recalculate.Text = "Перерасчет";
-            this.recalculate.UseVisualStyleBackColor = true;
-            this.recalculate.Click += new System.EventHandler(this.recalculate_Click);
+            this.bStartRecalculation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bStartRecalculation.Location = new System.Drawing.Point(19, 126);
+            this.bStartRecalculation.Name = "bStartRecalculation";
+            this.bStartRecalculation.Size = new System.Drawing.Size(156, 23);
+            this.bStartRecalculation.TabIndex = 8;
+            this.bStartRecalculation.Text = "Перерасчет";
+            this.bStartRecalculation.UseVisualStyleBackColor = true;
+            this.bStartRecalculation.Click += new System.EventHandler(this.recalculate_Click);
             // 
             // lNormDenorm
             // 
@@ -3049,16 +3049,16 @@
             this.bMaximizeFooterTab.Visible = false;
             this.bMaximizeFooterTab.Click += new System.EventHandler(this.bMaximizeFooterTab_Click);
             // 
-            // button2
+            // bStopRecalculation
             // 
-            this.button2.BackColor = System.Drawing.Color.DarkOrange;
-            this.button2.Location = new System.Drawing.Point(20, 126);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(156, 23);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Отмена";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Visible = false;
+            this.bStopRecalculation.BackColor = System.Drawing.Color.DarkOrange;
+            this.bStopRecalculation.Location = new System.Drawing.Point(20, 126);
+            this.bStopRecalculation.Name = "bStopRecalculation";
+            this.bStopRecalculation.Size = new System.Drawing.Size(156, 23);
+            this.bStopRecalculation.TabIndex = 14;
+            this.bStopRecalculation.Text = "Отмена";
+            this.bStopRecalculation.UseVisualStyleBackColor = false;
+            this.bStopRecalculation.Visible = false;
             // 
             // lTh1
             // 
@@ -3199,6 +3199,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::Flexible_computing.Properties.Resources.light_honeycomb;
             this.ClientSize = new System.Drawing.Size(964, 697);
+            this.Controls.Add(this.bStopRecalculation);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.lbTime);
             this.Controls.Add(this.dataGridView1);
@@ -3215,9 +3216,8 @@
             this.Controls.Add(this.lTh2);
             this.Controls.Add(this.lTh1);
             this.Controls.Add(this.tabControlFooter);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.recalculate);
+            this.Controls.Add(this.bStartRecalculation);
             this.Controls.Add(this.l2ccTo16cc);
             this.Controls.Add(this.bCopy);
             this.Controls.Add(this.lNormDenorm);
@@ -3269,8 +3269,8 @@
             this.statusStrip.PerformLayout();
             this.groupBox_Input.ResumeLayout(false);
             this.groupBox_Input.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.gBFormatChanger.ResumeLayout(false);
+            this.gBFormatChanger.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDown)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.contextMenuExceptions.ResumeLayout(false);
@@ -3299,7 +3299,7 @@
         private System.Windows.Forms.TabPage tabPB64;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.GroupBox groupBox_Input;
-        private System.Windows.Forms.Button bStart;
+        private System.Windows.Forms.Button bStartCalculation;
         private System.Windows.Forms.Button bClear;
         private System.Windows.Forms.TabPage tabPB128;
         private System.Windows.Forms.TabPage tabPB256;
@@ -3345,7 +3345,7 @@
         private System.Windows.Forms.ToolStripMenuItem значенияРезультатыИсследованияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem параметрыToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox gBFormatChanger;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.GroupBox gBFieldContainer64;
         private System.Windows.Forms.Label label21;
@@ -3433,7 +3433,7 @@
         private System.Windows.Forms.TextBox tbMantisa256_2;
         private System.Windows.Forms.ToolStripMenuItem miToNPInf;
         private System.Windows.Forms.TextBox tbCalcError;
-        private System.Windows.Forms.Button recalculate;
+        private System.Windows.Forms.Button bStartRecalculation;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.CheckBox cbClearLog;
         private System.Windows.Forms.RichTextBox richTextBox1;
@@ -3533,8 +3533,8 @@
         private System.Windows.Forms.Button bpb64Info;
         private System.Windows.Forms.Button bpb128Info;
         private System.Windows.Forms.Button bpb256Info;
-        private System.Windows.Forms.Button bCancelStart;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bStopCalculation;
+        private System.Windows.Forms.Button bStopRecalculation;
         private System.Windows.Forms.CheckBox cbDebug;
         private System.Windows.Forms.Label lTh1;
         private System.Windows.Forms.Label lTh2;

@@ -348,12 +348,12 @@ namespace Flexible_computing
                     progressBar1.Value = 0;
                     progressBar1.UseWaitCursor = false;
                     progressBar1.Refresh();
-                    bStart.Enabled = true;
+                    bStartCalculation.Enabled = true;
                     //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
                     calcResultsAndErrors(null);
-                    bCancelStart.Visible = false;
+                    bStopCalculation.Visible = false;
                     calcFinished = false;
-                    UnLockComponents();
+                    UnLockComponents(null);
                     timeOnForm("Paint CalcFinished");
                 }
             }
@@ -1353,8 +1353,8 @@ namespace Flexible_computing
         private void bStart_Click(object sender, EventArgs e)
         {
             // Buttons 
-            bStart.Enabled = false;
-            bCancelStart.Visible = true;
+            bStartCalculation.Enabled = false;
+            bStopCalculation.Visible = true;
 
             String outputLog="";
             String numLeft,numRight;
@@ -1417,7 +1417,7 @@ namespace Flexible_computing
                     isNum128Refreshed = false;
                     isNum256Refreshed = false;
                     stlStatus.Text = "Статус : Работаю... Осталось 32,64,128,256";
-                    LockComponents((byte)LockCommands.Start);
+                    LockComponents(LockCommands.Start);
                     //ThreadPool.QueueUserWorkItem(this.Calculation);
                     Calculation(1);          // Make Threading Here
 
@@ -1432,8 +1432,8 @@ namespace Flexible_computing
                     //stlStatus.Text = "Статус : Завершено...";
                     if (isThreadsRunning(3, true) == 0)
                     {
-                        bStart.Enabled = true;
-                        bCancelStart.Visible = false;
+                        bStartCalculation.Enabled = true;
+                        bStopCalculation.Visible = false;
                     }
                 }
                 else
@@ -1472,12 +1472,15 @@ namespace Flexible_computing
         {
             int i, loop_counter, temp, selectedTab;
             loop_counter = inputStringFormat == 0 ? 1 : 2;
-            String sign, currSeparator;
+            String sign, currSeparator, elapsedTime;
             String outputLog = "";
             String tempStr = "";
             Byte[] outputStr;
             selectedTab = tabControl_Format.SelectedIndex;
             bool was16cc = false;
+            
+            //timeCounter.Reset();
+            //timeCounter.Start();
             if (currentCCOnTabs == true)
             {
                 convert16to2Recalc();
@@ -1486,9 +1489,12 @@ namespace Flexible_computing
             stlStatus.Text = "Статус : Работаю... ";
             try
             {
-                LockComponents((byte)LockCommands.Recalc);
+                LockComponents(LockCommands.Recalc);
                 ThreadPool.QueueUserWorkItem(o =>
                 {
+                    //System.Timers.Timer tmpTimer = new System.Timers.Timer();
+                    Stopwatch tmpTimer = new Stopwatch();
+                    tmpTimer.Start();
                     switch (selectedTab)
                     {
                         case 0: // 32
@@ -1643,12 +1649,25 @@ namespace Flexible_computing
                             break;
                     }
 
+                    settbResText(tbInput.Text);
+                    
                     if (was16cc)
                     {
                         convert2to16(null);
                     }
                     stlStatus.Text = "Статус : Завершено...";
                     setProgress(0);
+                    UnLockComponents(null);
+                    
+                    tmpTimer.Stop();
+                    //timeCounter.Stop();
+                    elapsedTime = "";
+                    elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+                        tmpTimer.Elapsed.Hours, tmpTimer.Elapsed.Minutes, tmpTimer.Elapsed.Seconds,
+                        tmpTimer.Elapsed.Milliseconds);
+
+                    stlTime.Text = " Время преоборазования : " + elapsedTime;
+                    timeCounter.Reset();
                 });
 
             }
@@ -2209,7 +2228,7 @@ namespace Flexible_computing
         /// Locking all  components when calculations
         /// </summary>
         /// <param name="Command">1 - Start; 2 - Recalculate</param>
-        public void LockComponents(byte Command)
+        public void LockComponents(LockCommands Command)
         {
             timeOnForm("Lock Components");
             // menu
@@ -2219,7 +2238,7 @@ namespace Flexible_computing
             // Buttons
                 bLoad.Enabled = false;
                 bClear.Enabled = false;
-                groupBox3.Enabled = false;
+                gBFormatChanger.Enabled = false;
                 nUpDown.Enabled = false;
                 tbInput.Enabled = false;
 
@@ -2230,25 +2249,45 @@ namespace Flexible_computing
 
                 switch (Command)
                 {
-                    case 1: recalculate.Enabled = false; break;
-                    case 2: bStart.Enabled = false; break;
+                    case LockCommands.Recalc:
+                        bStartRecalculation.Enabled = false; 
+                        bStartRecalculation.Visible = false;
+                        bStartCalculation.Enabled = false;
+                        bStopCalculation.Visible = false;
+
+                        bStopRecalculation.Visible = true; break;
+                    case LockCommands.Start: 
+                        bStartCalculation.Enabled = false; 
+                        bStartCalculation.Visible = false;
+                        bStopRecalculation.Visible = false;
+                        bStartRecalculation.Enabled = false;
+
+                        bStopCalculation.Visible = true; break;
                 }
         }
 
+        public delegate void UnLockComponentsDel(Object threadContext);
         /// <summary>
         /// Unlocking all components after calculations
         /// </summary>
-        public void UnLockComponents()
+        public void UnLockComponents(Object threadContext)
         {
             timeOnForm("Unlock Components");
-            // menu
+            if (menuStrip_Global.InvokeRequired)
+            {
+                UnLockComponentsDel d = new UnLockComponentsDel(UnLockComponents);
+                this.Invoke(d, new object[] { null });
+            }
+            else
+            {   
+                // menu
                 menuStrip_Global.Enabled = true;
-            // 2cc 16cc
+                // 2cc 16cc
                 l2ccTo16cc.Enabled = true;
-            // Buttons
+                // Buttons
                 bLoad.Enabled = true;
                 bClear.Enabled = true;
-                groupBox3.Enabled = true;
+                gBFormatChanger.Enabled = true;
                 nUpDown.Enabled = true;
                 tbInput.Enabled = true;
 
@@ -2256,9 +2295,12 @@ namespace Flexible_computing
                 //bStop_Thread64.Enabled = false;
                 //bStop_Thread128.Enabled = false;
                 //bStop_Thread256.Enabled = false;
-            // Special Buttons 
-                bStart.Enabled = true;
-                recalculate.Enabled = true;
+                // Special Buttons 
+                bStartCalculation.Enabled = true;
+                bStartRecalculation.Enabled = true;
+                bStopCalculation.Visible = false;
+                bStopRecalculation.Visible = false;
+            }
         }
        
         public bool canAddDigit(char inChar, int bit)
@@ -2480,8 +2522,8 @@ namespace Flexible_computing
                 }
             }
             
-            bCancelStart.Visible = false;
-            bStart.Enabled = true;
+            bStopCalculation.Visible = false;
+            bStartCalculation.Enabled = true;
             stlStatus.Text = "Статус : Отменено...";
             bClear_Click(sender,e);
         }
@@ -3020,13 +3062,61 @@ namespace Flexible_computing
             }
         }
 
+        public void settbResText(Object threadContext)
+        {
+            String text = (String)threadContext;
+            if (tbRes.InvokeRequired)
+            {
+                settbExp32TextDel d = new settbExp32TextDel(settbResText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                tbRes.Text = text;
+            }
+        }
+        public void settbCalcErrorText(Object threadContext)
+        {
+            String text = (String)threadContext;
+            if (tbCalcError.InvokeRequired)
+            {
+                settbExp32TextDel d = new settbExp32TextDel(settbCalcErrorText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                tbCalcError.Text = text;
+            }
+        }
+        public void settbInputText(Object threadContext)
+        {
+            String text = (String)threadContext;
+            if (tbInput.InvokeRequired)
+            {
+                settbExp32TextDel d = new settbExp32TextDel(settbInputText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                tbInput.Text = text;
+            }
+        }
 
 //#################################  DEBUG Func's Section #########################################
-
-        public void timeOnForm(String text)
+        public delegate void timeOnFormDel(Object threadContext);
+        public void timeOnForm(Object threadContext)
         {
-            lbTime.Items.Add(System.DateTime.Now.ToString("hh:mm:ss:ms"));
-            lbEvent.Items.Add(text);
+            String inputText = (String)threadContext;
+            if (lbTime.InvokeRequired)
+            {
+                timeOnFormDel d = new timeOnFormDel(timeOnForm);
+                this.Invoke(d, new object[] { inputText });
+            }
+            else
+            {
+                lbTime.Items.Add(System.DateTime.Now.ToString("hh:mm:ss:ms"));
+                lbEvent.Items.Add(inputText);
+            }
         }
         private void tTime_Tick(object sender, EventArgs e)
         {
