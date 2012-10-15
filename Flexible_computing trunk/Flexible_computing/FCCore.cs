@@ -756,6 +756,7 @@ namespace Flexible_computing
         /// <param name="InputNumber">New Number to Calculate</param>
         public void SetNumber(String InputNumber)
         {
+            bool repeatConvertion = false;
             String tempNumber="";
             inputString = InputNumber;
             try
@@ -787,7 +788,21 @@ namespace Flexible_computing
                         if (Num256.NumberState != stateOfNumber.error)
                         {
                             this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
-                            this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
+                            do
+                            {
+                                this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
+                                if (isStringZero(BinaryFloatPart) && isStringZero(BinaryIntPart))
+                                {
+                                    AdditionalAccurancy += 500;
+                                    repeatConvertion = true;
+                                }
+                                else
+                                {
+                                    repeatConvertion = false;
+                                    AdditionalAccurancy = 0;
+                                }
+                            } while (repeatConvertion);
+
                             progIncThreadSafe();
                             FillBinaryVars(PartOfNumber.Left);
                         }
@@ -869,7 +884,21 @@ namespace Flexible_computing
                         if (Num256.NumberState != stateOfNumber.error)
                         {
                             this.BinaryIntPartFILeft= convert10to2IPart(IntPartDenormalizedFILeft);
-                            this.BinaryFloatPartFILeft = convert10to2FPart(FloatPartDenormalizedFILeft);
+                            do{
+                                this.BinaryFloatPartFILeft = convert10to2FPart(FloatPartDenormalizedFILeft);
+                                if (isStringZero(BinaryFloatPartFILeft) && isStringZero(BinaryIntPartFILeft))
+                                {
+                                    AdditionalAccurancy += 500;
+                                    repeatConvertion = true;
+                                }
+                                else
+                                {
+                                    repeatConvertion = false;
+                                    AdditionalAccurancy = 0;
+                                }
+                            }
+                            while(repeatConvertion);
+                            
                             FillBinaryVars(PartOfNumber.Left);
                             // Fill SEM 
                         }
@@ -923,7 +952,21 @@ namespace Flexible_computing
                         if (Num256.NumberStateRight != stateOfNumber.error)
                         {
                             this.BinaryIntPartFIRight = convert10to2IPart(IntPartDenormalizedFIRight);
-                            this.BinaryFloatPartFIRight = convert10to2FPart(FloatPartDenormalizedFIRight);
+                            do
+                            {
+                                this.BinaryFloatPartFIRight = convert10to2FPart(FloatPartDenormalizedFIRight);
+                                if (isStringZero(BinaryFloatPartFIRight) && isStringZero(BinaryIntPartFIRight))
+                                {
+                                    AdditionalAccurancy += 500;
+                                    repeatConvertion = true;
+                                }
+                                else
+                                {
+                                    repeatConvertion = false;
+                                    AdditionalAccurancy = 0;
+                                }
+                            }
+                            while (repeatConvertion);
                             FillBinaryVars(PartOfNumber.Right);
                             // Fill SEM 
                         }
@@ -1856,17 +1899,6 @@ namespace Flexible_computing
                                             Num32.NumberState = checkNumberState(expZero, manZero, numZero, expFull, recalculation);
                                     }
                                 }
-                                //if (NumberFormat != 0)
-                                //{
-                                //    if ((Num32.ExponentaRight != "") && (Num32.MantisaRight != ""))
-                                //    {
-                                //        expZero = isStringZero(Num32.ExponentaRight);
-                                //        manZero = isStringZero(Num32.MantisaRight);
-                                //        expFull = checkExpFull(Num32.ExponentaRight);
-                                //        if (Num32.NumberStateRight != stateOfNumber.error)
-                                //            Num32.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull);
-                                //    }
-                                //}
                                 break;
                             }
                         case 64:
@@ -2234,6 +2266,7 @@ namespace Flexible_computing
 
         //----------------------   Arithmetics  BEGIN
         public const int ACCURANCY = 2000;
+        public static int AdditionalAccurancy = 0;
         /// <summary>
         /// Converts float part of number form 10cc to 2cc.Lenght depends from constant 'ACCURANCY'
         /// Funcs using: NONE
@@ -2257,7 +2290,7 @@ namespace Flexible_computing
                 }
 
 
-                for (countAccuracy = 0; countAccuracy < ACCURANCY; countAccuracy++)
+                for (countAccuracy = 0; countAccuracy < ACCURANCY + AdditionalAccurancy; countAccuracy++)
                 {
 
                     outString = "";

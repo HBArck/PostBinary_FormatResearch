@@ -85,3 +85,4 @@ C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computi
 C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.application
 C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.exe
 C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.pdb
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.PropertiesForm.resources

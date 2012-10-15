@@ -82,6 +82,8 @@
             this.українскаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.исключенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.свойстваToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -241,18 +243,19 @@
             this.stlTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.problemStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox_Input = new System.Windows.Forms.GroupBox();
-            this.bStopCalculation = new System.Windows.Forms.Button();
             this.tbInput = new System.Windows.Forms.TextBox();
+            this.l2ccTo16cc = new System.Windows.Forms.Label();
             this.gBFormatChanger = new System.Windows.Forms.GroupBox();
             this.radioInteger = new System.Windows.Forms.RadioButton();
             this.radioFloat = new System.Windows.Forms.RadioButton();
             this.chbTetra = new System.Windows.Forms.CheckBox();
             this.radioInterval = new System.Windows.Forms.RadioButton();
-            this.nUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label19 = new System.Windows.Forms.Label();
             this.bLoad = new System.Windows.Forms.Button();
             this.bClear = new System.Windows.Forms.Button();
             this.bStartCalculation = new System.Windows.Forms.Button();
+            this.bStopCalculation = new System.Windows.Forms.Button();
+            this.nUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label19 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.cbClearLog = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -281,7 +284,6 @@
             this.cExpR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cManRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bCopy = new System.Windows.Forms.Button();
-            this.l2ccTo16cc = new System.Windows.Forms.Label();
             this.bStartRecalculation = new System.Windows.Forms.Button();
             this.lNormDenorm = new System.Windows.Forms.Label();
             this.errorTimer = new System.Windows.Forms.Timer(this.components);
@@ -306,6 +308,10 @@
             this.tTime = new System.Windows.Forms.Timer(this.components);
             this.lbTime = new System.Windows.Forms.ListBox();
             this.tStatus = new System.Windows.Forms.Timer(this.components);
+            this.gBThreads = new System.Windows.Forms.GroupBox();
+            this.gBEvents = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.GUITimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip_Global.SuspendLayout();
             this.tabControl_Format.SuspendLayout();
             this.tabPB32.SuspendLayout();
@@ -331,6 +337,9 @@
             this.contextMenuKnownErrors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.gBThreads.SuspendLayout();
+            this.gBEvents.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip_Global
@@ -452,7 +461,9 @@
             this.тестовыйРежимToolStripMenuItem,
             this.языкToolStripMenuItem,
             this.toolStripSeparator13,
-            this.исключенияToolStripMenuItem});
+            this.исключенияToolStripMenuItem,
+            this.toolStripSeparator14,
+            this.свойстваToolStripMenuItem});
             this.параметрыToolStripMenuItem1.Name = "параметрыToolStripMenuItem1";
             this.параметрыToolStripMenuItem1.Size = new System.Drawing.Size(83, 23);
             this.параметрыToolStripMenuItem1.Text = "Параметры";
@@ -762,6 +773,17 @@
             this.исключенияToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.исключенияToolStripMenuItem.Text = "Исключения";
             // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(233, 6);
+            // 
+            // свойстваToolStripMenuItem
+            // 
+            this.свойстваToolStripMenuItem.Name = "свойстваToolStripMenuItem";
+            this.свойстваToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.свойстваToolStripMenuItem.Text = "Свойства";
+            // 
             // справкаToolStripMenuItem
             // 
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -974,11 +996,11 @@
             this.tabControl_Format.Controls.Add(this.tabPB256);
             this.tabControl_Format.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabControl_Format.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.tabControl_Format.ItemSize = new System.Drawing.Size(184, 18);
-            this.tabControl_Format.Location = new System.Drawing.Point(12, 150);
+            this.tabControl_Format.ItemSize = new System.Drawing.Size(180, 18);
+            this.tabControl_Format.Location = new System.Drawing.Point(6, 37);
             this.tabControl_Format.Name = "tabControl_Format";
             this.tabControl_Format.SelectedIndex = 0;
-            this.tabControl_Format.Size = new System.Drawing.Size(740, 160);
+            this.tabControl_Format.Size = new System.Drawing.Size(735, 160);
             this.tabControl_Format.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl_Format.TabIndex = 1;
             this.toolTip1.SetToolTip(this.tabControl_Format, "Остановка вычиления формата pb256");
@@ -995,7 +1017,7 @@
             this.tabPB32.Location = new System.Drawing.Point(4, 22);
             this.tabPB32.Name = "tabPB32";
             this.tabPB32.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPB32.Size = new System.Drawing.Size(732, 134);
+            this.tabPB32.Size = new System.Drawing.Size(727, 134);
             this.tabPB32.TabIndex = 0;
             this.tabPB32.Text = "pbinary32";
             // 
@@ -1005,8 +1027,9 @@
             this.bStop_Thread32.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bStop_Thread32.Cursor = System.Windows.Forms.Cursors.Help;
             this.bStop_Thread32.Enabled = false;
+            this.bStop_Thread32.FlatAppearance.BorderSize = 0;
             this.bStop_Thread32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bStop_Thread32.Location = new System.Drawing.Point(708, 36);
+            this.bStop_Thread32.Location = new System.Drawing.Point(705, 36);
             this.bStop_Thread32.Name = "bStop_Thread32";
             this.bStop_Thread32.Size = new System.Drawing.Size(19, 19);
             this.bStop_Thread32.TabIndex = 5;
@@ -1022,7 +1045,7 @@
             this.bpb32Info.FlatAppearance.BorderSize = 0;
             this.bpb32Info.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bpb32Info.ForeColor = System.Drawing.SystemColors.Control;
-            this.bpb32Info.Location = new System.Drawing.Point(708, 14);
+            this.bpb32Info.Location = new System.Drawing.Point(706, 14);
             this.bpb32Info.Margin = new System.Windows.Forms.Padding(0);
             this.bpb32Info.Name = "bpb32Info";
             this.bpb32Info.Size = new System.Drawing.Size(19, 19);
@@ -1255,7 +1278,7 @@
             this.tabPB64.Location = new System.Drawing.Point(4, 22);
             this.tabPB64.Name = "tabPB64";
             this.tabPB64.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPB64.Size = new System.Drawing.Size(732, 134);
+            this.tabPB64.Size = new System.Drawing.Size(727, 134);
             this.tabPB64.TabIndex = 1;
             this.tabPB64.Text = "pbinary64";
             // 
@@ -1265,8 +1288,9 @@
             this.bStop_Thread64.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bStop_Thread64.Cursor = System.Windows.Forms.Cursors.Help;
             this.bStop_Thread64.Enabled = false;
+            this.bStop_Thread64.FlatAppearance.BorderSize = 0;
             this.bStop_Thread64.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bStop_Thread64.Location = new System.Drawing.Point(708, 36);
+            this.bStop_Thread64.Location = new System.Drawing.Point(705, 36);
             this.bStop_Thread64.Name = "bStop_Thread64";
             this.bStop_Thread64.Size = new System.Drawing.Size(19, 19);
             this.bStop_Thread64.TabIndex = 6;
@@ -1282,7 +1306,7 @@
             this.bpb64Info.FlatAppearance.BorderSize = 0;
             this.bpb64Info.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bpb64Info.ForeColor = System.Drawing.SystemColors.Control;
-            this.bpb64Info.Location = new System.Drawing.Point(708, 14);
+            this.bpb64Info.Location = new System.Drawing.Point(706, 14);
             this.bpb64Info.Margin = new System.Windows.Forms.Padding(0);
             this.bpb64Info.Name = "bpb64Info";
             this.bpb64Info.Size = new System.Drawing.Size(19, 19);
@@ -1644,7 +1668,7 @@
             this.tabPB128.Location = new System.Drawing.Point(4, 22);
             this.tabPB128.Name = "tabPB128";
             this.tabPB128.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPB128.Size = new System.Drawing.Size(732, 134);
+            this.tabPB128.Size = new System.Drawing.Size(727, 134);
             this.tabPB128.TabIndex = 2;
             this.tabPB128.Text = "pbinary128";
             // 
@@ -1654,8 +1678,9 @@
             this.bStop_Thread128.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bStop_Thread128.Cursor = System.Windows.Forms.Cursors.Help;
             this.bStop_Thread128.Enabled = false;
+            this.bStop_Thread128.FlatAppearance.BorderSize = 0;
             this.bStop_Thread128.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bStop_Thread128.Location = new System.Drawing.Point(708, 36);
+            this.bStop_Thread128.Location = new System.Drawing.Point(705, 36);
             this.bStop_Thread128.Name = "bStop_Thread128";
             this.bStop_Thread128.Size = new System.Drawing.Size(19, 19);
             this.bStop_Thread128.TabIndex = 10;
@@ -1671,7 +1696,7 @@
             this.bpb128Info.FlatAppearance.BorderSize = 0;
             this.bpb128Info.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bpb128Info.ForeColor = System.Drawing.SystemColors.Control;
-            this.bpb128Info.Location = new System.Drawing.Point(708, 14);
+            this.bpb128Info.Location = new System.Drawing.Point(706, 14);
             this.bpb128Info.Margin = new System.Windows.Forms.Padding(0);
             this.bpb128Info.Name = "bpb128Info";
             this.bpb128Info.Size = new System.Drawing.Size(19, 19);
@@ -2039,7 +2064,7 @@
             this.tabPB256.Location = new System.Drawing.Point(4, 22);
             this.tabPB256.Name = "tabPB256";
             this.tabPB256.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPB256.Size = new System.Drawing.Size(732, 134);
+            this.tabPB256.Size = new System.Drawing.Size(727, 134);
             this.tabPB256.TabIndex = 3;
             this.tabPB256.Text = "pbinary256";
             // 
@@ -2048,8 +2073,9 @@
             this.bStop_Thread256.BackgroundImage = global::Flexible_computing.Properties.Resources.stop_thread2;
             this.bStop_Thread256.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bStop_Thread256.Enabled = false;
+            this.bStop_Thread256.FlatAppearance.BorderSize = 0;
             this.bStop_Thread256.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bStop_Thread256.Location = new System.Drawing.Point(708, 36);
+            this.bStop_Thread256.Location = new System.Drawing.Point(705, 36);
             this.bStop_Thread256.Name = "bStop_Thread256";
             this.bStop_Thread256.Size = new System.Drawing.Size(19, 19);
             this.bStop_Thread256.TabIndex = 13;
@@ -2064,7 +2090,7 @@
             this.bpb256Info.FlatAppearance.BorderSize = 0;
             this.bpb256Info.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bpb256Info.ForeColor = System.Drawing.SystemColors.Control;
-            this.bpb256Info.Location = new System.Drawing.Point(708, 14);
+            this.bpb256Info.Location = new System.Drawing.Point(706, 14);
             this.bpb256Info.Margin = new System.Windows.Forms.Padding(0);
             this.bpb256Info.Name = "bpb256Info";
             this.bpb256Info.Size = new System.Drawing.Size(19, 19);
@@ -2424,7 +2450,7 @@
             // 
             this.gbError.BackColor = System.Drawing.Color.Lavender;
             this.gbError.Controls.Add(this.tbCalcError);
-            this.gbError.Location = new System.Drawing.Point(12, 428);
+            this.gbError.Location = new System.Drawing.Point(12, 435);
             this.gbError.Name = "gbError";
             this.gbError.Size = new System.Drawing.Size(740, 85);
             this.gbError.TabIndex = 2;
@@ -2449,7 +2475,7 @@
             this.gbRes.Controls.Add(this.rB2cc32);
             this.gbRes.Controls.Add(this.rB10cc32);
             this.gbRes.Controls.Add(this.tbRes);
-            this.gbRes.Location = new System.Drawing.Point(12, 326);
+            this.gbRes.Location = new System.Drawing.Point(12, 335);
             this.gbRes.Name = "gbRes";
             this.gbRes.Size = new System.Drawing.Size(740, 96);
             this.gbRes.TabIndex = 1;
@@ -2510,7 +2536,7 @@
             this.label18.BackColor = System.Drawing.Color.Lavender;
             this.label18.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label18.Font = new System.Drawing.Font("Book Antiqua", 9F);
-            this.label18.Location = new System.Drawing.Point(482, 127);
+            this.label18.Location = new System.Drawing.Point(520, 68);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(110, 21);
             this.label18.TabIndex = 0;
@@ -2560,36 +2586,20 @@
             // groupBox_Input
             // 
             this.groupBox_Input.BackColor = System.Drawing.Color.Lavender;
-            this.groupBox_Input.Controls.Add(this.bStopCalculation);
             this.groupBox_Input.Controls.Add(this.tbInput);
+            this.groupBox_Input.Controls.Add(this.l2ccTo16cc);
             this.groupBox_Input.Controls.Add(this.gBFormatChanger);
-            this.groupBox_Input.Controls.Add(this.nUpDown);
-            this.groupBox_Input.Controls.Add(this.label19);
             this.groupBox_Input.Controls.Add(this.bLoad);
+            this.groupBox_Input.Controls.Add(this.label18);
             this.groupBox_Input.Controls.Add(this.bClear);
             this.groupBox_Input.Controls.Add(this.bStartCalculation);
+            this.groupBox_Input.Controls.Add(this.bStopCalculation);
             this.groupBox_Input.Location = new System.Drawing.Point(12, 27);
             this.groupBox_Input.Name = "groupBox_Input";
             this.groupBox_Input.Size = new System.Drawing.Size(740, 98);
             this.groupBox_Input.TabIndex = 3;
             this.groupBox_Input.TabStop = false;
             this.groupBox_Input.Text = "Ввод исходных данных";
-            // 
-            // bStopCalculation
-            // 
-            this.bStopCalculation.BackColor = System.Drawing.Color.DarkOrange;
-            this.bStopCalculation.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.bStopCalculation.FlatAppearance.BorderSize = 2;
-            this.bStopCalculation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.bStopCalculation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.bStopCalculation.Location = new System.Drawing.Point(6, 65);
-            this.bStopCalculation.Name = "bStopCalculation";
-            this.bStopCalculation.Size = new System.Drawing.Size(75, 23);
-            this.bStopCalculation.TabIndex = 14;
-            this.bStopCalculation.Text = "Отмена";
-            this.bStopCalculation.UseVisualStyleBackColor = false;
-            this.bStopCalculation.Visible = false;
-            this.bStopCalculation.Click += new System.EventHandler(this.bCancelStart_Click);
             // 
             // tbInput
             // 
@@ -2609,6 +2619,19 @@
             this.tbInput.WordWrap = false;
             this.tbInput.TextChanged += new System.EventHandler(this.tbInput_TextChanged);
             this.tbInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbInput_KeyPress);
+            // 
+            // l2ccTo16cc
+            // 
+            this.l2ccTo16cc.AutoSize = true;
+            this.l2ccTo16cc.BackColor = System.Drawing.Color.SkyBlue;
+            this.l2ccTo16cc.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.l2ccTo16cc.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.l2ccTo16cc.Location = new System.Drawing.Point(480, 69);
+            this.l2ccTo16cc.Name = "l2ccTo16cc";
+            this.l2ccTo16cc.Size = new System.Drawing.Size(34, 20);
+            this.l2ccTo16cc.TabIndex = 7;
+            this.l2ccTo16cc.Text = "2cc";
+            this.l2ccTo16cc.Click += new System.EventHandler(this.l2ccTo16cc_Click);
             // 
             // gBFormatChanger
             // 
@@ -2668,43 +2691,14 @@
             this.radioInterval.UseVisualStyleBackColor = true;
             this.radioInterval.Click += new System.EventHandler(this.radioInterval_Click);
             // 
-            // nUpDown
-            // 
-            this.nUpDown.Location = new System.Drawing.Point(550, 69);
-            this.nUpDown.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nUpDown.Name = "nUpDown";
-            this.nUpDown.Size = new System.Drawing.Size(73, 20);
-            this.nUpDown.TabIndex = 4;
-            this.nUpDown.Tag = "";
-            this.nUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.toolTip1.SetToolTip(this.nUpDown, "Количество знаков целой и \r\nдробной частей входного числа");
-            this.nUpDown.Value = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            0});
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label19.Location = new System.Drawing.Point(476, 71);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(73, 13);
-            this.label19.TabIndex = 1;
-            this.label19.Text = "Кол-во цифр:";
-            // 
             // bLoad
             // 
             this.bLoad.Location = new System.Drawing.Point(659, 66);
             this.bLoad.Name = "bLoad";
-            this.bLoad.Size = new System.Drawing.Size(75, 23);
+            this.bLoad.Size = new System.Drawing.Size(76, 23);
             this.bLoad.TabIndex = 0;
             this.bLoad.Text = "Загрузить...";
+            this.bLoad.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bLoad.UseVisualStyleBackColor = true;
             // 
             // bClear
@@ -2728,6 +2722,52 @@
             this.bStartCalculation.UseVisualStyleBackColor = true;
             this.bStartCalculation.Click += new System.EventHandler(this.bStart_Click);
             // 
+            // bStopCalculation
+            // 
+            this.bStopCalculation.BackColor = System.Drawing.Color.DarkOrange;
+            this.bStopCalculation.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.bStopCalculation.FlatAppearance.BorderSize = 2;
+            this.bStopCalculation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.bStopCalculation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.bStopCalculation.Location = new System.Drawing.Point(6, 65);
+            this.bStopCalculation.Name = "bStopCalculation";
+            this.bStopCalculation.Size = new System.Drawing.Size(75, 23);
+            this.bStopCalculation.TabIndex = 14;
+            this.bStopCalculation.Text = "Отмена";
+            this.bStopCalculation.UseVisualStyleBackColor = false;
+            this.bStopCalculation.Visible = false;
+            this.bStopCalculation.Click += new System.EventHandler(this.bCancelStart_Click);
+            // 
+            // nUpDown
+            // 
+            this.nUpDown.Location = new System.Drawing.Point(889, 127);
+            this.nUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.nUpDown.Name = "nUpDown";
+            this.nUpDown.Size = new System.Drawing.Size(46, 20);
+            this.nUpDown.TabIndex = 4;
+            this.nUpDown.Tag = "";
+            this.nUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.nUpDown, "Количество знаков целой и \r\nдробной частей входного числа");
+            this.nUpDown.Value = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label19.Location = new System.Drawing.Point(889, 112);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(73, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "Кол-во цифр:";
+            // 
             // toolTip1
             // 
             this.toolTip1.AutoPopDelay = 5000;
@@ -2738,7 +2778,7 @@
             // cbClearLog
             // 
             this.cbClearLog.AutoSize = true;
-            this.cbClearLog.Location = new System.Drawing.Point(1, 521);
+            this.cbClearLog.Location = new System.Drawing.Point(889, 168);
             this.cbClearLog.Name = "cbClearLog";
             this.cbClearLog.Size = new System.Drawing.Size(15, 14);
             this.cbClearLog.TabIndex = 9;
@@ -2803,7 +2843,6 @@
             this.cbDebug.TabIndex = 15;
             this.toolTip1.SetToolTip(this.cbDebug, "Debug CB");
             this.cbDebug.UseVisualStyleBackColor = true;
-            this.cbDebug.Visible = false;
             this.cbDebug.CheckedChanged += new System.EventHandler(this.cbDebug_CheckedChanged);
             // 
             // tabPage1
@@ -2882,7 +2921,7 @@
             this.tabControlFooter.Controls.Add(this.tabPage2);
             this.tabControlFooter.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControlFooter.ItemSize = new System.Drawing.Size(146, 18);
-            this.tabControlFooter.Location = new System.Drawing.Point(16, 519);
+            this.tabControlFooter.Location = new System.Drawing.Point(16, 523);
             this.tabControlFooter.Name = "tabControlFooter";
             this.tabControlFooter.Padding = new System.Drawing.Point(3, 4);
             this.tabControlFooter.SelectedIndex = 0;
@@ -2941,9 +2980,9 @@
             this.cMan,
             this.cExpR,
             this.cManRight});
-            this.dataGridView2.Location = new System.Drawing.Point(781, 456);
+            this.dataGridView2.Location = new System.Drawing.Point(781, 479);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(500, 216);
+            this.dataGridView2.Size = new System.Drawing.Size(500, 193);
             this.dataGridView2.TabIndex = 24;
             // 
             // cName
@@ -2976,31 +3015,18 @@
             // 
             // bCopy
             // 
-            this.bCopy.Location = new System.Drawing.Point(598, 126);
+            this.bCopy.Location = new System.Drawing.Point(660, 12);
             this.bCopy.Name = "bCopy";
-            this.bCopy.Size = new System.Drawing.Size(75, 22);
+            this.bCopy.Size = new System.Drawing.Size(76, 22);
             this.bCopy.TabIndex = 6;
             this.bCopy.Text = "Копировать";
             this.bCopy.UseVisualStyleBackColor = true;
             this.bCopy.Click += new System.EventHandler(this.bCopy_Click);
             // 
-            // l2ccTo16cc
-            // 
-            this.l2ccTo16cc.AutoSize = true;
-            this.l2ccTo16cc.BackColor = System.Drawing.Color.SkyBlue;
-            this.l2ccTo16cc.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.l2ccTo16cc.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.l2ccTo16cc.Location = new System.Drawing.Point(689, 128);
-            this.l2ccTo16cc.Name = "l2ccTo16cc";
-            this.l2ccTo16cc.Size = new System.Drawing.Size(34, 20);
-            this.l2ccTo16cc.TabIndex = 7;
-            this.l2ccTo16cc.Text = "2cc";
-            this.l2ccTo16cc.Click += new System.EventHandler(this.l2ccTo16cc_Click);
-            // 
             // bStartRecalculation
             // 
             this.bStartRecalculation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bStartRecalculation.Location = new System.Drawing.Point(19, 126);
+            this.bStartRecalculation.Location = new System.Drawing.Point(11, 14);
             this.bStartRecalculation.Name = "bStartRecalculation";
             this.bStartRecalculation.Size = new System.Drawing.Size(156, 23);
             this.bStartRecalculation.TabIndex = 8;
@@ -3015,7 +3041,7 @@
             this.lNormDenorm.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lNormDenorm.Font = new System.Drawing.Font("Segoe UI Symbol", 10F);
             this.lNormDenorm.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lNormDenorm.Location = new System.Drawing.Point(181, 127);
+            this.lNormDenorm.Location = new System.Drawing.Point(175, 15);
             this.lNormDenorm.Name = "lNormDenorm";
             this.lNormDenorm.Size = new System.Drawing.Size(41, 21);
             this.lNormDenorm.TabIndex = 10;
@@ -3030,7 +3056,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label12.Location = new System.Drawing.Point(249, 313);
+            this.label12.Location = new System.Drawing.Point(889, 152);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(41, 13);
             this.label12.TabIndex = 11;
@@ -3041,7 +3067,7 @@
             // 
             this.bMaximizeFooterTab.BackgroundImage = global::Flexible_computing.Properties.Resources.arrow_out;
             this.bMaximizeFooterTab.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bMaximizeFooterTab.Location = new System.Drawing.Point(0, 537);
+            this.bMaximizeFooterTab.Location = new System.Drawing.Point(940, 27);
             this.bMaximizeFooterTab.Name = "bMaximizeFooterTab";
             this.bMaximizeFooterTab.Size = new System.Drawing.Size(24, 24);
             this.bMaximizeFooterTab.TabIndex = 12;
@@ -3052,18 +3078,19 @@
             // bStopRecalculation
             // 
             this.bStopRecalculation.BackColor = System.Drawing.Color.DarkOrange;
-            this.bStopRecalculation.Location = new System.Drawing.Point(20, 126);
+            this.bStopRecalculation.Location = new System.Drawing.Point(10, 13);
             this.bStopRecalculation.Name = "bStopRecalculation";
             this.bStopRecalculation.Size = new System.Drawing.Size(156, 23);
             this.bStopRecalculation.TabIndex = 14;
             this.bStopRecalculation.Text = "Отмена";
             this.bStopRecalculation.UseVisualStyleBackColor = false;
             this.bStopRecalculation.Visible = false;
+            this.bStopRecalculation.Click += new System.EventHandler(this.bStopRecalculation_Click);
             // 
             // lTh1
             // 
             this.lTh1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lTh1.Location = new System.Drawing.Point(778, 37);
+            this.lTh1.Location = new System.Drawing.Point(6, 16);
             this.lTh1.Name = "lTh1";
             this.lTh1.Size = new System.Drawing.Size(86, 15);
             this.lTh1.TabIndex = 16;
@@ -3071,7 +3098,7 @@
             // lTh2
             // 
             this.lTh2.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lTh2.Location = new System.Drawing.Point(778, 54);
+            this.lTh2.Location = new System.Drawing.Point(6, 33);
             this.lTh2.Name = "lTh2";
             this.lTh2.Size = new System.Drawing.Size(86, 15);
             this.lTh2.TabIndex = 16;
@@ -3079,7 +3106,7 @@
             // lTh3
             // 
             this.lTh3.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lTh3.Location = new System.Drawing.Point(778, 71);
+            this.lTh3.Location = new System.Drawing.Point(6, 50);
             this.lTh3.Name = "lTh3";
             this.lTh3.Size = new System.Drawing.Size(86, 15);
             this.lTh3.TabIndex = 16;
@@ -3087,7 +3114,7 @@
             // lTh4
             // 
             this.lTh4.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lTh4.Location = new System.Drawing.Point(778, 89);
+            this.lTh4.Location = new System.Drawing.Point(6, 68);
             this.lTh4.Name = "lTh4";
             this.lTh4.Size = new System.Drawing.Size(86, 15);
             this.lTh4.TabIndex = 16;
@@ -3095,7 +3122,7 @@
             // lTh4R
             // 
             this.lTh4R.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lTh4R.Location = new System.Drawing.Point(778, 161);
+            this.lTh4R.Location = new System.Drawing.Point(6, 133);
             this.lTh4R.Name = "lTh4R";
             this.lTh4R.Size = new System.Drawing.Size(86, 15);
             this.lTh4R.TabIndex = 19;
@@ -3103,7 +3130,7 @@
             // lTh3R
             // 
             this.lTh3R.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lTh3R.Location = new System.Drawing.Point(778, 143);
+            this.lTh3R.Location = new System.Drawing.Point(6, 115);
             this.lTh3R.Name = "lTh3R";
             this.lTh3R.Size = new System.Drawing.Size(86, 15);
             this.lTh3R.TabIndex = 18;
@@ -3111,7 +3138,7 @@
             // lTh2R
             // 
             this.lTh2R.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lTh2R.Location = new System.Drawing.Point(778, 126);
+            this.lTh2R.Location = new System.Drawing.Point(6, 98);
             this.lTh2R.Name = "lTh2R";
             this.lTh2R.Size = new System.Drawing.Size(86, 15);
             this.lTh2R.TabIndex = 17;
@@ -3119,7 +3146,7 @@
             // lbEvent
             // 
             this.lbEvent.FormattingEnabled = true;
-            this.lbEvent.Location = new System.Drawing.Point(889, 201);
+            this.lbEvent.Location = new System.Drawing.Point(117, 32);
             this.lbEvent.Name = "lbEvent";
             this.lbEvent.Size = new System.Drawing.Size(166, 95);
             this.lbEvent.TabIndex = 20;
@@ -3133,9 +3160,9 @@
             this.StateR,
             this.ResultL,
             this.ResultR});
-            this.dataGridView1.Location = new System.Drawing.Point(781, 299);
+            this.dataGridView1.Location = new System.Drawing.Point(781, 323);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(500, 151);
+            this.dataGridView1.Size = new System.Drawing.Size(500, 150);
             this.dataGridView1.TabIndex = 21;
             // 
             // ThreadN
@@ -3169,7 +3196,7 @@
             // lTime
             // 
             this.lTime.AutoSize = true;
-            this.lTime.Location = new System.Drawing.Point(802, 185);
+            this.lTime.Location = new System.Drawing.Point(30, 16);
             this.lTime.Name = "lTime";
             this.lTime.Size = new System.Drawing.Size(41, 13);
             this.lTime.TabIndex = 22;
@@ -3183,7 +3210,7 @@
             // lbTime
             // 
             this.lbTime.FormattingEnabled = true;
-            this.lbTime.Location = new System.Drawing.Point(781, 201);
+            this.lbTime.Location = new System.Drawing.Point(9, 32);
             this.lbTime.Name = "lbTime";
             this.lbTime.Size = new System.Drawing.Size(102, 95);
             this.lbTime.TabIndex = 23;
@@ -3193,40 +3220,78 @@
             this.tStatus.Interval = 1000;
             this.tStatus.Tick += new System.EventHandler(this.TimerCount);
             // 
+            // gBThreads
+            // 
+            this.gBThreads.Controls.Add(this.lTh3);
+            this.gBThreads.Controls.Add(this.lTh1);
+            this.gBThreads.Controls.Add(this.lTh2);
+            this.gBThreads.Controls.Add(this.lTh4);
+            this.gBThreads.Controls.Add(this.lTh3R);
+            this.gBThreads.Controls.Add(this.lTh4R);
+            this.gBThreads.Controls.Add(this.lTh2R);
+            this.gBThreads.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.gBThreads.Location = new System.Drawing.Point(781, 30);
+            this.gBThreads.Name = "gBThreads";
+            this.gBThreads.Size = new System.Drawing.Size(102, 152);
+            this.gBThreads.TabIndex = 25;
+            this.gBThreads.TabStop = false;
+            this.gBThreads.Text = "Threads";
+            // 
+            // gBEvents
+            // 
+            this.gBEvents.Controls.Add(this.lTime);
+            this.gBEvents.Controls.Add(this.lbEvent);
+            this.gBEvents.Controls.Add(this.lbTime);
+            this.gBEvents.Location = new System.Drawing.Point(781, 193);
+            this.gBEvents.Name = "gBEvents";
+            this.gBEvents.Size = new System.Drawing.Size(200, 133);
+            this.gBEvents.TabIndex = 26;
+            this.gBEvents.TabStop = false;
+            this.gBEvents.Text = "Events";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Lavender;
+            this.groupBox1.Controls.Add(this.tabControl_Format);
+            this.groupBox1.Controls.Add(this.bCopy);
+            this.groupBox1.Controls.Add(this.bStartRecalculation);
+            this.groupBox1.Controls.Add(this.bStopRecalculation);
+            this.groupBox1.Controls.Add(this.lNormDenorm);
+            this.groupBox1.Location = new System.Drawing.Point(12, 127);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(740, 203);
+            this.groupBox1.TabIndex = 27;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Поля";
+            // 
+            // GUITimer
+            // 
+            this.GUITimer.Interval = 1000;
+            this.GUITimer.Tick += new System.EventHandler(this.GUITimer_Tick);
+            // 
             // Form1
             // 
+            this.AcceptButton = this.bStartCalculation;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::Flexible_computing.Properties.Resources.light_honeycomb;
             this.ClientSize = new System.Drawing.Size(964, 697);
-            this.Controls.Add(this.bStopRecalculation);
-            this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.lbTime);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.lbEvent);
-            this.Controls.Add(this.lTh2R);
-            this.Controls.Add(this.cbDebug);
-            this.Controls.Add(this.cbClearLog);
-            this.Controls.Add(this.lTh4R);
-            this.Controls.Add(this.lTime);
-            this.Controls.Add(this.lTh3R);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.lTh4);
-            this.Controls.Add(this.lTh3);
-            this.Controls.Add(this.lTh2);
-            this.Controls.Add(this.lTh1);
-            this.Controls.Add(this.tabControlFooter);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gBEvents);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.nUpDown);
+            this.Controls.Add(this.gBThreads);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.bStartRecalculation);
-            this.Controls.Add(this.l2ccTo16cc);
-            this.Controls.Add(this.bCopy);
-            this.Controls.Add(this.lNormDenorm);
-            this.Controls.Add(this.label18);
+            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.cbDebug);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.tabControlFooter);
             this.Controls.Add(this.gbRes);
+            this.Controls.Add(this.cbClearLog);
             this.Controls.Add(this.gbError);
             this.Controls.Add(this.groupBox_Input);
             this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.tabControl_Format);
             this.Controls.Add(this.menuStrip_Global);
             this.Controls.Add(this.bMaximizeFooterTab);
             this.DoubleBuffered = true;
@@ -3281,6 +3346,11 @@
             this.contextMenuKnownErrors.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.gBThreads.ResumeLayout(false);
+            this.gBEvents.ResumeLayout(false);
+            this.gBEvents.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3564,6 +3634,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn StateR;
         private System.Windows.Forms.DataGridViewTextBoxColumn ResultL;
         private System.Windows.Forms.DataGridViewTextBoxColumn ResultR;
+        private System.Windows.Forms.GroupBox gBThreads;
+        private System.Windows.Forms.GroupBox gBEvents;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripMenuItem свойстваToolStripMenuItem;
+        private System.Windows.Forms.Timer GUITimer;
     }
 }
 

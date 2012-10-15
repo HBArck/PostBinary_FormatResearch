@@ -319,10 +319,11 @@ namespace Flexible_computing
             {
                 bStart_Click(sender, e);
                 e.KeyChar = '\0';
-                return;
+                tbInput.Enabled = true;
+               // return;
             }
 
-            tbInput.Text = temp;
+            //tbInput.Text = temp;
         }
 
         public void changeFiledsFormat(byte isNormal)

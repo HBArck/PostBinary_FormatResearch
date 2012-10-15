@@ -47,6 +47,7 @@ namespace Flexible_computing
         bool isNum256Refreshed = true;
         bool calcFinished = false;
         bool isFormClosing = false;
+        bool GUI_Timer_Work = false;
         Thread threadCalc;
         //char Flags END
 
@@ -134,6 +135,7 @@ namespace Flexible_computing
             //temp.SetValue(Core.Num32, "new mantissa",null);
             //tbMantisa32.Text = Core.Num32.Mantisa;
             tTime.Start();
+            GUITimer.Start();
             tabControl_Format.SelectedIndex = 0;
 
             radioFloat.Enabled = false;
@@ -233,7 +235,7 @@ namespace Flexible_computing
         }
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            //FillForm();
+            //ThreadPool.QueueUserWorkItem(FillForm);
             // calcResultsAndErrors(this, null);
             refreshNumberStatus();
             if (isFirstTime)
@@ -261,110 +263,15 @@ namespace Flexible_computing
             lTh3R.Text = Core.thread128_right.ThreadState.ToString();
             lTh4R.Text = Core.thread256_right.ThreadState.ToString();
 
-            if (!isNum32Refreshed)
-            {
-                if (isThreadsRunning(0, false) == 0)
-                {
-                    //bStop_Thread32.Enabled = false;
-                    progInc();
-                    isNum32Refreshed = true;
-                }
-            }
-
-            if (!isNum64Refreshed)
-            {
-                if (inputStringFormat == 0)
-                {
-                    if (isThreadsRunning(1, false) == 0)
-                    {
-                        //bStop_Thread64.Enabled = false;
-                        progInc();
-                        isNum64Refreshed = true;
-                    }
-                }
-                else
-                {
-                    if (isThreadsRunning(1, true) == 0)
-                    {
-                        //bStop_Thread64.Enabled = false;
-                        progInc();
-                        isNum64Refreshed = true;
-                    }
-                }
-            }
-
-            if (!isNum128Refreshed)
-            {
-                if (inputStringFormat == 0)
-                {
-                    if (isThreadsRunning(2, false) == 0)
-                    {
-                        //bStop_Thread128.Enabled = false;
-                        progInc();
-                        isNum128Refreshed = true;
-                    }
-                }
-                else
-                {
-                    if (isThreadsRunning(2, true) == 0)
-                    {
-                        //bStop_Thread128.Enabled = false;
-                        progInc();
-                        isNum128Refreshed = true;
-                    }
-                }
-            }
-
-            if (!isNum256Refreshed)
-            {
-                if (inputStringFormat == 0)
-                {
-                    if (isThreadsRunning(3, false) == 0)
-                    {
-                        progInc();
-                        isNum256Refreshed = true;
-                        calcFinished = true;
-                       // bStop_Thread256.Enabled = false;
-                        timeOnForm("Paint 256 Finished");
-                    }
-                }
-                else
-                {
-                    if (isThreadsRunning(3, true) == 0)
-                    {
-                        progInc();
-                        isNum256Refreshed = true;
-                        calcFinished = true;
-                       // bStop_Thread256.Enabled = false;
-                        timeOnForm("Paint 256 Finished + Right");
-                    }
-                }
-            }
-
-            if ((isNum256Refreshed) && (calcFinished))
-            {
-                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
-                {
-                    progressBar1.Value = 0;
-                    progressBar1.UseWaitCursor = false;
-                    progressBar1.Refresh();
-                    bStartCalculation.Enabled = true;
-                    //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
-                    calcResultsAndErrors(null);
-                    bStopCalculation.Visible = false;
-                    calcFinished = false;
-                    UnLockComponents(null);
-                    timeOnForm("Paint CalcFinished");
-                }
-            }
-            else
-            {
-                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
-                {
-                    progressBar1.Value = 0;
-                    progressBar1.Refresh();
-                }
-            }
+         
+            //else
+            //{
+            //    if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
+            //    {
+            //        progressBar1.Value = 0;
+            //        progressBar1.Refresh();
+            //    }
+            //}
         }
 
         public void Load_Form_Components()
@@ -869,7 +776,7 @@ namespace Flexible_computing
         public void logResults(Object threadContext)
         {
             Thread.CurrentThread.IsBackground = true;
-            while (isThreadsRunning(3, inputStringFormat == 0 ? false : true) != 0)
+            while (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) != 0)
             {
                 if (isFormClosing)
                 {
@@ -948,17 +855,17 @@ namespace Flexible_computing
             try
             {
                 Thread.CurrentThread.IsBackground = true;
-                while (isThreadsRunning(3, inputStringFormat == 0 ? false : true) != 0)
-                {
-                    if (isFormClosing)
-                    {
-                        try
-                        { Thread.CurrentThread.Abort(); }
-                        catch (Exception ex)
-                        { return; }
-                    }
-                    Thread.Sleep(1000);
-                }
+                //while (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) != 0)
+                //{
+                //    if (isFormClosing)
+                //    {
+                //        try
+                //        { Thread.CurrentThread.Abort(); }
+                //        catch (Exception ex)
+                //        { return; }
+                //    }
+                //    Thread.Sleep(1000);
+                //}
 
                 settbS32Text(Core.Num32.Sign == "-" ? "1" : "0");
                 settbS64Text(Core.Num64.Sign == "-" ? "1" : "0");
@@ -1009,17 +916,17 @@ namespace Flexible_computing
         public void calcResultsAndErrors(Object threadContext)
         {
             Thread.CurrentThread.IsBackground = true;
-            while (isThreadsRunning(3, inputStringFormat == 0 ? false : true) != 0)
-            {
-                if (isFormClosing)
-                {
-                    try
-                    { Thread.CurrentThread.Abort(); }
-                    catch (Exception ex)
-                    { return; }
-                }
-                Thread.Sleep(1000);
-            }
+            //while (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) != 0)
+            //{
+            //    if (isFormClosing)
+            //    {
+            //        try
+            //        { Thread.CurrentThread.Abort(); }
+            //        catch (Exception ex)
+            //        { return; }
+            //    }
+            //    Thread.Sleep(1000);
+            //}
           
             //isTabIndexChanged = true;
             if (tabControl_Format.InvokeRequired)
@@ -1211,70 +1118,190 @@ namespace Flexible_computing
                 //    catch (Exception ex)
                 //    { return; }
                 //}
-                stlStatus.Text = "Статус : Работаю... ";
-                if (isThreadsRunning(0, inputStringFormat == 0 ? false : true) != 0)
-                {
-                    if (!i32)
-                    {
-                        stlStatus.Text += " 32 ";
-                        i32 = true;
-                    }
-                }
-                else
-                {
-                    i64 = false;
-                    i128 = false;
-                    i256 = false;
-                }
 
-                if (isThreadsRunning(1, inputStringFormat == 0 ? false : true) != 0)
-                {
-                    if (!i64)
-                    {
-                        stlStatus.Text += "64 ";
-                        i64 = true;
-                    }
-                }
-                else
-                {
-                    i128 = false;
-                    i256 = false;
-                }
 
-                if (isThreadsRunning(2, inputStringFormat == 0 ? false : true) != 0)
-                {
-                    if (!i128)
-                    {
-                        stlStatus.Text += "128 ";
-                        i128 = true;
-                    }
-                }
-                else
-                {
-                    i256 = false;
-                }
-
-                if (isThreadsRunning(3, inputStringFormat == 0 ? false : true) != 0)
-                {
-                    if (!i256)
-                    {
-                        stlStatus.Text += "256 ";
-                        i256 = true;
-                    }
-                }
-            
-            //    Thread.Sleep(500);
+            //if (!isNum32Refreshed)
+            //{
+            //    if (isThreadsRunning(0, false) == 0)
+            //    {
+            //        //bStop_Thread32.Enabled = false;
+            //        progInc();
+            //        isNum32Refreshed = true;
+            //    }
             //}
 
-            stlStatus.Text = "Статус : Завершено...";
-            timeCounter.Stop();
-            elapsedTime = "";
-            elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
-                timeCounter.Elapsed.Hours, timeCounter.Elapsed.Minutes, timeCounter.Elapsed.Seconds,
-                timeCounter.Elapsed.Milliseconds);
+            //if (!isNum64Refreshed)
+            //{
+            //    if (inputStringFormat == 0)
+            //    {
+            //        if (isThreadsRunning(1, false) == 0)
+            //        {
+            //            //bStop_Thread64.Enabled = false;
+            //            progInc();
+            //            isNum64Refreshed = true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (isThreadsRunning(1, true) == 0)
+            //        {
+            //            //bStop_Thread64.Enabled = false;
+            //            progInc();
+            //            isNum64Refreshed = true;
+            //        }
+            //    }
+            //}
 
-            stlTime.Text = " Время преоборазования : " + elapsedTime;
-            timeCounter.Reset();
+            //if (!isNum128Refreshed)
+            //{
+            //    if (inputStringFormat == 0)
+            //    {
+            //        if (isThreadsRunning(2, false) == 0)
+            //        {
+            //            //bStop_Thread128.Enabled = false;
+            //            progInc();
+            //            isNum128Refreshed = true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (isThreadsRunning(2, true) == 0)
+            //        {
+            //            //bStop_Thread128.Enabled = false;
+            //            progInc();
+            //            isNum128Refreshed = true;
+            //        }
+            //    }
+            //}
+
+            //if (!isNum256Refreshed)
+            //{
+            //    if (inputStringFormat == 0)
+            //    {
+            //        if (isThreadsRunning(3, false) == 0)
+            //        {
+            //            progInc();
+            //            isNum256Refreshed = true;
+            //            calcFinished = true;
+            //            // bStop_Thread256.Enabled = false;
+            //            timeOnForm("Paint 256 Finished");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (isThreadsRunning(3, true) == 0)
+            //        {
+            //            progInc();
+            //            isNum256Refreshed = true;
+            //            calcFinished = true;
+            //            // bStop_Thread256.Enabled = false;
+            //            timeOnForm("Paint 256 Finished + Right");
+            //        }
+            //    }
+            //}
+
+            //if ((isNum256Refreshed) && (calcFinished))
+            //{
+                //if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
+                //{
+                //    progressBar1.Value = 0;
+                //    progressBar1.UseWaitCursor = false;
+                //    //progressBar1.Refresh();
+                //    bStartCalculation.Enabled = true;
+                //    //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
+                //    calcResultsAndErrors(null);
+                //    bStopCalculation.Visible = false;
+                //    calcFinished = false;
+                //    UnLockComponents(null);
+                //    timeOnForm("Paint CalcFinished");
+                //}
+           // }
+
+
+                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) != 0)
+                {
+                    stlStatus.Text = "Статус : Работаю... ";
+                    if (isThreadsRunning(0, inputStringFormat == 0 ? false : true) != 0)
+                    {
+                        if (!i32)
+                        {
+                            stlStatus.Text += " 32 ";
+                            i32 = true;
+                        }
+                    }
+                    else
+                    {
+                        i64 = false;
+                        i128 = false;
+                        i256 = false;
+                    }
+
+                    if (isThreadsRunning(1, inputStringFormat == 0 ? false : true) != 0)
+                    {
+                        if (!i64)
+                        {
+                            stlStatus.Text += "64 ";
+                            i64 = true;
+                        }
+                    }
+                    else
+                    {
+                        i128 = false;
+                        i256 = false;
+                    }
+
+                    if (isThreadsRunning(2, inputStringFormat == 0 ? false : true) != 0)
+                    {
+                        if (!i128)
+                        {
+                            stlStatus.Text += "128 ";
+                            i128 = true;
+                        }
+                    }
+                    else
+                    {
+                        i256 = false;
+                    }
+
+                    if (isThreadsRunning(3, inputStringFormat == 0 ? false : true) != 0)
+                    {
+                        if (!i256)
+                        {
+                            stlStatus.Text += "256 ";
+                            i256 = true;
+                        }
+                    }
+
+                    //    Thread.Sleep(500);
+                    //}
+
+                }
+                else
+                {
+
+                    progressBar1.Value = 0;
+                    progressBar1.UseWaitCursor = false;
+                    //progressBar1.Refresh();
+                    bStartCalculation.Enabled = true;
+                    //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
+                    calcResultsAndErrors(null);
+                    bStopCalculation.Visible = false;
+                    calcFinished = true;
+                    UnLockComponents(null);
+                    timeOnForm("Paint CalcFinished");
+
+                    stlStatus.Text = "Статус : Завершено...";
+                    timeCounter.Stop();
+                    tStatus.Stop();
+                    elapsedTime = "";
+                    elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+                        timeCounter.Elapsed.Hours, timeCounter.Elapsed.Minutes, timeCounter.Elapsed.Seconds,
+                        timeCounter.Elapsed.Milliseconds);
+
+                    stlTime.Text = " Время преоборазования : " + elapsedTime;
+                   // timeCounter.Reset();
+                }
+            
         }
 
         //public delegate void dMakeCalculations();
@@ -1324,7 +1351,7 @@ namespace Flexible_computing
                     Core.SetNumber(datastr);
                     // ThreadPool.QueueUserWorkItem(Core.SetNumber, datastr);
 
-                    //calcFinished = true;
+                    calcFinished = true;
 
                     //checkInputStringForCurrentFormat();
                 }
@@ -1355,7 +1382,7 @@ namespace Flexible_computing
             // Buttons 
             bStartCalculation.Enabled = false;
             bStopCalculation.Visible = true;
-
+            GUI_Timer_Work = false;
             String outputLog="";
             String numLeft,numRight;
             Byte[] outputStr;
@@ -1363,7 +1390,7 @@ namespace Flexible_computing
             int i, separatorInd = 0 ;
             String separ = "";
             timeCounter.Reset();
-            timeCounter.Start();
+            
             if (tbInput.Text.IndexOf('/') != -1)
             {
                 separ = "/";
@@ -1382,6 +1409,7 @@ namespace Flexible_computing
                     convert16to2();
                     was16cc = true;
                 }
+                /*
                 switch (inputStringFormat)
                 {
                     case 0:
@@ -1395,6 +1423,7 @@ namespace Flexible_computing
                         tbInput.Text+= separ + testExponentNumber(numRight, (int)nUpDown.Value);
                         break;
                 }
+                */
                 switch (inputStringFormat)
                 {
                     case 0:
@@ -1412,6 +1441,7 @@ namespace Flexible_computing
                 if (RegxTest())
                 {
                     calcFinished = false;
+                    timeCounter.Start();
                     isNum32Refreshed = false;
                     isNum64Refreshed = false;
                     isNum128Refreshed = false;
@@ -1423,8 +1453,8 @@ namespace Flexible_computing
 
                     refreshNumberStatus();
                     ThreadPool.QueueUserWorkItem(logResults);
-                    ThreadPool.QueueUserWorkItem(FillForm);
-                    ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
+                    //ThreadPool.QueueUserWorkItem(FillForm);
+                    //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
                     tStatus.Start();
                     //ThreadPool.QueueUserWorkItem(TimerCount);
                     //calcResultsAndErrors(this, null);
@@ -1468,31 +1498,41 @@ namespace Flexible_computing
             statusStrip.Refresh();
             
         }
-        private void recalculate_Click(object sender, EventArgs e)
+
+        public delegate void del();
+        public del o;
+        public Thread RecalculationThread ;
+        public delegate void RecalculationDel(Object threadContext);
+        public void Recalculation(Object threadContext)
         {
-            int i, loop_counter, temp, selectedTab;
-            loop_counter = inputStringFormat == 0 ? 1 : 2;
-            String sign, currSeparator, elapsedTime;
-            String outputLog = "";
-            String tempStr = "";
-            Byte[] outputStr;
-            selectedTab = tabControl_Format.SelectedIndex;
-            bool was16cc = false;
-            
-            //timeCounter.Reset();
-            //timeCounter.Start();
-            if (currentCCOnTabs == true)
+            if (tabControl_Format.InvokeRequired)
             {
-                convert16to2Recalc();
-                was16cc = true;
+                RecalculationDel d = new RecalculationDel(Recalculation);
+                this.Invoke(d, new object[] { threadContext });
             }
-            stlStatus.Text = "Статус : Работаю... ";
-            try
+            else
             {
-                LockComponents(LockCommands.Recalc);
-                ThreadPool.QueueUserWorkItem(o =>
+                int i, loop_counter, temp, selectedTab;
+                loop_counter = inputStringFormat == 0 ? 1 : 2;
+                String sign, currSeparator, elapsedTime;
+                String outputLog = "";
+                String tempStr = "";
+                Byte[] outputStr;
+                selectedTab = tabControl_Format.SelectedIndex;
+                bool was16cc = false;
+
+                if (currentCCOnTabs == true)
                 {
-                    //System.Timers.Timer tmpTimer = new System.Timers.Timer();
+                    convert16to2Recalc();
+                    was16cc = true;
+                }
+                stlStatus.Text = "Статус : Работаю... ";
+                try
+                {
+                    LockComponents(LockCommands.Recalc);
+                    //ThreadPool.QueueUserWorkItem(
+                    //del o = () =>
+                    //{
                     Stopwatch tmpTimer = new Stopwatch();
                     tmpTimer.Start();
                     switch (selectedTab)
@@ -1650,7 +1690,7 @@ namespace Flexible_computing
                     }
 
                     settbResText(tbInput.Text);
-                    
+
                     if (was16cc)
                     {
                         convert2to16(null);
@@ -1658,9 +1698,8 @@ namespace Flexible_computing
                     stlStatus.Text = "Статус : Завершено...";
                     setProgress(0);
                     UnLockComponents(null);
-                    
+
                     tmpTimer.Stop();
-                    //timeCounter.Stop();
                     elapsedTime = "";
                     elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
                         tmpTimer.Elapsed.Hours, tmpTimer.Elapsed.Minutes, tmpTimer.Elapsed.Seconds,
@@ -1668,35 +1707,44 @@ namespace Flexible_computing
 
                     stlTime.Text = " Время преоборазования : " + elapsedTime;
                     timeCounter.Reset();
-                });
+                    //};
 
+                }
+                catch (FCCoreArithmeticException ex)
+                {
+                    catchException(excps.FCCoreArithmeticException, ex.Message);
+                }
+                catch (FCCoreGeneralException ex)
+                {
+                    catchException(excps.FCCoreGeneralException, ex.Message);
+                }
+                catch (FCCoreFunctionException ex)
+                {
+                    catchException(excps.FCCoreFunctionException, ex.Message);
+                }
+                catch (FCFormArithmeticException ex)
+                {
+                    catchException(excps.FCCoreArithmeticException, ex.Message);
+                }
+                catch (FCFormGeneralException ex)
+                {
+                    catchException(excps.FCCoreGeneralException, ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    catchException(excps.Exception, ex.Message);
+                }
+
+                statusStrip.Refresh();
             }
-            catch (FCCoreArithmeticException ex)
-            {
-                catchException(excps.FCCoreArithmeticException, ex.Message);
-            }
-            catch (FCCoreGeneralException ex)
-            {
-                catchException(excps.FCCoreGeneralException, ex.Message);
-            }
-            catch (FCCoreFunctionException ex)
-            {
-                catchException(excps.FCCoreFunctionException, ex.Message);
-            }
-            catch (FCFormArithmeticException ex)
-            {
-                catchException(excps.FCCoreArithmeticException, ex.Message);
-            }
-            catch (FCFormGeneralException ex)
-            {
-                catchException(excps.FCCoreGeneralException, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                catchException(excps.Exception, ex.Message);
-            }
-            
-            statusStrip.Refresh();
+        
+        }
+
+        private void recalculate_Click(object sender, EventArgs e)
+        {
+            RecalculationThread = new Thread(Recalculation);
+            RecalculationThread.IsBackground = true;
+            RecalculationThread.Start();
         }
      
         public void catchException(excps ex,String message)
@@ -1778,19 +1826,20 @@ namespace Flexible_computing
         /// Функция в зависимости от выбранной закладки переводит все поля формата (экспоненту, мантису,
         /// и если необходимо Код_Формата и Модификатор_формата) из 2сс в 16сс и обратно
         /// </summary>
-        /// <param name="inputSize">one of 4 options : 32, 64, 128, 256</param>
+        /// <param name="threadContext">one of 4 options : 32, 64, 128, 256</param>
         public void convert2to16(Object threadContext)
         {
             String temp_str;
-            String result;
-            Object temp_tb ;
-            int size = 0;
-            int i;
-            int count = 2;
-            String number = "Num";
+            //String result;
+            //Object temp_tb ;
+            //int size = 0;
+            //int i;
+            //int count = 2;
+            //String number = "Num";
+            
             try
             {
-                int currMBits = 0;
+                //int currMBits = 0;
                 //int inputStrForm = inputStringFormat == 0 ? 0 : 1;]
 
                 if (tbExp32.InvokeRequired)
@@ -1807,7 +1856,8 @@ namespace Flexible_computing
                     
                  foreach (TextBox currTextBox in textBoxes)
                  {
-                     currTextBox.Text = Core.convert2to16(currTextBox.Text);
+                    temp_str = Core.convert2to16(currTextBox.Text);
+                    currTextBox.Text = temp_str;
                  }
                  //for (int j = 0; j < 4; j++)
                  //{
@@ -1817,9 +1867,7 @@ namespace Flexible_computing
                  //        if ((tabControl_Format.SelectedIndex == 0) && (i > 1))
                  //            continue;
                  //        temp_str = FormatFileds[i] + size.ToString();
-
                  //        temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
-
                  //        result = Core.convert2to16(((TextBox)temp_tb).Text);
                  //        ((TextBox)temp_tb).Text = result;
                  //    }
@@ -1830,11 +1878,8 @@ namespace Flexible_computing
                  //            for (i = 0; i < 2; i++)
                  //            {
                  //                temp_str = FormatFileds[i] + size.ToString() + "_2";
-
                  //                temp_tb = tabControl_Format.TabPages[j].Controls["gBFieldContainer" + size.ToString()].Controls[temp_str];
-
                  //                result = Core.convert2to16(((TextBox)temp_tb).Text);
-
                  //                if (i > 1)
                  //                    ((TextBox)temp_tb).Text = result;
                  //                else
@@ -2238,6 +2283,7 @@ namespace Flexible_computing
             // Buttons
                 bLoad.Enabled = false;
                 bClear.Enabled = false;
+                bCopy.Enabled = false;
                 gBFormatChanger.Enabled = false;
                 nUpDown.Enabled = false;
                 tbInput.Enabled = false;
@@ -2259,8 +2305,8 @@ namespace Flexible_computing
                     case LockCommands.Start: 
                         bStartCalculation.Enabled = false; 
                         bStartCalculation.Visible = false;
-                        bStopRecalculation.Visible = false;
                         bStartRecalculation.Enabled = false;
+                        bStopRecalculation.Visible = false;
 
                         bStopCalculation.Visible = true; break;
                 }
@@ -2287,10 +2333,11 @@ namespace Flexible_computing
                 // Buttons
                 bLoad.Enabled = true;
                 bClear.Enabled = true;
+                bCopy.Enabled = true;
                 gBFormatChanger.Enabled = true;
                 nUpDown.Enabled = true;
                 tbInput.Enabled = true;
-
+                
                 //bStop_Thread32.Enabled = false;
                 //bStop_Thread64.Enabled = false;
                 //bStop_Thread128.Enabled = false;
@@ -2298,6 +2345,9 @@ namespace Flexible_computing
                 // Special Buttons 
                 bStartCalculation.Enabled = true;
                 bStartRecalculation.Enabled = true;
+                bStartCalculation.Visible = true;
+                bStartRecalculation.Visible = true;
+
                 bStopCalculation.Visible = false;
                 bStopRecalculation.Visible = false;
             }
@@ -2799,11 +2849,12 @@ namespace Flexible_computing
 
         // Exponent
         public delegate void settbExp32TextDel(Object threadContext);
-        public void settbExp32Text(String text)
+        public void settbExp32Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbExp32.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbExp32Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2812,11 +2863,12 @@ namespace Flexible_computing
             }
         }
      //   public delegate void settbExp64TextDel(Object threadContext);
-        public void settbExp64Text(String text)
+        public void settbExp64Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbExp64.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbExp64Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2825,11 +2877,12 @@ namespace Flexible_computing
             }
         }
      //   public delegate void settbExp128TextDel(Object threadContext);
-        public void settbExp128Text(String text)
+        public void settbExp128Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbExp128.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbExp128Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2838,11 +2891,12 @@ namespace Flexible_computing
             }
         }
      //   public delegate void settbExp256TextDel(Object threadContext);
-        public void settbExp256Text(String text)
+        public void settbExp256Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbExp256.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbExp256Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2851,11 +2905,12 @@ namespace Flexible_computing
             }
         }
 
-        public void settbExp64_2Text(String text)
+        public void settbExp64_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbExp64_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbExp64_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2863,11 +2918,12 @@ namespace Flexible_computing
                 tbExp64_2.Text = text;
             }
         }
-        public void settbExp128_2Text(String text)
+        public void settbExp128_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbExp128_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbExp128_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2875,11 +2931,12 @@ namespace Flexible_computing
                 tbExp128_2.Text = text;
             }
         }
-        public void settbExp256_2Text(String text)
+        public void settbExp256_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbExp256_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbExp256_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2889,11 +2946,12 @@ namespace Flexible_computing
         }
 
         // Mantissa
-        public void settbMan32Text(String text)
+        public void settbMan32Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbMantisa32.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbMan32Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2901,11 +2959,12 @@ namespace Flexible_computing
                 tbMantisa32.Text = text;
             }
         }
-        public void settbMan64Text(String text)
+        public void settbMan64Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbMantisa64.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbMan64Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2913,8 +2972,9 @@ namespace Flexible_computing
                 tbMantisa64.Text = text;
             }
         }
-        public void settbMan128Text(String text)
+        public void settbMan128Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbMantisa128.InvokeRequired)
             {
                 settbExp32TextDel d = new settbExp32TextDel(FillForm);
@@ -2925,11 +2985,12 @@ namespace Flexible_computing
                 tbMantisa128.Text = text;
             }
         }
-        public void settbMan256Text(String text)
+        public void settbMan256Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbMantisa256.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbMan256Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2937,12 +2998,13 @@ namespace Flexible_computing
                 tbMantisa256.Text = text;
             }
         }
-        
-        public void settbMan64_2Text(String text)
+
+        public void settbMan64_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbMantisa64_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbMan64_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2950,11 +3012,12 @@ namespace Flexible_computing
                 tbMantisa64_2.Text = text;
             }
         }
-        public void settbMan128_2Text(String text)
+        public void settbMan128_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbMantisa128_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbMan128_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2962,11 +3025,12 @@ namespace Flexible_computing
                 tbMantisa128_2.Text = text;
             }
         }
-        public void settbMan256_2Text(String text)
+        public void settbMan256_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbMantisa256_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbMan256_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2976,11 +3040,12 @@ namespace Flexible_computing
         }
 
         // Sign
-        public void settbS32Text(String text)
+        public void settbS32Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbSign32.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbS32Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -2988,11 +3053,12 @@ namespace Flexible_computing
                 tbSign32.Text = text;
             }
         }
-        public void settbS64Text(String text)
+        public void settbS64Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbSign64.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbS64Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -3000,11 +3066,12 @@ namespace Flexible_computing
                 tbSign64.Text = text;
             }
         }
-        public void settbS128Text(String text)
+        public void settbS128Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbSign128.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbS128Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -3012,11 +3079,12 @@ namespace Flexible_computing
                 tbSign128.Text = text;
             }
         }
-        public void settbS256Text(String text)
+        public void settbS256Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbSign256.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbS256Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -3025,11 +3093,12 @@ namespace Flexible_computing
             }
         }
 
-        public void settbS64_2Text(String text)
+        public void settbS64_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbSign64_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbS64_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -3037,11 +3106,12 @@ namespace Flexible_computing
                 tbSign64_2.Text = text;
             }
         }
-        public void settbS128_2Text(String text)
+        public void settbS128_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbSign128_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbS128_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -3049,11 +3119,12 @@ namespace Flexible_computing
                 tbSign128_2.Text = text;
             }
         }
-        public void settbS256_2Text(String text)
+        public void settbS256_2Text(Object threadContext)
         {
+            String text = (String)threadContext;
             if (tbSign256_2.InvokeRequired)
             {
-                settbExp32TextDel d = new settbExp32TextDel(FillForm);
+                settbExp32TextDel d = new settbExp32TextDel(settbS256_2Text);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -3213,6 +3284,28 @@ namespace Flexible_computing
             dataGridView2.Rows[9].Cells[0].Value = "BinaryFloatPartFIRight";
             dataGridView2.Rows[9].Cells[1].Value = Core.BinaryFloatPartFIRight;
         }
+
+        private void bStopRecalculation_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GUITimer_Tick(object sender, EventArgs e)
+        {
+
+            if (!GUI_Timer_Work)
+            {
+                if (isThreadsRunning(-1, inputStringFormat == 0 ? false : true) == 0)
+                {
+                    //ThreadPool.QueueUserWorkItem(FillForm);
+                    FillForm(null);
+                    //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
+                    calcResultsAndErrors(null);
+                    GUI_Timer_Work = true;
+                }
+            }
+        }
+
     
     }//class Form1
     public class FCFormGeneralException : System.Exception
