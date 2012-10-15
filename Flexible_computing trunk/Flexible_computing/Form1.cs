@@ -764,7 +764,7 @@ namespace Flexible_computing
             }
             else
             {
-                if ((val <= 100) && (val>0))
+                if ((val <= 100) && (val >=0))
                 {
                     progressBar1.Value = val;
                 }
@@ -1742,9 +1742,12 @@ namespace Flexible_computing
 
         private void recalculate_Click(object sender, EventArgs e)
         {
+            ThreadPool.QueueUserWorkItem( o =>{
             RecalculationThread = new Thread(Recalculation);
             RecalculationThread.IsBackground = true;
             RecalculationThread.Start();
+            });
+            
         }
      
         public void catchException(excps ex,String message)
@@ -3287,7 +3290,13 @@ namespace Flexible_computing
 
         private void bStopRecalculation_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                if ((RecalculationThread != null) && (RecalculationThread.ThreadState & (System.Threading.ThreadState.Background | System.Threading.ThreadState.Running)) != 0)
+                    RecalculationThread.Abort();
+            }
+            catch (Exception ex)
+            { }
         }
 
         private void GUITimer_Tick(object sender, EventArgs e)
