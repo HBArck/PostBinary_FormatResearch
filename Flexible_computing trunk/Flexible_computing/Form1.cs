@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
-
+using System.Threading.Tasks;
 namespace Flexible_computing
 {
     
@@ -134,6 +134,9 @@ namespace Flexible_computing
             //var  temp = Core.Num32.GetType().GetProperty("Mantisa");
             //temp.SetValue(Core.Num32, "new mantissa",null);
             //tbMantisa32.Text = Core.Num32.Mantisa;
+
+            ThreadPool.SetMaxThreads(20, 10);
+            ThreadPool.SetMinThreads(10, 5);
             tTime.Start();
             GUITimer.Start();
             tabControl_Format.SelectedIndex = 0;
@@ -728,6 +731,7 @@ namespace Flexible_computing
             }
         }
         
+        /*--Progress Bar Lux--BEGIN___*/
         private void progInc()
         {
             if (progressBar1.InvokeRequired)
@@ -770,7 +774,7 @@ namespace Flexible_computing
                 }
             }
         }
-
+        /*--Progress Bar Lux--END___*/
 
         public delegate void logResultsDel(Object threadContext);
         public void logResults(Object threadContext)
@@ -1499,26 +1503,207 @@ namespace Flexible_computing
             
         }
 
-        public delegate void del();
-        public del o;
-        public Thread RecalculationThread ;
-        public delegate void RecalculationDel(Object threadContext);
-        public void Recalculation(Object threadContext)
+        public delegate void RecalculationDel(object threadContext, DoWorkEventArgs e);
+        private void Recalculation(Object sender)
         {
-            if (tabControl_Format.InvokeRequired)
-            {
-                RecalculationDel d = new RecalculationDel(Recalculation);
-                this.Invoke(d, new object[] { threadContext });
-            }
-            else
-            {
                 int i, loop_counter, temp, selectedTab;
                 loop_counter = inputStringFormat == 0 ? 1 : 2;
                 String sign, currSeparator, elapsedTime;
                 String outputLog = "";
                 String tempStr = "";
                 Byte[] outputStr;
-                selectedTab = tabControl_Format.SelectedIndex;
+                //selectedTab = tabControl_Format.SelectedIndex;
+
+                bool was16cc = false;
+
+                if (currentCCOnTabs == true)
+                {
+                    //   convert16to2Recalc();
+                    was16cc = true;
+                }
+                Stopwatch tmpTimer = new Stopwatch();
+                tmpTimer.Start();
+                switch (CurrentSelectedTab)
+                {
+                    case 0: // 32
+                        if (inputStringFormat == 0)
+                        {
+                            //result = my754.selectOut(tbSign32.Text, tbExp32.Text, tbMantisa32.Text);
+                            progInc();
+                            Core.Num32.Sign = tbSign32.Text;
+                            progInc();
+                            Core.Num32.Exponenta = tbExp32.Text;
+                            progInc();
+                            Core.Num32.Mantisa = tbMantisa32.Text;
+                            progInc();
+                            Core.changeNumberState(false, true);
+                            progInc();
+                            Core.calcRes(Core.Num32, PartOfNumber.Left);
+                            progInc();
+                            changetbInputText(modifyMe((int)nUpDown.Value, Core.Num32.CorrectResult));
+                            setProgress(100);
+                        }
+                        break;
+                    case 1: // 64
+                        switch (inputStringFormat)
+                        {
+                            case 0:
+                                //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
+                                Core.Num64.Sign = tbSign64.Text; progInc();
+                                Core.Num64.Exponenta = tbExp64.Text; progInc();
+                                Core.Num64.Mantisa = tbMantisa64.Text; progInc();
+                                Core.changeNumberState(false, true); progInc();
+                                Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
+                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResult));
+                                setProgress(100);
+                                break;
+
+                            //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
+                            case 1:
+                            case 2:
+                                currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
+                                if (inputStringFormat == 1)
+                                {
+                                    Core.Num64.Sign = tbSign64.Text;
+                                    Core.Num64.SignRight = tbSign64_2.Text; progInc();
+                                }
+                                else
+                                    Core.Num64.Sign = tbSign64.Text;
+                                progInc();
+                                Core.Num64.Exponenta = tbExp64.Text;
+                                Core.Num64.Mantisa = tbMantisa64.Text; progInc();
+                                Core.changeNumberState(false, true); progInc();
+                                Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
+                                //tbInput.Text = Core.Num64.CorrectResult;
+                                progInc();
+                                Core.Num64.ExponentaRight = tbExp64_2.Text; progInc();
+                                Core.Num64.MantisaRight = tbMantisa64_2.Text; progInc();
+                                Core.changeNumberState(true, true); progInc();
+                                Core.calcRes(Core.Num64, PartOfNumber.Right); progInc();
+                                if (inputStringFormat == 1)
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionR));
+                                else
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalR));
+                                setProgress(100);
+                                break;
+                        }
+                        break;
+                    case 2: // 128
+                        switch (inputStringFormat)
+                        {
+                            case 0:
+                                //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
+                                Core.Num128.Sign = tbSign128.Text; progInc();
+                                Core.Num128.Exponenta = tbExp128.Text; progInc();
+                                Core.Num128.Mantisa = tbMantisa128.Text; progInc();
+                                Core.changeNumberState(false, true); progInc();
+                                Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
+                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult));
+                                setProgress(100);
+                                break;
+
+                            //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
+                            case 1:
+                            case 2:
+                                currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
+                                if (inputStringFormat == 1)
+                                {
+                                    Core.Num128.Sign = tbSign128.Text; progInc();
+                                    Core.Num128.SignRight = tbSign128_2.Text;
+                                }
+                                else
+                                    Core.Num128.Sign = tbSign128.Text; progInc();
+
+                                Core.Num128.Exponenta = tbExp128.Text; progInc();
+                                Core.Num128.Mantisa = tbMantisa128.Text; progInc();
+                                Core.changeNumberState(false, true); progInc();
+                                Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
+                                //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult);
+
+                                Core.Num128.ExponentaRight = tbExp128_2.Text; progInc();
+                                Core.Num128.MantisaRight = tbMantisa128_2.Text; progInc();
+                                Core.changeNumberState(true, true); progInc();
+                                Core.calcRes(Core.Num128, PartOfNumber.Right); progInc();
+                                if (inputStringFormat == 1)
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionR));
+                                else
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalR));
+                                setProgress(100);
+                                break;
+                        }
+                        break;
+                    case 3: // 256
+                        switch (inputStringFormat)
+                        {
+                            case 0:
+                                //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
+                                Core.Num256.Sign = tbSign256.Text; progInc();
+                                Core.Num256.Exponenta = tbExp256.Text; progInc();
+                                Core.Num256.Mantisa = tbMantisa256.Text; progInc();
+                                Core.changeNumberState(false, true); progInc();
+                                Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
+                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult)); setProgress(100);
+                                break;
+
+                            //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
+                            case 1:
+                            case 2:
+                                currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
+                                if (inputStringFormat == 1)
+                                {
+                                    Core.Num256.Sign = tbSign256.Text; progInc();
+                                    Core.Num256.SignRight = tbSign256_2.Text;
+                                }
+                                else
+                                    Core.Num256.Sign = tbSign256.Text; progInc();
+
+                                Core.Num256.Exponenta = tbExp256.Text; progInc();
+                                Core.Num256.Mantisa = tbMantisa256.Text; progInc();
+                                Core.changeNumberState(false, true); progInc();
+                                Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
+                                //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult);
+
+                                Core.Num256.ExponentaRight = tbExp256_2.Text; progInc();
+                                Core.Num256.MantisaRight = tbMantisa256_2.Text; progInc();
+                                Core.changeNumberState(true, true); progInc();
+                                Core.calcRes(Core.Num256, PartOfNumber.Right); progInc();
+                                if (inputStringFormat == 1)
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionR));
+                                else
+                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalR));
+                                setProgress(100);
+                                break;
+                        }
+                        break;
+                }
+
+                settbResText(tbInput.Text);
+
+                if (was16cc)
+                {
+                    convert2to16(null);
+                }
+                stlStatus.Text = "Статус : Завершено...";
+                setProgress(0);
+                UnLockComponents(null);
+
+                tmpTimer.Stop();
+                elapsedTime = "";
+                elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+                    tmpTimer.Elapsed.Hours, tmpTimer.Elapsed.Minutes, tmpTimer.Elapsed.Seconds,
+                    tmpTimer.Elapsed.Milliseconds);
+
+                stlTime.Text = " Время преоборазования : " + elapsedTime;
+                timeCounter.Reset();
+                //});
+
+        
+        }
+
+        public Thread RecalculationThread;
+        public BackgroundWorker bwRecalculation = new BackgroundWorker();
+        private void recalculate_Click(object sender, EventArgs e)//object sender, EventArgs e
+        {
                 bool was16cc = false;
 
                 if (currentCCOnTabs == true)
@@ -1530,185 +1715,20 @@ namespace Flexible_computing
                 try
                 {
                     LockComponents(LockCommands.Recalc);
-                    //ThreadPool.QueueUserWorkItem(
-                    //del o = () =>
+                    //bwRecalculation.WorkerReportsProgress = true;
+                    //bwRecalculation.WorkerSupportsCancellation = true;
+                    
+                    RecalculationThread = new Thread(new ParameterizedThreadStart(Recalculation));
+                    RecalculationThread.IsBackground = true;
+                    //ThreadPool.QueueUserWorkItem(o =>
                     //{
-                    Stopwatch tmpTimer = new Stopwatch();
-                    tmpTimer.Start();
-                    switch (selectedTab)
-                    {
-                        case 0: // 32
-                            if (inputStringFormat == 0)
-                            {
-                                //result = my754.selectOut(tbSign32.Text, tbExp32.Text, tbMantisa32.Text);
-                                progInc();
-                                Core.Num32.Sign = tbSign32.Text;
-                                progInc();
-                                Core.Num32.Exponenta = tbExp32.Text;
-                                progInc();
-                                Core.Num32.Mantisa = tbMantisa32.Text;
-                                progInc();
-                                Core.changeNumberState(false, true);
-                                progInc();
-                                Core.calcRes(Core.Num32, PartOfNumber.Left);
-                                progInc();
-                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num32.CorrectResult));
-                                setProgress(100);
-                            }
-                            break;
-                        case 1: // 64
-                            switch (inputStringFormat)
-                            {
-                                case 0:
-                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
-                                    Core.Num64.Sign = tbSign64.Text; progInc();
-                                    Core.Num64.Exponenta = tbExp64.Text; progInc();
-                                    Core.Num64.Mantisa = tbMantisa64.Text; progInc();
-                                    Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResult));
-                                    setProgress(100);
-                                    break;
+                        RecalculationThread.Start();
+                    //});
+                    //ThreadPool.QueueUserWorkItem(Recalculation);
 
-                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
-                                case 1:
-                                case 2:
-                                    currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
-                                    if (inputStringFormat == 1)
-                                    {
-                                        Core.Num64.Sign = tbSign64.Text;
-                                        Core.Num64.SignRight = tbSign64_2.Text; progInc();
-                                    }
-                                    else
-                                        Core.Num64.Sign = tbSign64.Text;
-                                    progInc();
-                                    Core.Num64.Exponenta = tbExp64.Text;
-                                    Core.Num64.Mantisa = tbMantisa64.Text; progInc();
-                                    Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
-                                    //tbInput.Text = Core.Num64.CorrectResult;
-                                    progInc();
-                                    Core.Num64.ExponentaRight = tbExp64_2.Text; progInc();
-                                    Core.Num64.MantisaRight = tbMantisa64_2.Text; progInc();
-                                    Core.changeNumberState(true, true); progInc();
-                                    Core.calcRes(Core.Num64, PartOfNumber.Right); progInc();
-                                    if (inputStringFormat == 1)
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionR));
-                                    else
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalR));
-                                    setProgress(100);
-                                    break;
-                            }
-                            break;
-                        case 2: // 128
-                            switch (inputStringFormat)
-                            {
-                                case 0:
-                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
-                                    Core.Num128.Sign = tbSign128.Text; progInc();
-                                    Core.Num128.Exponenta = tbExp128.Text; progInc();
-                                    Core.Num128.Mantisa = tbMantisa128.Text; progInc();
-                                    Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult));
-                                    setProgress(100);
-                                    break;
-
-                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
-                                case 1:
-                                case 2:
-                                    currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
-                                    if (inputStringFormat == 1)
-                                    {
-                                        Core.Num128.Sign = tbSign128.Text; progInc();
-                                        Core.Num128.SignRight = tbSign128_2.Text;
-                                    }
-                                    else
-                                        Core.Num128.Sign = tbSign128.Text; progInc();
-
-                                    Core.Num128.Exponenta = tbExp128.Text; progInc();
-                                    Core.Num128.Mantisa = tbMantisa128.Text; progInc();
-                                    Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
-                                    //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult);
-
-                                    Core.Num128.ExponentaRight = tbExp128_2.Text; progInc();
-                                    Core.Num128.MantisaRight = tbMantisa128_2.Text; progInc();
-                                    Core.changeNumberState(true, true); progInc();
-                                    Core.calcRes(Core.Num128, PartOfNumber.Right); progInc();
-                                    if (inputStringFormat == 1)
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionR));
-                                    else
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalR));
-                                    setProgress(100);
-                                    break;
-                            }
-                            break;
-                        case 3: // 256
-                            switch (inputStringFormat)
-                            {
-                                case 0:
-                                    //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
-                                    Core.Num256.Sign = tbSign256.Text; progInc();
-                                    Core.Num256.Exponenta = tbExp256.Text; progInc();
-                                    Core.Num256.Mantisa = tbMantisa256.Text; progInc();
-                                    Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult)); setProgress(100);
-                                    break;
-
-                                //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
-                                case 1:
-                                case 2:
-                                    currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
-                                    if (inputStringFormat == 1)
-                                    {
-                                        Core.Num256.Sign = tbSign256.Text; progInc();
-                                        Core.Num256.SignRight = tbSign256_2.Text;
-                                    }
-                                    else
-                                        Core.Num256.Sign = tbSign256.Text; progInc();
-
-                                    Core.Num256.Exponenta = tbExp256.Text; progInc();
-                                    Core.Num256.Mantisa = tbMantisa256.Text; progInc();
-                                    Core.changeNumberState(false, true); progInc();
-                                    Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
-                                    //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult);
-
-                                    Core.Num256.ExponentaRight = tbExp256_2.Text; progInc();
-                                    Core.Num256.MantisaRight = tbMantisa256_2.Text; progInc();
-                                    Core.changeNumberState(true, true); progInc();
-                                    Core.calcRes(Core.Num256, PartOfNumber.Right); progInc();
-                                    if (inputStringFormat == 1)
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionR));
-                                    else
-                                        changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalR));
-                                    setProgress(100);
-                                    break;
-                            }
-                            break;
-                    }
-
-                    settbResText(tbInput.Text);
-
-                    if (was16cc)
-                    {
-                        convert2to16(null);
-                    }
-                    stlStatus.Text = "Статус : Завершено...";
-                    setProgress(0);
-                    UnLockComponents(null);
-
-                    tmpTimer.Stop();
-                    elapsedTime = "";
-                    elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
-                        tmpTimer.Elapsed.Hours, tmpTimer.Elapsed.Minutes, tmpTimer.Elapsed.Seconds,
-                        tmpTimer.Elapsed.Milliseconds);
-
-                    stlTime.Text = " Время преоборазования : " + elapsedTime;
-                    timeCounter.Reset();
-                    //};
-
+                    //bwRecalculation.DoWork += Recalculation;
+                    //bwRecalculation.RunWorkerCompleted += bw_RunWorkerCompleted;
+                    //bwRecalculation.RunWorkerAsync(null);
                 }
                 catch (FCCoreArithmeticException ex)
                 {
@@ -1735,21 +1755,24 @@ namespace Flexible_computing
                     catchException(excps.Exception, ex.Message);
                 }
 
-                statusStrip.Refresh();
-            }
-        
+                statusStrip.Refresh();            
         }
 
-        private void recalculate_Click(object sender, EventArgs e)
+        static void bw_RunWorkerCompleted(object sender,
+        RunWorkerCompletedEventArgs e)
         {
-            ThreadPool.QueueUserWorkItem( o =>{
-            RecalculationThread = new Thread(Recalculation);
-            RecalculationThread.IsBackground = true;
-            RecalculationThread.Start();
-            });
-            
+            //if (e.Cancelled)
+            //    Console.WriteLine(
+            //      "Работа BackgroundWorker была прервана пользователем!");
+            //else if (e.Error != null)
+            //    Console.WriteLine("Worker exception: " + e.Error);
+            //else
+            //    Console.WriteLine("Работа закончена успешно. Результат - "
+            //      + e.Result + ". ");
+
+            //Console.WriteLine("Нажмите Enter для выхода из программы...");
         }
-     
+
         public void catchException(excps ex,String message)
         {
             String outputLog = "";
@@ -3294,6 +3317,16 @@ namespace Flexible_computing
             {
                 if ((RecalculationThread != null) && (RecalculationThread.ThreadState & (System.Threading.ThreadState.Background | System.Threading.ThreadState.Running)) != 0)
                     RecalculationThread.Abort();
+                UnLockComponents(null);
+                progressBar1.Value = 0;
+                stlStatus.Text = "Статус : Отменено. ";
+                //if (bwRecalculation != null)
+                //{
+                //    if (bwRecalculation.IsBusy)
+                //    {
+                //        bwRecalculation.CancelAsync();
+                //    }
+                //}
             }
             catch (Exception ex)
             { }
@@ -3346,6 +3379,28 @@ namespace Flexible_computing
         }
     }
 }// namespace
+
+/*
+ 
+private void button1_Click(object sender, EventArgs e)
+{
+    thrd = new Thread(new ThreadStart(DoUpload));
+    thrd.Start();
+}
+
+private void DoUpload()
+{
+    // do some upload
+    // ...
+    MethoInvoker updateUi = delegate
+                            {
+                                // set progress info in the UI
+                            };
+    Invoke(updateUi);
+}
+
+ */
+
 
 //  число не число над мантисой BEGIN
 // jLabelInfoDigit32.setText("число=" + my754.getSignCharacter() + my754.getState(32));

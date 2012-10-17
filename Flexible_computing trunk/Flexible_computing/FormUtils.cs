@@ -93,6 +93,8 @@ namespace Flexible_computing
                         /*__9__*/   { "Нормализованное","Денормализованное","Нуль","Бесконечность","Не число","Не представимо"}
                                  };//{"","","","","",""}
         String[][,] inStr = { languageStringsEng, languageStringsRus, languageStringsGer, languageStringsUkr };
+
+        int CurrentSelectedTab = 0;
         /// <summary>
         /// Changing language based on input var lang
         /// </summary>
@@ -1424,6 +1426,7 @@ namespace Flexible_computing
         private void tabControl_Format_SelectedIndexChanged(object sender, EventArgs e)
         {
             //changePasportFormat(inputStringFormat, tabControl_Format.SelectedIndex);
+            CurrentSelectedTab = tabControl_Format.SelectedIndex;
             if (tabControl_Format.SelectedIndex == 0)
             {
                 radioFloat.Enabled = false;
