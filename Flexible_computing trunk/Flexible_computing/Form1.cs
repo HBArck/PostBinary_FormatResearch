@@ -1547,8 +1547,7 @@ namespace Flexible_computing
                     case 1: // 64
                         switch (inputStringFormat)
                         {
-                            case 0:
-                                //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
+                            case 0:                                
                                 Core.Num64.Sign = tbSign64.Text; progInc();
                                 Core.Num64.Exponenta = tbExp64.Text; progInc();
                                 Core.Num64.Mantisa = tbMantisa64.Text; progInc();
@@ -1558,7 +1557,6 @@ namespace Flexible_computing
                                 setProgress(100);
                                 break;
 
-                            //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
                             case 1:
                             case 2:
                                 currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
@@ -1574,7 +1572,7 @@ namespace Flexible_computing
                                 Core.Num64.Mantisa = tbMantisa64.Text; progInc();
                                 Core.changeNumberState(false, true); progInc();
                                 Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
-                                //tbInput.Text = Core.Num64.CorrectResult;
+                                
                                 progInc();
                                 Core.Num64.ExponentaRight = tbExp64_2.Text; progInc();
                                 Core.Num64.MantisaRight = tbMantisa64_2.Text; progInc();
@@ -1592,7 +1590,6 @@ namespace Flexible_computing
                         switch (inputStringFormat)
                         {
                             case 0:
-                                //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
                                 Core.Num128.Sign = tbSign128.Text; progInc();
                                 Core.Num128.Exponenta = tbExp128.Text; progInc();
                                 Core.Num128.Mantisa = tbMantisa128.Text; progInc();
@@ -1601,8 +1598,6 @@ namespace Flexible_computing
                                 changetbInputText(Core.Num128.CorrectResult);//modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult)
                                 setProgress(100);
                                 break;
-
-                            //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
                             case 1:
                             case 2:
                                 currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
@@ -1618,7 +1613,6 @@ namespace Flexible_computing
                                 Core.Num128.Mantisa = tbMantisa128.Text; progInc();
                                 Core.changeNumberState(false, true); progInc();
                                 Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
-                                //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult);
 
                                 Core.Num128.ExponentaRight = tbExp128_2.Text; progInc();
                                 Core.Num128.MantisaRight = tbMantisa128_2.Text; progInc();
@@ -1636,7 +1630,6 @@ namespace Flexible_computing
                         switch (inputStringFormat)
                         {
                             case 0:
-                                //  result = my754.selectOut(tbSign64.Text, tbExp64.Text, tbMantisa64.Text);
                                 Core.Num256.Sign = tbSign256.Text; progInc();
                                 Core.Num256.Exponenta = tbExp256.Text; progInc();
                                 Core.Num256.Mantisa = tbMantisa256.Text; progInc();
@@ -1645,7 +1638,6 @@ namespace Flexible_computing
                                 changetbInputText(Core.Num256.CorrectResult); setProgress(100);
                                 break;
 
-                            //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
                             case 1:
                             case 2:
                                 currSeparator = inputStringFormat == 1 ? "/" : ";"; progInc();
@@ -1661,7 +1653,6 @@ namespace Flexible_computing
                                 Core.Num256.Mantisa = tbMantisa256.Text; progInc();
                                 Core.changeNumberState(false, true); progInc();
                                 Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
-                                //tbInput.Text = modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult);
 
                                 Core.Num256.ExponentaRight = tbExp256_2.Text; progInc();
                                 Core.Num256.MantisaRight = tbMantisa256_2.Text; progInc();
@@ -3320,13 +3311,6 @@ namespace Flexible_computing
                 UnLockComponents(null);
                 progressBar1.Value = 0;
                 stlStatus.Text = "Статус : Отменено. ";
-                //if (bwRecalculation != null)
-                //{
-                //    if (bwRecalculation.IsBusy)
-                //    {
-                //        bwRecalculation.CancelAsync();
-                //    }
-                //}
             }
             catch (Exception ex)
             { }
@@ -3344,6 +3328,74 @@ namespace Flexible_computing
                     //ThreadPool.QueueUserWorkItem(calcResultsAndErrors);
                     calcResultsAndErrors(null);
                     GUI_Timer_Work = true;
+                }
+            }
+        }
+
+        private void bpb64Info_Click(object sender, EventArgs e)
+        {
+            if (!TetraCheck)
+            {
+                switch (inputStringFormat)
+                {
+                    case 0:
+                        Forms.Formpb64 pb64Info = new Forms.Formpb64();
+                        pb64Info.Show();
+                        break;
+                    case 1:
+                        Forms.Formpb64_32f pb64_32fInfo = new Forms.Formpb64_32f();
+                        pb64_32fInfo.Show();
+                        break;
+                    case 2:
+                        Forms.Formpb64_32i pb64_32iInfo = new Forms.Formpb64_32i();
+                        pb64_32iInfo.Show();
+                        break;
+                }
+
+            }
+            else
+            {
+                Forms.Formpb64_32p pb64_32pInfo = new Forms.Formpb64_32p();
+                pb64_32pInfo.Show();
+            }
+        }
+
+        private void bpb128Info_Click(object sender, EventArgs e)
+        {
+            if (!TetraCheck)
+            {
+                switch (inputStringFormat)
+                {
+                    case 0:
+                        Forms.Formpb128 pb128Info = new Forms.Formpb128();
+                        pb128Info.Show();
+                        break;
+                    case 1:
+                        Forms.Formpb128_64f pb128_64fInfo = new Forms.Formpb128_64f();
+                        pb128_64fInfo.Show();
+                        break;
+                    case 2:
+                        Forms.Formpb128_64i pb128_64iInfo = new Forms.Formpb128_64i();
+                        pb128_64iInfo.Show();
+                        break;
+                }
+            }
+            else
+            {
+                switch (inputStringFormat)
+                {
+                    case 0:
+                        Forms.Formpb128_64p pb128_64pInfo = new Forms.Formpb128_64p();
+                        pb128_64pInfo.Show();
+                        break;
+                    case 1:
+                        Forms.Formpb128_32fp pb128_32fpInfo = new Forms.Formpb128_32fp();
+                        pb128_32fpInfo.Show();
+                        break;
+                    case 2:
+                        Forms.Formpb128_32ip pb128_32ipInfo = new Forms.Formpb128_32ip();
+                        pb128_32ipInfo.Show();
+                        break;
                 }
             }
         }

@@ -1234,8 +1234,8 @@ namespace Flexible_computing
 
             }
         }
-     
 
+//-------------------------------------------------------------- BLOCK Menu Buttons
         private void числоToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             if (radioInteger.Enabled == true)
@@ -1296,7 +1296,6 @@ namespace Flexible_computing
             }
             */
         }
-
 
         private void тестовыйРежимToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1373,7 +1372,6 @@ namespace Flexible_computing
             }
         }
 
-
         private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Name == "toolStripMenuItem2")
@@ -1422,7 +1420,7 @@ namespace Flexible_computing
             }
         }
 
-
+//-------------------------------------------------------------- BLOCK Lux Func's
         private void tabControl_Format_SelectedIndexChanged(object sender, EventArgs e)
         {
             //changePasportFormat(inputStringFormat, tabControl_Format.SelectedIndex);
@@ -1485,7 +1483,7 @@ namespace Flexible_computing
             }
         }
 
-
+//-------------------------------------------------------------- BLOCK Info Forms
         // Information Forms of current format
         private void bpb32Info_Click(object sender, EventArgs e)
         {
@@ -1500,7 +1498,6 @@ namespace Flexible_computing
                 pb32Info.Show();
             }
         }
-
 
         /*------------------------------------------- JUNK  ------------------------------------------------*/
         private void bMaximizeFooterTab_Click(object sender, EventArgs e)

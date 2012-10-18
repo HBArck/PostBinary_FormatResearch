@@ -104,6 +104,36 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Formpb128_32fp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb128_32fp.Designer.cs">
+      <DependentUpon>Formpb128_32fp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb128_32ip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb128_32ip.Designer.cs">
+      <DependentUpon>Formpb128_32ip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb128_64f.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb128_64f.Designer.cs">
+      <DependentUpon>Formpb128_64f.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb128_64i.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb128_64i.Designer.cs">
+      <DependentUpon>Formpb128_64i.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb128_64p.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb128_64p.Designer.cs">
+      <DependentUpon>Formpb128_64p.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Formpb32_16p.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +157,24 @@
     </Compile>
     <Compile Include="Forms\Formpb64_32f.Designer.cs">
       <DependentUpon>Formpb64_32f.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb64_32i.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb64_32i.Designer.cs">
+      <DependentUpon>Formpb64_32i.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb64_32p.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb64_32p.Designer.cs">
+      <DependentUpon>Formpb64_32p.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb128.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb128.Designer.cs">
+      <DependentUpon>Formpb128.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PropertiesForm.cs">
       <SubType>Form</SubType>
@@ -161,6 +209,21 @@
     <EmbeddedResource Include="Form1.ru.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb128_32fp.resx">
+      <DependentUpon>Formpb128_32fp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb128_32ip.resx">
+      <DependentUpon>Formpb128_32ip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb128_64f.resx">
+      <DependentUpon>Formpb128_64f.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb128_64i.resx">
+      <DependentUpon>Formpb128_64i.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb128_64p.resx">
+      <DependentUpon>Formpb128_64p.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Formpb32_16p.resx">
       <DependentUpon>Formpb32_16p.cs</DependentUpon>
     </EmbeddedResource>
@@ -172,6 +235,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Formpb64_32f.resx">
       <DependentUpon>Formpb64_32f.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb64_32i.resx">
+      <DependentUpon>Formpb64_32i.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb64_32p.resx">
+      <DependentUpon>Formpb64_32p.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb128.resx">
+      <DependentUpon>Formpb128.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>

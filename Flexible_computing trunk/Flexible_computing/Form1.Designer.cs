@@ -1313,6 +1313,7 @@
             this.bpb64Info.TabIndex = 5;
             this.toolTip1.SetToolTip(this.bpb64Info, "Свединия о формате");
             this.bpb64Info.UseVisualStyleBackColor = false;
+            this.bpb64Info.Click += new System.EventHandler(this.bpb64Info_Click);
             // 
             // gBFieldContainer64
             // 
@@ -1703,6 +1704,7 @@
             this.bpb128Info.TabIndex = 9;
             this.toolTip1.SetToolTip(this.bpb128Info, "Свединия о формате");
             this.bpb128Info.UseVisualStyleBackColor = false;
+            this.bpb128Info.Click += new System.EventHandler(this.bpb128Info_Click);
             // 
             // gBFieldContainer128
             // 

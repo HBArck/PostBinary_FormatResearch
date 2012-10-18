@@ -86,3 +86,11 @@ C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computi
 C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.exe
 C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.pdb
 C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.PropertiesForm.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb128_32fp.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb128_32ip.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb128_64f.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb128_64i.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb128_64p.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb64_32i.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb64_32p.resources
+C:\Users\arck\Documents\GitHub\d6972a1\Flexible_computing trunk\Flexible_computing\obj\x86\Debug\Flexible_computing.Forms.Formpb128.resources

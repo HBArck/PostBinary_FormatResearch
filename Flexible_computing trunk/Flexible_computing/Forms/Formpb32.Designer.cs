@@ -423,7 +423,7 @@
             // 
             // label36
             // 
-            this.label36.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label36.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label36.Location = new System.Drawing.Point(9, 509);
             this.label36.Margin = new System.Windows.Forms.Padding(0);
             this.label36.Name = "label36";
