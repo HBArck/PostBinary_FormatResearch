@@ -215,9 +215,9 @@
             this.label22.Location = new System.Drawing.Point(319, 199);
             this.label22.Margin = new System.Windows.Forms.Padding(0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(132, 15);
+            this.label22.Size = new System.Drawing.Size(125, 15);
             this.label22.TabIndex = 201;
-            this.label22.Text = "2  (2 + 16 + 42) = 120 ";
+            this.label22.Text = "2 x (2 + 16 + 42) = 120 ";
             // 
             // label21
             // 

@@ -134,6 +134,42 @@
     <Compile Include="Forms\Formpb128_64p.Designer.cs">
       <DependentUpon>Formpb128_64p.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Formpb256.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb256.Designer.cs">
+      <DependentUpon>Formpb256.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb256_128f.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb256_128f.Designer.cs">
+      <DependentUpon>Formpb256_128f.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb256_128i.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb256_128i.Designer.cs">
+      <DependentUpon>Formpb256_128i.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb256_128p.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb256_128p.Designer.cs">
+      <DependentUpon>Formpb256_128p.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb256_64fp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb256_64fp.Designer.cs">
+      <DependentUpon>Formpb256_64fp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Formpb256_64ip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Formpb256_64ip.Designer.cs">
+      <DependentUpon>Formpb256_64ip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Formpb32_16p.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +259,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Formpb128_64p.resx">
       <DependentUpon>Formpb128_64p.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb256.resx">
+      <DependentUpon>Formpb256.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb256_128f.resx">
+      <DependentUpon>Formpb256_128f.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb256_128i.resx">
+      <DependentUpon>Formpb256_128i.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb256_128p.resx">
+      <DependentUpon>Formpb256_128p.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb256_64fp.resx">
+      <DependentUpon>Formpb256_64fp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Formpb256_64ip.resx">
+      <DependentUpon>Formpb256_64ip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Formpb32_16p.resx">
       <DependentUpon>Formpb32_16p.cs</DependentUpon>

@@ -1,6 +1,6 @@
 ﻿namespace Flexible_computing.Forms
 {
-    partial class Formpb128_32ip
+    partial class Formpb256_128f
     {
         /// <summary>
         /// Required designer variable.
@@ -28,13 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Formpb128_32ip));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Formpb256_128f));
             this.label39 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -65,31 +68,28 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label39
             // 
-            this.label39.Location = new System.Drawing.Point(264, 538);
+            this.label39.Location = new System.Drawing.Point(264, 529);
             this.label39.Margin = new System.Windows.Forms.Padding(0);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(385, 115);
+            this.label39.Size = new System.Drawing.Size(385, 100);
             this.label39.TabIndex = 242;
-            this.label39.Text = resources.GetString("label39.Text");
+            this.label39.Text = "формат предназначен для хранения двух вещественных чисел (модификатор MF = 001h) " +
+    "счетверенной точности (код формата СF = 7h), представляющих собой числитель и зн" +
+    "аменатель дроби ";
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(264, 517);
+            this.label37.Location = new System.Drawing.Point(264, 508);
             this.label37.Margin = new System.Windows.Forms.Padding(0);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(201, 15);
+            this.label37.Size = new System.Drawing.Size(211, 15);
             this.label37.TabIndex = 243;
-            this.label37.Text = "6 (для каждой границы интервала) ";
+            this.label37.Text = "31–32 (для числителя и знаменателя)";
             // 
             // label17
             // 
@@ -107,9 +107,9 @@
             this.label19.Location = new System.Drawing.Point(319, 69);
             this.label19.Margin = new System.Windows.Forms.Padding(0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(261, 15);
+            this.label19.Size = new System.Drawing.Size(258, 15);
             this.label19.TabIndex = 229;
-            this.label19.Text = "вещественный интервал одинарной точности";
+            this.label19.Text = "вещественная дробь счетверенной точности ";
             // 
             // label20
             // 
@@ -117,9 +117,19 @@
             this.label20.Location = new System.Drawing.Point(319, 99);
             this.label20.Margin = new System.Windows.Forms.Padding(0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(86, 15);
+            this.label20.Size = new System.Drawing.Size(61, 15);
             this.label20.TabIndex = 232;
-            this.label20.Text = "постбинарное";
+            this.label20.Text = "бинарное";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(319, 475);
+            this.label35.Margin = new System.Windows.Forms.Padding(0);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(179, 15);
+            this.label35.TabIndex = 231;
+            this.label35.Text = "± 0/0 = ±NaNs;  ±∞/∞ = ±NaNs";
             // 
             // label28
             // 
@@ -127,9 +137,29 @@
             this.label28.Location = new System.Drawing.Point(319, 389);
             this.label28.Margin = new System.Windows.Forms.Padding(0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(109, 15);
+            this.label28.Size = new System.Drawing.Size(268, 15);
             this.label28.TabIndex = 226;
-            this.label28.Text = "≈ ± 3.4028229 e+38";
+            this.label28.Text = "≈ ± 1.1897314953572317650857593266280 e+4932 ";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(319, 457);
+            this.label34.Margin = new System.Windows.Forms.Padding(0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(121, 15);
+            this.label34.TabIndex = 225;
+            this.label34.Text = "± x/0 = ± ∞ при х ≠ 0";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(319, 439);
+            this.label33.Margin = new System.Windows.Forms.Padding(0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(198, 15);
+            this.label33.TabIndex = 228;
+            this.label33.Text = "± 0/∞ = ± 0;   ± 0/|x| = ± 0 при х ≠ 0";
             // 
             // label27
             // 
@@ -137,9 +167,9 @@
             this.label27.Location = new System.Drawing.Point(319, 369);
             this.label27.Margin = new System.Windows.Forms.Padding(0);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(107, 15);
+            this.label27.Size = new System.Drawing.Size(263, 15);
             this.label27.TabIndex = 227;
-            this.label27.Text = "≈ ± 1.1754944 e–38";
+            this.label27.Text = "≈ ± 3.3621031431120935062626778173218 e–4932";
             // 
             // label26
             // 
@@ -147,9 +177,9 @@
             this.label26.Location = new System.Drawing.Point(319, 349);
             this.label26.Margin = new System.Windows.Forms.Padding(0);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(110, 15);
+            this.label26.Size = new System.Drawing.Size(263, 15);
             this.label26.TabIndex = 233;
-            this.label26.Text = "≈ ± 1.1754938 e–38 ";
+            this.label26.Text = "≈ ± 3.3621031431120935062626778173216 e–4932";
             // 
             // label25
             // 
@@ -157,9 +187,9 @@
             this.label25.Location = new System.Drawing.Point(319, 329);
             this.label25.Margin = new System.Windows.Forms.Padding(0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(110, 15);
+            this.label25.Size = new System.Drawing.Size(266, 15);
             this.label25.TabIndex = 239;
-            this.label25.Text = "≈ ±  5.6051939 e–45";
+            this.label25.Text = "≈ ± 1.6576448305761344283966563733063 e–4963 ";
             // 
             // label24
             // 
@@ -167,9 +197,9 @@
             this.label24.Location = new System.Drawing.Point(319, 279);
             this.label24.Margin = new System.Windows.Forms.Padding(0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(36, 15);
+            this.label24.Size = new System.Drawing.Size(45, 15);
             this.label24.TabIndex = 238;
-            this.label24.Text = "+127 ";
+            this.label24.Text = "+16383";
             // 
             // label23
             // 
@@ -177,9 +207,9 @@
             this.label23.Location = new System.Drawing.Point(319, 249);
             this.label23.Margin = new System.Windows.Forms.Padding(0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(53, 15);
+            this.label23.Size = new System.Drawing.Size(65, 15);
             this.label23.TabIndex = 241;
-            this.label23.Text = "5 + 3 = 8";
+            this.label23.Text = "12 + 4 = 16";
             // 
             // label22
             // 
@@ -187,9 +217,9 @@
             this.label22.Location = new System.Drawing.Point(319, 199);
             this.label22.Margin = new System.Windows.Forms.Padding(0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(125, 15);
+            this.label22.Size = new System.Drawing.Size(131, 15);
             this.label22.TabIndex = 240;
-            this.label22.Text = "2 x (2 + 16 + 42) = 120 ";
+            this.label22.Text = "2 x (1 + 15 + 104) = 240 ";
             // 
             // label21
             // 
@@ -197,9 +227,9 @@
             this.label21.Location = new System.Drawing.Point(319, 149);
             this.label21.Margin = new System.Windows.Forms.Padding(0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(85, 15);
+            this.label21.Size = new System.Drawing.Size(106, 15);
             this.label21.TabIndex = 235;
-            this.label21.Text = "1 + 8 + 21 = 30";
+            this.label21.Text = "1 + 15 + 104 = 120 ";
             // 
             // label18
             // 
@@ -209,7 +239,7 @@
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(25, 15);
             this.label18.TabIndex = 234;
-            this.label18.Text = "128";
+            this.label18.Text = "256";
             // 
             // label32
             // 
@@ -334,7 +364,7 @@
             // label36
             // 
             this.label36.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label36.Location = new System.Drawing.Point(9, 517);
+            this.label36.Location = new System.Drawing.Point(9, 508);
             this.label36.Margin = new System.Windows.Forms.Padding(0);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(316, 21);
@@ -344,7 +374,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(9, 538);
+            this.label38.Location = new System.Drawing.Point(9, 529);
             this.label38.Margin = new System.Windows.Forms.Padding(0);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(68, 15);
@@ -420,7 +450,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(198, 15);
             this.label2.TabIndex = 206;
-            this.label2.Text = "pbinary128/32ip ( pb128/32ip )";
+            this.label2.Text = "pbinary256/128f ( pb256/128f )";
             // 
             // label1
             // 
@@ -432,72 +462,20 @@
             this.label1.TabIndex = 205;
             this.label1.Text = "Обозначение :";
             // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(319, 475);
-            this.label35.Margin = new System.Windows.Forms.Padding(0);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(189, 15);
-            this.label35.TabIndex = 246;
-            this.label35.Text = "[–x, +NaNs]; [–NaNs, +x] при х > 0";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(319, 457);
-            this.label34.Margin = new System.Windows.Forms.Padding(0);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(149, 15);
-            this.label34.TabIndex = 244;
-            this.label34.Text = "[-x,+∞] ; [-∞,+x]  при х > 0";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(319, 439);
-            this.label33.Margin = new System.Windows.Forms.Padding(0);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(55, 15);
-            this.label33.TabIndex = 245;
-            this.label33.Text = "[± 0,± 0] ";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(319, 502);
-            this.label41.Margin = new System.Windows.Forms.Padding(0);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(150, 15);
-            this.label41.TabIndex = 247;
-            this.label41.Text = "[–∞, +∞];  [–NaNs, +NaNs]";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(19, 502);
-            this.label40.Margin = new System.Windows.Forms.Padding(0);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(169, 15);
-            this.label40.TabIndex = 248;
-            this.label40.Text = "– невыраженность (UnPress) :";
-            // 
-            // Formpb128_32ip
+            // Formpb256_128f
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::Flexible_computing.Properties.Resources.double_lined;
             this.ClientSize = new System.Drawing.Size(689, 662);
-            this.Controls.Add(this.label41);
-            this.Controls.Add(this.label40);
-            this.Controls.Add(this.label35);
-            this.Controls.Add(this.label34);
-            this.Controls.Add(this.label33);
             this.Controls.Add(this.label39);
             this.Controls.Add(this.label37);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label20);
+            this.Controls.Add(this.label35);
             this.Controls.Add(this.label28);
+            this.Controls.Add(this.label34);
+            this.Controls.Add(this.label33);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
@@ -530,8 +508,8 @@
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Formpb128_32ip";
-            this.Text = "Свединия о формате pbinary128/32ip (pb128/32ip)";
+            this.Name = "Formpb256_128f";
+            this.Text = "Свединия о формате pbinary256/128f (pb256/128f)";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -544,7 +522,10 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label25;
@@ -575,10 +556,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.Label label40;
     }
 }

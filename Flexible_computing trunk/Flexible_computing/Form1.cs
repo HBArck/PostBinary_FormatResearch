@@ -3400,6 +3400,46 @@ namespace Flexible_computing
             }
         }
 
+        private void bpb256Info_Click(object sender, EventArgs e)
+        {
+            if (!TetraCheck)
+            {
+                switch (inputStringFormat)
+                {
+                    case 0:
+                        Forms.Formpb256 pb256Info = new Forms.Formpb256();
+                        pb256Info.Show();
+                        break;
+                    case 1:
+                        Forms.Formpb256_128f pb256_128fInfo = new Forms.Formpb256_128f();
+                        pb256_128fInfo.Show();
+                        break;
+                    case 2:
+                        Forms.Formpb256_128i pb256_128iInfo = new Forms.Formpb256_128i();
+                        pb256_128iInfo.Show();
+                        break;
+                }
+            }
+            else
+            {
+                switch (inputStringFormat)
+                {
+                    case 0:
+                        Forms.Formpb256_128p pb256_128pInfo = new Forms.Formpb256_128p();
+                        pb256_128pInfo.Show();
+                        break;
+                    case 1:
+                        Forms.Formpb256_64fp pb256_64fpInfo = new Forms.Formpb256_64fp();
+                        pb256_64fpInfo.Show();
+                        break;
+                    case 2:
+                        Forms.Formpb256_64ip pb256_64ipInfo = new Forms.Formpb256_64ip();
+                        pb256_64ipInfo.Show();
+                        break;
+                }
+            }
+        }
+
     
     }//class Form1
     public class FCFormGeneralException : System.Exception

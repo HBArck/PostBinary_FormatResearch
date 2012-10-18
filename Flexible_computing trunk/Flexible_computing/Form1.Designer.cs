@@ -2099,6 +2099,7 @@
             this.bpb256Info.TabIndex = 12;
             this.toolTip1.SetToolTip(this.bpb256Info, "Свединия о формате");
             this.bpb256Info.UseVisualStyleBackColor = false;
+            this.bpb256Info.Click += new System.EventHandler(this.bpb256Info_Click);
             // 
             // gBFieldContainer256
             // 
