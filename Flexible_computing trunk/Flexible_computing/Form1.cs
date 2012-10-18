@@ -1540,7 +1540,7 @@ namespace Flexible_computing
                             progInc();
                             Core.calcRes(Core.Num32, PartOfNumber.Left);
                             progInc();
-                            changetbInputText(modifyMe((int)nUpDown.Value, Core.Num32.CorrectResult));
+                            changetbInputText(Core.Num32.CorrectResult);
                             setProgress(100);
                         }
                         break;
@@ -1554,7 +1554,7 @@ namespace Flexible_computing
                                 Core.Num64.Mantisa = tbMantisa64.Text; progInc();
                                 Core.changeNumberState(false, true); progInc();
                                 Core.calcRes(Core.Num64, PartOfNumber.Left); progInc();
-                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResult));
+                                changetbInputText( Core.Num64.CorrectResult);
                                 setProgress(100);
                                 break;
 
@@ -1581,9 +1581,9 @@ namespace Flexible_computing
                                 Core.changeNumberState(true, true); progInc();
                                 Core.calcRes(Core.Num64, PartOfNumber.Right); progInc();
                                 if (inputStringFormat == 1)
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultFractionR));
+                                    changetbInputText( Core.Num64.CorrectResultFractionL + currSeparator +  Core.Num64.CorrectResultFractionR); //modifyMe((int)nUpDown.Value,
                                 else
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num64.CorrectResultIntervalR));
+                                    changetbInputText( Core.Num64.CorrectResultIntervalL + currSeparator +  Core.Num64.CorrectResultIntervalR);
                                 setProgress(100);
                                 break;
                         }
@@ -1598,7 +1598,7 @@ namespace Flexible_computing
                                 Core.Num128.Mantisa = tbMantisa128.Text; progInc();
                                 Core.changeNumberState(false, true); progInc();
                                 Core.calcRes(Core.Num128, PartOfNumber.Left); progInc();
-                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult));
+                                changetbInputText(Core.Num128.CorrectResult);//modifyMe((int)nUpDown.Value, Core.Num128.CorrectResult)
                                 setProgress(100);
                                 break;
 
@@ -1625,9 +1625,9 @@ namespace Flexible_computing
                                 Core.changeNumberState(true, true); progInc();
                                 Core.calcRes(Core.Num128, PartOfNumber.Right); progInc();
                                 if (inputStringFormat == 1)
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultFractionR));
+                                    changetbInputText( Core.Num128.CorrectResultFractionL + currSeparator +  Core.Num128.CorrectResultFractionR);
                                 else
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num128.CorrectResultIntervalR));
+                                    changetbInputText(Core.Num128.CorrectResultIntervalL + currSeparator +  Core.Num128.CorrectResultIntervalR);
                                 setProgress(100);
                                 break;
                         }
@@ -1642,7 +1642,7 @@ namespace Flexible_computing
                                 Core.Num256.Mantisa = tbMantisa256.Text; progInc();
                                 Core.changeNumberState(false, true); progInc();
                                 Core.calcRes(Core.Num256, PartOfNumber.Left); progInc();
-                                changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResult)); setProgress(100);
+                                changetbInputText(Core.Num256.CorrectResult); setProgress(100);
                                 break;
 
                             //result = my754.selectOut(sign, tbExp64_2.Text, tbMantisa64_2.Text);
@@ -1668,9 +1668,9 @@ namespace Flexible_computing
                                 Core.changeNumberState(true, true); progInc();
                                 Core.calcRes(Core.Num256, PartOfNumber.Right); progInc();
                                 if (inputStringFormat == 1)
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultFractionR));
+                                    changetbInputText(Core.Num256.CorrectResultFractionL + currSeparator +  Core.Num256.CorrectResultFractionR);
                                 else
-                                    changetbInputText(modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalL) + currSeparator + modifyMe((int)nUpDown.Value, Core.Num256.CorrectResultIntervalR));
+                                    changetbInputText( Core.Num256.CorrectResultIntervalL + currSeparator + Core.Num256.CorrectResultIntervalR);
                                 setProgress(100);
                                 break;
                         }
