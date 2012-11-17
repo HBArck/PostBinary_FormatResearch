@@ -157,6 +157,7 @@ namespace Flexible_computing
             
             stlStatus.Text = "";
             Core = new FCCore(1, exceptionUtil, this.progressBar1, progInc);
+           
             bClear_Click(sender, e);
             // -0,3e-1 - Exception
             // Load XML INIT PARAMS HERE

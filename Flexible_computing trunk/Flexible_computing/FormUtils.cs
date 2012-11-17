@@ -189,7 +189,6 @@ namespace Flexible_computing
             TetraCheck = (TetraCheck) ? false : true;
             if ((TetraCheck) && (tabControl_Format.SelectedIndex <= 1)) // NO SUCH FORMATS 64/16pi or 64/16fp
             {
-                
                 radioFloat.Enabled = false;
                 radioInterval.Enabled = false;
                 дробьToolStripMenuItem.Enabled = false;
@@ -202,6 +201,10 @@ namespace Flexible_computing
                 radioInterval.Enabled = true;
                 дробьToolStripMenuItem.Enabled = true;
                 интервалToolStripMenuItem.Enabled = true;
+            }
+            if (TetraCheck)
+            {
+ 
             }
         }
 

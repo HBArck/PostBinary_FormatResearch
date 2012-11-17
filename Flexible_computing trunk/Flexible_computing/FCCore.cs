@@ -1480,8 +1480,10 @@ namespace Flexible_computing
                     throw new Exception("Func [selectSEM]:= NoExponentaException.");
 
                 int iExp = Math.Abs(int.Parse(E));
+                if ((dataString[0] == '-') || (dataString[0] == '+'))
+                    dataString = dataString.Substring(1);
                 /*iPart */
-                denormIntPart = dataString.Substring(1, dataString.IndexOf(',') - 1);
+                denormIntPart = dataString.Substring(0, dataString.IndexOf(','));
                 index = dataString.IndexOf(',') + 1;
 
                 /*fPart*/
@@ -3863,10 +3865,8 @@ namespace Flexible_computing
                     iPartDevider = iPartDevider.Substring(i);
                 }
 
-
                 BigDevident = BigInteger.Parse(Devident);
                 BigDevider = BigInteger.Parse(Devider);
-
 
                 Result = SignResult + divV2(BigDevident, BigDevider, precision);
                 return Result;
