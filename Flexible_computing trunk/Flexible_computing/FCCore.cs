@@ -88,7 +88,7 @@ namespace Flexible_computing
         public String Exponenta
         {
             get { return E; }
-            set 
+            set
             {
                 int currEBits = 0;
                 switch (Format)
@@ -100,7 +100,7 @@ namespace Flexible_computing
                     case 4: break; // TetraCodeFI
 
                 }
-                if (currEBits == value.Length )
+                if (currEBits == value.Length)
                 {
                     E = value;
                 }
@@ -110,7 +110,7 @@ namespace Flexible_computing
                     {
                         E = value.Substring(value.Length - currEBits, currEBits);
                     }
-                    else 
+                    else
                     {
                         int i = 0;
                         E = "";
@@ -205,7 +205,7 @@ namespace Flexible_computing
                 }
             }
         } // EXCEPTION NEEDED !!!!!     <<<<<<<<<<<<<<----------------
-        
+
         private String MR;
         public String MantisaRight
         {
@@ -592,7 +592,7 @@ namespace Flexible_computing
         public byte Rounding // 0 - to zero 1 - to number 2 - to Pos Inf 3 - to Neg Inf 4 - to Pos Neg Inf
         {
             get { return Round; }
-            set 
+            set
             {
                 if (value > 4 || value < 0)
                     Round = 0;
@@ -605,12 +605,12 @@ namespace Flexible_computing
         public byte NumberFormat
         {
             get { return Format; }
-            set 
+            set
             {
                 switch (value)
                 {
-                    case 0: 
-                    case 1: 
+                    case 0:
+                    case 1:
                     case 2:
                         Num32.Format = Num64.Format = Num128.Format = Num256.Format = Format = value;
                     break;
@@ -1302,11 +1302,11 @@ namespace Flexible_computing
         {
             switch (NumberFormat)
             {
-                case 1: 
+                case 1:
                     inputStringL = inputString.Substring(0,inputString.IndexOf(";"));
                     inputStringR = inputString.Substring(inputString.IndexOf(";") + 1, inputString.Length);
                     break;
-                case 2: 
+                case 2:
                     inputStringL = inputString.Substring(0,inputString.IndexOf("/"));
                     inputStringR = inputString.Substring(inputString.IndexOf("/") + 1, inputString.Length);
                     break;
@@ -1710,7 +1710,7 @@ namespace Flexible_computing
             }
             else
             {
-               
+
                 if (expFull) // exp = 111111
                 {
                     if (man) // man == 0
@@ -1726,7 +1726,7 @@ namespace Flexible_computing
                 {
                     return stateOfNumber.normalized;
                 }
-                
+
             }
         }
 
@@ -1885,7 +1885,7 @@ namespace Flexible_computing
 
                 for (i = 32; i <= 256; i *= 2)
                 {
-                    
+
                     switch (i)
                     {
                         case 32:
@@ -2845,7 +2845,7 @@ namespace Flexible_computing
                     // After Research Modification HERE NEEDED !
                     l = currMBits + 1 - result.Length;
                     tempArray = new String[l];
-                    for (i = 0; i < l;i++ )
+                    for (i = 0; i < l;i++)
                     {
                         tempArray[i] = "0";
                     }
@@ -2901,7 +2901,7 @@ namespace Flexible_computing
                                 {
                                     l = currMBits - M.Length;
                                     tempArray = new String[l];
-                                    for (i = 0; i < l ; i++)
+                                    for (i = 0; i < l; i++)
                                         tempArray[i] = "0";
                                     M = String.Join("", tempArray) + M;
                                 }
@@ -2968,7 +2968,7 @@ namespace Flexible_computing
                         }
                         break;
                 }
-                
+     
                 return M;
             }
             catch (Exception ex)
@@ -3163,8 +3163,8 @@ namespace Flexible_computing
                     }
                     if (max > 0)
                         M = String.Join("", tempArray) + M;
-                    //else
-                    //    M = "0" + M;
+                    else
+                        M = "0" + M; // WAS  commented  WARNING
 
                     binIPartOut = "0";
                     binFPartOut = M;
@@ -3470,7 +3470,7 @@ namespace Flexible_computing
             try
             {
                 int z,cycle;
-                
+ 
                 cycle = NumberFormat == 0 ? 1 : 2;
                 z = RightPart == PartOfNumber.Left ? 0 : 1;
                 //for (z = 0; z < cycle; z++)
@@ -3478,7 +3478,7 @@ namespace Flexible_computing
                     if ((inNumber.NumberState != stateOfNumber.error && NumberFormat == 0) || (NumberFormat != 0 && inNumber.NumberStateRight != stateOfNumber.error))
                     {
                         String tempInput = "";// DenormalizedNumber; 
-                        if (z==0)
+                        if (z == 0)
                             tempInput = inNumber.Denormalized;
                         else
                             tempInput = inNumber.DenormalizedRight;
@@ -3554,7 +3554,7 @@ namespace Flexible_computing
              * Перевод целой части числа из 2 с/с в 10 с/с
              */
             String result = "0";
-            String tempRes="0";
+            String tempRes = "0";
             String factor = "1"; // множитель=степени 2
             try
             {
@@ -3581,7 +3581,7 @@ namespace Flexible_computing
                         return result;
                 }
                 else
-                    return "0";   
+                    return "0";
             }
             catch (Exception ex)
             {
@@ -3595,7 +3595,7 @@ namespace Flexible_computing
              */
             String result = "0";
             String divider = "0,5"; // делитель=степени 2
-        
+
             if (isStringZero(inString))
             {
                 return "0";
@@ -3606,7 +3606,7 @@ namespace Flexible_computing
                 {
                     if (inString[i] == '1')
                     {
-                        divider = DevideBy2(i );
+                        divider = DevideBy2(i + 1);
                         result = Addition(result, divider);
                     }
                    // divider = Devision(divider, "2", Precision);
@@ -3621,7 +3621,7 @@ namespace Flexible_computing
         public String convertToExp(String inputStr)
         {
             String currentValue;
-            String Exp="";
+            String Exp = "";
             String signExp;
             try
             {
@@ -3629,7 +3629,86 @@ namespace Flexible_computing
                 if (inputStr.IndexOf('e') != -1)
                 {
                     currentValue = inputStr;
-                    Exp = inputStr.Substring(inputStr.IndexOf('e')+1);
+                    Exp = inputStr.Substring(inputStr.IndexOf('e') + 1);
+                    inputStr = inputStr.Substring(0, inputStr.IndexOf('e'));
+                }
+                if ((inputStr[0] != '-') && (inputStr[0] != '+'))
+                    inputStr = "+" + inputStr;
+
+                if (isStringZero(inputStr) == true)
+                    return inputStr.Substring(1, 3);
+
+                String outString = "";
+                String signTemp = "+";
+
+                if ((inputStr[1] == '0') && (inputStr[2] == ','))
+                {
+
+                    int offset = 0;
+                    for (int i = 3; i < inputStr.Length; i++)
+                        if (inputStr[i] != '0')
+                        {
+                            offset = i;
+                            break;
+                        }
+                    if (inputStr.Length == offset + 1)
+                        inputStr += "0";
+
+                    String temp1, temp2, temp3;
+                    temp1 = inputStr.Substring(offset, 1);
+                    temp2 = inputStr.Substring(offset + 1);
+                    temp3 = (offset - 2).ToString();
+                    //outString = signTemp + temp1 + ","+ temp2 +"e-"+ temp3;
+                    if (Exp == "")
+                    {
+                        if (int.Parse(temp3) > 0)
+                            signExp = "-";
+                        else
+                            signExp = "+";
+                        outString = temp1 + "," + temp2 + "e" + signExp + temp3;
+                    }
+                    else
+                    {
+                        int res = int.Parse("-" + temp3) + int.Parse(Exp);
+                        if (res >= 0)
+                            outString = temp1 + "," + temp2 + "e+" + res.ToString();
+                        else
+                            outString = temp1 + "," + temp2 + "e" + res.ToString();
+                    }
+                }
+                else
+                {
+                    int offset = inputStr.IndexOf(',') - 2;
+                    if (Exp != "")
+                        offset += int.Parse(Exp);
+                    if (offset >= 0)
+                        signExp = "+";
+                    else
+                        signExp = "";
+                    inputStr = inputStr.Replace(",", "");
+                    outString = inputStr.Substring(0, 2) + "," + inputStr.Substring(2) + "e" + signExp + offset.ToString();
+                    outString = outString.Substring(1, outString.Length - 1);
+                }
+                return outString;
+            }
+            catch (Exception ex)
+            {
+                throw new FCCoreArithmeticException("Func 'convertToExp' = [ " + ex.Message + " ]");
+            }
+        }
+        
+        public String convertToExp2(String inputStr)
+        {
+            String currentValue;
+            String Exp = "";
+            String signExp;
+            try
+            {
+
+                if (inputStr.IndexOf('e') != -1)
+                {
+                    currentValue = inputStr;
+                    Exp = inputStr.Substring(inputStr.IndexOf('e') + 1);
                     inputStr = inputStr.Substring(0, inputStr.IndexOf('e'));
                 }
                 if ((inputStr[0] != '-') && (inputStr[0] != '+'))
@@ -3665,12 +3744,12 @@ namespace Flexible_computing
                             signExp = "-";
                         else
                             signExp = "+";
-                        outString = temp1 + "," + temp2 + "e"+ signExp + temp3;
+                        outString = temp1 + "," + temp2 + "e" + signExp + temp3;
                     }
                     else
                     {
-                        int res = int.Parse("-"+temp3) + int.Parse(Exp);
-                        if (res>=0)
+                        int res = int.Parse("-" + temp3) + int.Parse(Exp);
+                        if (res >= 0)
                             outString = temp1 + "," + temp2 + "e+" + res.ToString();
                         else
                             outString = temp1 + "," + temp2 + "e" + res.ToString();
@@ -3679,14 +3758,14 @@ namespace Flexible_computing
                 else
                 {
                     int offset = inputStr.IndexOf(',') - 2;
-                    if (Exp!="")
-                        offset+=int.Parse(Exp);
+                    if (Exp != "")
+                        offset += int.Parse(Exp);
                     if (offset >= 0)
                         signExp = "+";
                     else
                         signExp = "";
                     inputStr = inputStr.Replace(",", "");
-                    outString = inputStr.Substring(0, 2) + "," + inputStr.Substring(2) + "e"+ signExp + offset.ToString();
+                    outString = inputStr.Substring(0, 2) + "," + inputStr.Substring(2) + "e" + signExp + offset.ToString();
                     outString = outString.Substring(1, outString.Length - 1);
                 }
                 return outString;
@@ -3700,8 +3779,8 @@ namespace Flexible_computing
         //----------------------   NOT TESTED FUNCS END
 
         //----------------------   TESTED 
-        
-        public  String deleteZeroFromNumberV2(String inStr)
+
+        public String deleteZeroFromNumberV2(String inStr)
         {
             String result = "";
             String sign = "";
@@ -3733,14 +3812,14 @@ namespace Flexible_computing
 
             return result;
         }
-        
+
         /// <summary>
         /// Devides devident A on devider B 
         /// </summary>
         /// <param name="Devident">Number which is devided.</param>
         /// <param name="Devider">Number which is devides.</param>
         /// <returns>Quotient</returns>
-        public  String Devision(String Devident, String Devider,int Precision)
+        public String Devision(String Devident, String Devider,int Precision)
         {
             String SignResult = "", Result = "";
             String iPartResult = "", fPartResult = "";
@@ -3875,9 +3954,9 @@ namespace Flexible_computing
             {
                 throw new FCCoreArithmeticException("Func 'Devision' = [ " + ex.Message + " ]");
             }
-        }        
+        }
 
-        private  String divV2(BigInteger Divident, BigInteger Divider, int Precision)
+        private String divV2(BigInteger Divident, BigInteger Divider, int Precision)
         {
             String result = "";
             int counter = 0;
@@ -3898,7 +3977,7 @@ namespace Flexible_computing
             return result;
         }
 
-        private  String mulV2(BigInteger Multiplicator, BigInteger Factor)
+        private String mulV2(BigInteger Multiplicator, BigInteger Factor)
         {
             BigInteger Result = Multiplicator * Factor;
             return Result.ToString();
@@ -3912,7 +3991,7 @@ namespace Flexible_computing
         /// <param name="Multiplicand">Number to multiply</param>
         /// <param name="Factor">Number wich is multiplied</param>
         /// <returns></returns>
-        public  String Multiplication(String Multiplicator, String Factor)
+        public String Multiplication(String Multiplicator, String Factor)
         {
             String SignResult = "", Result = "";
             String iPartMultiplicator = "", fPartMultiplicator = "";
@@ -4024,7 +4103,7 @@ namespace Flexible_computing
         /// <param name="Operand1">First operand of addition</param>
         /// <param name="Operand2">Second operand of addition</param>
         /// <returns>Number wich is representation an addition of two numbers</returns>
-        public  String Addition(String Operand1, String Operand2)
+        public String Addition(String Operand1, String Operand2)
         {
             String SignResult = "", Result = "";
             String iPartOperand1 = "", fPartOperand1 = "";
@@ -4281,19 +4360,21 @@ namespace Flexible_computing
                     LenFractionPartOperand2 = 0;
                 }
 
-                if (LenFractionPartOperand1 < LenFractionPartOperand2)
+                 if (LenFractionPartOperand1 < LenFractionPartOperand2)
                 {
                     BiggerLen = LenFractionPartOperand2;
                     for (i = 0; i < LenFractionPartOperand2 - LenFractionPartOperand1; i++)
                         Operand1 += "0";
                 }
-
-                if (LenFractionPartOperand1 > LenFractionPartOperand2)
-                {
-                    BiggerLen = LenFractionPartOperand1;
-                    for (i = 0; i < LenFractionPartOperand1 - LenFractionPartOperand2; i++)
-                        Operand2 += "0";
-                }
+                else
+                    if (LenFractionPartOperand1 > LenFractionPartOperand2)
+                    {
+                        BiggerLen = LenFractionPartOperand1;
+                        for (i = 0; i < LenFractionPartOperand1 - LenFractionPartOperand2; i++)
+                            Operand2 += "0";
+                    }
+                    else
+                    { BiggerLen = LenFractionPartOperand1; }
 
 
                 BigOperand1 = BigInteger.Parse(Operand1.Replace(",", ""));
