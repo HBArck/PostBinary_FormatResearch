@@ -55,8 +55,8 @@ namespace Flexible_computing
         }
     }
 
-    
-    
+
+
     public enum CalculationStatus
     {
         Ok,
@@ -245,7 +245,7 @@ namespace Flexible_computing
                 }
             }
         } // EXCEPTION NEEDED !!!!!     <<<<<<<<<<<<<<----------------
-       
+
         public String MF;
         public String CF;
 
@@ -267,10 +267,10 @@ namespace Flexible_computing
             set { if ((value < int.MaxValue) && (value > int.MinValue)) EBfi = value; }
         }
         private int MB;
-        public int MBits 
+        public int MBits
         {
             get { return MB; }
-            set { if ((value < int.MaxValue)&&(value>int.MinValue)) MB = value; }
+            set { if ((value < int.MaxValue) && (value > int.MinValue)) MB = value; }
         }
         private int MBfi;
         public int MBitsFI
@@ -548,11 +548,11 @@ namespace Flexible_computing
     {
         //public fields - out put
         //public enum Num32Number { D0 =  5,605193857299268283694918333159664525121047767506063087028273135559164330743442405946552753448486328125 , D1 =  1,1754937903029017780419081677304123618522130446673107709024430034511037035382940985073219053447246551513671875 , N0 =  1,1754943508222875079687365372222456778186655567720875215087517062784172594547271728515625 , N1 =  3,40282285791300048856692911642763067392 , Inf =  3,40282366920938463463374607431768211456 , Nn0 =  3,40282529180215292676737999009778499584 , Nn1 =  6.80564571582600097713385823285526134784  };
-        public enum diapNames{ D0=0, D1=1, N0=2,N1=3, Inf=4, Nn0=5, Nn1=6};
-        public int[] N32Exp = {-45 ,-38, -38 ,+38 ,+38 , +38 ,+38 };        
-        public int[] N64Exp = {-323,-308,-308,+308 , +308 , +308 , +308};
-        public int[] N128Exp = { -4963,-4932 ,   -4932 ,  +4932 ,  +4932 ,   +4932 ,  +4932  };
-        public int[] N256Exp = { -157892  ,  -157826  ,  -157826  ,  +157826  ,  +157826  ,  +157826  ,  +157826   };
+        public enum diapNames { D0 = 0, D1 = 1, N0 = 2, N1 = 3, Inf = 4, Nn0 = 5, Nn1 = 6 };
+        public int[] N32Exp = { -45, -38, -38, +38, +38, +38, +38 };
+        public int[] N64Exp = { -323, -308, -308, +308, +308, +308, +308 };
+        public int[] N128Exp = { -4963, -4932, -4932, +4932, +4932, +4932, +4932 };
+        public int[] N256Exp = { -157892, -157826, -157826, +157826, +157826, +157826, +157826 };
 
         String inputString;
         String inputStringL;
@@ -601,7 +601,7 @@ namespace Flexible_computing
             }
         }
         private byte Format;
-        
+
         public byte NumberFormat
         {
             get { return Format; }
@@ -613,7 +613,7 @@ namespace Flexible_computing
                     case 1:
                     case 2:
                         Num32.Format = Num64.Format = Num128.Format = Num256.Format = Format = value;
-                    break;
+                        break;
 
                     default:
                         Num32.Format = Num64.Format = Num128.Format = Num256.Format = Format = 0; break;
@@ -650,24 +650,24 @@ namespace Flexible_computing
             Exception,
             Error
         };
-        
+
         CalculationStatus calcStatus = CalculationStatus.Ok;
         //private fields - lux maintance
         ExceptionUtil exceptionUtil;
         System.Windows.Forms.ProgressBar progressBar;
         public Thread thread32, thread64, thread128, thread256;
         public Thread thread64_right, thread128_right, thread256_right;
-        
+
 
         progIncThreadHeandler progIncThreadSafe;
 
-        public FCCore(byte Rounding, ExceptionUtil exc_util,System.Windows.Forms.ProgressBar progress,progIncThreadHeandler ThreadSaveIncrementProgressBar)
+        public FCCore(byte Rounding, ExceptionUtil exc_util, System.Windows.Forms.ProgressBar progress, progIncThreadHeandler ThreadSaveIncrementProgressBar)
         { //                     sCF    nE nEFI  nM  nMFI nMF nCF    off  offFI   name
             Num32 = new Number("0", 8, 0, 21, 0, 1, 1, 127, 0, "Num32");
             Num64 = new Number("01", 11, 8, 48, 21, 2, 2, 1023, 127, "Num64");
             Num128 = new Number("011", 15, 11, 104, 48, 5, 3, 16383, 1023, "Num128");
             Num256 = new Number("0111", 20, 15, 219, 104, 12, 4, 524287, 16383, "Num256");
-            Numbers = new Number[4] { Num32 , Num64 , Num128 , Num256 };
+            Numbers = new Number[4] { Num32, Num64, Num128, Num256 };
 
             thread32 = new Thread(Calculate32);
             thread64 = new Thread(new ParameterizedThreadStart(Calculate64));
@@ -679,17 +679,17 @@ namespace Flexible_computing
 
             thread32.Name = "thread32";
             thread64.Name = "thread64";
-            thread128.Name = "thread128"; 
+            thread128.Name = "thread128";
             thread256.Name = "thread256";
             thread64_right.Name = "thread64_right";
             thread128_right.Name = "thread128_right";
-            thread256_right.Name = "thread256_right"; 
-                   
+            thread256_right.Name = "thread256_right";
+
             exceptionUtil = exc_util;
             progressBar = progress;
             progIncThreadSafe = ThreadSaveIncrementProgressBar;
             this.Rounding = Rounding;
-            this.NumberFormat = 0;            
+            this.NumberFormat = 0;
         }
 
         public void SetNumberWithCurr(String InputNumber, int input)
@@ -757,7 +757,7 @@ namespace Flexible_computing
         public void SetNumber(String InputNumber)
         {
             bool repeatConvertion = false;
-            String tempNumber="";
+            String tempNumber = "";
             inputString = InputNumber;
             try
             {
@@ -772,7 +772,7 @@ namespace Flexible_computing
                 thread128 = new Thread(Calculate128);
                 thread256 = new Thread(Calculate256);
 
-                
+
                 // Check Number State
                 // Normalize Number
                 if (NumberFormat == 0)
@@ -781,79 +781,79 @@ namespace Flexible_computing
                     // Denormalize Number
                     Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizedNumber = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
-                    
-                        // test State HERE
-                        tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber, PartOfNumber.Left);
-                        if (Num256.NumberState != stateOfNumber.error)
-                        {
-                            this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
-                            do
-                            {
-                                this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
-                                if (isStringZero(BinaryFloatPart) && isStringZero(BinaryIntPart))
-                                {
-                                    AdditionalAccurancy += 500;
-                                    repeatConvertion = true;
-                                }
-                                else
-                                {
-                                    repeatConvertion = false;
-                                    AdditionalAccurancy = 0;
-                                }
-                            } while (repeatConvertion);
 
-                            progIncThreadSafe();
-                            FillBinaryVars(PartOfNumber.Left);
-                        }
-                        else
+                    // test State HERE
+                    tempNumber = convertToExp(DenormalizedNumber);
+                    defineNumberState(tempNumber, PartOfNumber.Left);
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
+                        do
                         {
-                            this.BinaryIntPart = "0";
-                            this.BinaryFloatPart = "0";
-                            FillBinaryVars(PartOfNumber.Left);
-                            progIncThreadSafe();
-                        }
-                        // Fill SEM 
-                        if (Num32.NumberState != stateOfNumber.error)
-                        {
-                            //#if (!DEBUG)
-                            //    Calculate32();
-                            //#else
-                                thread32.IsBackground = true;
-                                thread32.Start();
-                           // #endif
-                        }
-                        else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
-                        if (Num64.NumberState != stateOfNumber.error)
-                        {
-                            //#if (!DEBUG)
-                            //    Calculate64((Object)false);
-                            //#else
-                                thread64.IsBackground = true;
-                                thread64.Start(false);
-                            //#endif
-                        }
-                        else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
-                        if (Num128.NumberState != stateOfNumber.error)
-                        {
-                            //#if (!DEBUG)
-                            //    Calculate128((Object)false);
-                            //#else
-                            thread128.IsBackground = true;
-                                thread128.Start(false);
-                            //#endif
-                        }
-                        else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
-                        if (Num256.NumberState != stateOfNumber.error)
-                        {
-                            //#if (!DEBUG)
-                            //    Calculate256((Object)false);
-                            //#else
-                            thread256.IsBackground = true;
-                                thread256.Start(false);
-                            //#endif
-                        }
-                        else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
+                            this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
+                            if (isStringZero(BinaryFloatPart) && isStringZero(BinaryIntPart))
+                            {
+                                AdditionalAccurancy += 500;
+                                repeatConvertion = true;
+                            }
+                            else
+                            {
+                                repeatConvertion = false;
+                                AdditionalAccurancy = 0;
+                            }
+                        } while (repeatConvertion);
+
+                        progIncThreadSafe();
+                        FillBinaryVars(PartOfNumber.Left);
+                    }
+                    else
+                    {
+                        this.BinaryIntPart = "0";
+                        this.BinaryFloatPart = "0";
+                        FillBinaryVars(PartOfNumber.Left);
+                        progIncThreadSafe();
+                    }
+                    // Fill SEM 
+                    if (Num32.NumberState != stateOfNumber.error)
+                    {
+                        //#if (!DEBUG)
+                        //    Calculate32();
+                        //#else
+                        thread32.IsBackground = true;
+                        thread32.Start();
+                        // #endif
+                    }
+                    else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
+                    if (Num64.NumberState != stateOfNumber.error)
+                    {
+                        //#if (!DEBUG)
+                        //    Calculate64((Object)false);
+                        //#else
+                        thread64.IsBackground = true;
+                        thread64.Start(false);
+                        //#endif
+                    }
+                    else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
+                    if (Num128.NumberState != stateOfNumber.error)
+                    {
+                        //#if (!DEBUG)
+                        //    Calculate128((Object)false);
+                        //#else
+                        thread128.IsBackground = true;
+                        thread128.Start(false);
+                        //#endif
+                    }
+                    else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        //#if (!DEBUG)
+                        //    Calculate256((Object)false);
+                        //#else
+                        thread256.IsBackground = true;
+                        thread256.Start(false);
+                        //#endif
+                    }
+                    else { progIncThreadSafe(); progIncThreadSafe(); progIncThreadSafe(); }
                 }
                 else
                 {
@@ -878,136 +878,137 @@ namespace Flexible_computing
                     // Denormalize Number
                     Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizedNumberLeft = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
-                   
-                        tempNumber = convertToExp(DenormalizedNumberLeft);
-                        defineNumberState(tempNumber, PartOfNumber.Left);
-                        if (Num256.NumberState != stateOfNumber.error)
+
+                    tempNumber = convertToExp(DenormalizedNumberLeft);
+                    defineNumberState(tempNumber, PartOfNumber.Left);
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        this.BinaryIntPartFILeft = convert10to2IPart(IntPartDenormalizedFILeft);
+                        do
                         {
-                            this.BinaryIntPartFILeft= convert10to2IPart(IntPartDenormalizedFILeft);
-                            do{
-                                this.BinaryFloatPartFILeft = convert10to2FPart(FloatPartDenormalizedFILeft);
-                                if (isStringZero(BinaryFloatPartFILeft) && isStringZero(BinaryIntPartFILeft))
-                                {
-                                    AdditionalAccurancy += 500;
-                                    repeatConvertion = true;
-                                }
-                                else
-                                {
-                                    repeatConvertion = false;
-                                    AdditionalAccurancy = 0;
-                                }
+                            this.BinaryFloatPartFILeft = convert10to2FPart(FloatPartDenormalizedFILeft);
+                            if (isStringZero(BinaryFloatPartFILeft) && isStringZero(BinaryIntPartFILeft))
+                            {
+                                AdditionalAccurancy += 500;
+                                repeatConvertion = true;
                             }
-                            while(repeatConvertion);
-                            
-                            FillBinaryVars(PartOfNumber.Left);
-                            // Fill SEM 
+                            else
+                            {
+                                repeatConvertion = false;
+                                AdditionalAccurancy = 0;
+                            }
                         }
-                        else
-                        {
-                            this.BinaryIntPart = "0";
-                            this.BinaryFloatPart = "0";
-                            FillBinaryVars(PartOfNumber.Left);
-                        }
-                        if (Num64.NumberState != stateOfNumber.error)
-                        { 
-                            //#if (!DEBUG)
-                            //    Calculate64((Object)false);
-                            //#else
-                                thread64.IsBackground = true;
-                                thread64.Start(false);
-                            //#endif
-                        }
-                        if (Num128.NumberState != stateOfNumber.error)
-                        {   
-                            //#if (!DEBUG)
-                            //    Calculate128((Object)false);
-                            //#else
-                                thread128.IsBackground = true;
-                                thread128.Start(false);
-                            //#endif
-                        }
-                        if (Num256.NumberState != stateOfNumber.error)
-                        {   
-                            //#if (!DEBUG)
-                            //    Calculate256((Object)false);
-                            //#else
-                            thread256.IsBackground = true;
-                            thread256.Start(false);
-                            //#endif
-                        }
-                       // changeNumberState(false,false);
-                   
+                        while (repeatConvertion);
+
+                        FillBinaryVars(PartOfNumber.Left);
+                        // Fill SEM 
+                    }
+                    else
+                    {
+                        this.BinaryIntPart = "0";
+                        this.BinaryFloatPart = "0";
+                        FillBinaryVars(PartOfNumber.Left);
+                    }
+                    if (Num64.NumberState != stateOfNumber.error)
+                    {
+                        //#if (!DEBUG)
+                        //    Calculate64((Object)false);
+                        //#else
+                        thread64.IsBackground = true;
+                        thread64.Start(false);
+                        //#endif
+                    }
+                    if (Num128.NumberState != stateOfNumber.error)
+                    {
+                        //#if (!DEBUG)
+                        //    Calculate128((Object)false);
+                        //#else
+                        thread128.IsBackground = true;
+                        thread128.Start(false);
+                        //#endif
+                    }
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        //#if (!DEBUG)
+                        //    Calculate256((Object)false);
+                        //#else
+                        thread256.IsBackground = true;
+                        thread256.Start(false);
+                        //#endif
+                    }
+                    // changeNumberState(false,false);
+
                     /*>>>>>>>>>>>>>>>>>>>>> LEFT PART END <<<<<<<<<<<<<<<<<<<<<<<*/
 
                     /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART BEGIN <<<<<<<<<<<<<<<<<<<<<<<*/
-                        
+
                     //RightPartCalculating = true;
                     NormalizedNumberRight = NormalizeNumber(inputStringR, 2000, PartOfNumber.Right);
                     // Denormalize Number
                     Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizedNumberRight = DenormalizeNumber(NormalizedNumberRight, PartOfNumber.Right);
                     // Convert from 10cc to 2cc
-                    
-                        tempNumber = convertToExp(DenormalizedNumberRight);
-                        defineNumberState(tempNumber, PartOfNumber.Right);
-                        if (Num256.NumberStateRight != stateOfNumber.error)
+
+                    tempNumber = convertToExp(DenormalizedNumberRight);
+                    defineNumberState(tempNumber, PartOfNumber.Right);
+                    if (Num256.NumberStateRight != stateOfNumber.error)
+                    {
+                        this.BinaryIntPartFIRight = convert10to2IPart(IntPartDenormalizedFIRight);
+                        do
                         {
-                            this.BinaryIntPartFIRight = convert10to2IPart(IntPartDenormalizedFIRight);
-                            do
+                            this.BinaryFloatPartFIRight = convert10to2FPart(FloatPartDenormalizedFIRight);
+                            if (isStringZero(BinaryFloatPartFIRight) && isStringZero(BinaryIntPartFIRight))
                             {
-                                this.BinaryFloatPartFIRight = convert10to2FPart(FloatPartDenormalizedFIRight);
-                                if (isStringZero(BinaryFloatPartFIRight) && isStringZero(BinaryIntPartFIRight))
-                                {
-                                    AdditionalAccurancy += 500;
-                                    repeatConvertion = true;
-                                }
-                                else
-                                {
-                                    repeatConvertion = false;
-                                    AdditionalAccurancy = 0;
-                                }
+                                AdditionalAccurancy += 500;
+                                repeatConvertion = true;
                             }
-                            while (repeatConvertion);
-                            FillBinaryVars(PartOfNumber.Right);
-                            // Fill SEM 
+                            else
+                            {
+                                repeatConvertion = false;
+                                AdditionalAccurancy = 0;
+                            }
                         }
-                        else
-                        {
-                            this.BinaryIntPartFIRight = "0";
-                            this.BinaryFloatPartFIRight = "0";
-                            FillBinaryVars(PartOfNumber.Right);
-                        }
+                        while (repeatConvertion);
+                        FillBinaryVars(PartOfNumber.Right);
+                        // Fill SEM 
+                    }
+                    else
+                    {
+                        this.BinaryIntPartFIRight = "0";
+                        this.BinaryFloatPartFIRight = "0";
+                        FillBinaryVars(PartOfNumber.Right);
+                    }
 
-                        if (Num64.NumberStateRight != stateOfNumber.error)
-                        {
-                            //#if (DEBUG)
-                            //    Calculate64((Object)true);
-                            //#else
-                                thread64_right.IsBackground = true;
-                                thread64_right.Start(true); 
-                            //#endif
-                            
-                        }
-                        if (Num128.NumberStateRight != stateOfNumber.error)
-                        {
-                            
-                            //#if (DEBUG)
-                            //    Calculate128((Object)true);
-                            //#else
-                                thread128_right.IsBackground = true;
-                                thread128_right.Start(true);
-                            //#endif
-                        }
-                        if (Num256.NumberStateRight != stateOfNumber.error)
-                        {
-                            //#if (DEBUG)
-                            //    Calculate256((Object)true);                        
-                            //#else
-                                thread256_right.IsBackground = true;
-                                thread256_right.Start(true);
-                            //#endif
+                    if (Num64.NumberStateRight != stateOfNumber.error)
+                    {
+                        //#if (DEBUG)
+                        //    Calculate64((Object)true);
+                        //#else
+                        thread64_right.IsBackground = true;
+                        thread64_right.Start(true);
+                        //#endif
 
-                        }
-                        /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART END <<<<<<<<<<<<<<<<<<<<<<<*/
+                    }
+                    if (Num128.NumberStateRight != stateOfNumber.error)
+                    {
+
+                        //#if (DEBUG)
+                        //    Calculate128((Object)true);
+                        //#else
+                        thread128_right.IsBackground = true;
+                        thread128_right.Start(true);
+                        //#endif
+                    }
+                    if (Num256.NumberStateRight != stateOfNumber.error)
+                    {
+                        //#if (DEBUG)
+                        //    Calculate256((Object)true);                        
+                        //#else
+                        thread256_right.IsBackground = true;
+                        thread256_right.Start(true);
+                        //#endif
+
+                    }
+                    /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART END <<<<<<<<<<<<<<<<<<<<<<<*/
                 }
             }
             catch (Exception ex)
@@ -1015,7 +1016,7 @@ namespace Flexible_computing
                 throw new FCCoreFunctionException("Func 'SetNumber(String InputNumber)' =[ " + ex.Message + " ]");
             }
         }
-       
+
         /// <summary>
         /// Function Calculates correct 2cc value based on arg = 'InputNumber' and sets calculation result
         /// Uses funcs : Normolize
@@ -1045,39 +1046,39 @@ namespace Flexible_computing
                     // Denormalize Number
                     Num32.Denormalized = Num64.Denormalized = Num128.Denormalized = Num256.Denormalized = DenormalizeNumber(NormalizedNumber, PartOfNumber.Left);
                     // Convert from 10cc to 2cc
-                   
-                        tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber, PartOfNumber.Left);
-                        if (Num256.NumberState != stateOfNumber.error)
-                        {
-                            this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
-                            this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
 
-                            FillBinaryVars(PartOfNumber.Left);
-                        }
-                        else
-                        {
-                            this.BinaryIntPart = "0";
-                            this.BinaryFloatPart = "0";
-                            FillBinaryVars(PartOfNumber.Left);
-                        }
-                        // Fill SEM 
-                        if (Num32.NumberState != stateOfNumber.error)
-                        {
-                            thread32.Start();
-                        }
-                        if (Num64.NumberState != stateOfNumber.error)
-                        {
-                            thread64.Start();                            
-                        }
-                        if (Num128.NumberState != stateOfNumber.error)
-                        {
-                            thread128.Start();
-                        }
-                        if (Num256.NumberState != stateOfNumber.error)
-                        {
-                            thread256.Start();
-                        }
+                    tempNumber = convertToExp(DenormalizedNumber);
+                    defineNumberState(tempNumber, PartOfNumber.Left);
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
+                        this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
+
+                        FillBinaryVars(PartOfNumber.Left);
+                    }
+                    else
+                    {
+                        this.BinaryIntPart = "0";
+                        this.BinaryFloatPart = "0";
+                        FillBinaryVars(PartOfNumber.Left);
+                    }
+                    // Fill SEM 
+                    if (Num32.NumberState != stateOfNumber.error)
+                    {
+                        thread32.Start();
+                    }
+                    if (Num64.NumberState != stateOfNumber.error)
+                    {
+                        thread64.Start();
+                    }
+                    if (Num128.NumberState != stateOfNumber.error)
+                    {
+                        thread128.Start();
+                    }
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        thread256.Start();
+                    }
                 }
                 else
                 {
@@ -1100,74 +1101,74 @@ namespace Flexible_computing
                     // Convert from 10cc to 2cc
                     //if ((IntPartDenormalized != "0") || (FloatPartDenormalized != "0"))
                     //{
-                        tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber, PartOfNumber.Left);
-                        if (Num256.NumberState != stateOfNumber.error)
-                        {
-                            this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
-                            this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
-                            FillBinaryVars(PartOfNumber.Left);
-                            // Fill SEM 
-                        }
-                        else
-                        {
-                            this.BinaryIntPart = "0";
-                            this.BinaryFloatPart = "0";
-                            FillBinaryVars(PartOfNumber.Left);
-                        }
-                        if (Num64.NumberState != stateOfNumber.error)
-                        {
-                            thread64.Start();       
-                        }
-                        if (Num128.NumberState != stateOfNumber.error)
-                        {
-                            thread128.Start();       
-                        }
-                        if (Num256.NumberState != stateOfNumber.error)
-                        {
-                            thread256.Start();       
-                        }
-                        changeNumberState(false, false);
-                    
+                    tempNumber = convertToExp(DenormalizedNumber);
+                    defineNumberState(tempNumber, PartOfNumber.Left);
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
+                        this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
+                        FillBinaryVars(PartOfNumber.Left);
+                        // Fill SEM 
+                    }
+                    else
+                    {
+                        this.BinaryIntPart = "0";
+                        this.BinaryFloatPart = "0";
+                        FillBinaryVars(PartOfNumber.Left);
+                    }
+                    if (Num64.NumberState != stateOfNumber.error)
+                    {
+                        thread64.Start();
+                    }
+                    if (Num128.NumberState != stateOfNumber.error)
+                    {
+                        thread128.Start();
+                    }
+                    if (Num256.NumberState != stateOfNumber.error)
+                    {
+                        thread256.Start();
+                    }
+                    changeNumberState(false, false);
+
                     /*>>>>>>>>>>>>>>>>>>>>> LEFT PART END <<<<<<<<<<<<<<<<<<<<<<<*/
 
                     /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART BEGIN <<<<<<<<<<<<<<<<<<<<<<<*/
-                        RightPartCalculating = true;
+                    RightPartCalculating = true;
                     NormalizedNumber = NormalizeNumber(inputStringR, 2000, PartOfNumber.Right);
                     // Denormalize Number
                     Num64.DenormalizedRight = Num128.DenormalizedRight = Num256.DenormalizedRight = DenormalizeNumber(NormalizedNumber, PartOfNumber.Right);
                     // Convert from 10cc to 2cc
                     //if ((IntPartDenormalized != "0") || (FloatPartDenormalized != "0"))
                     //{
-                        tempNumber = convertToExp(DenormalizedNumber);
-                        defineNumberState(tempNumber, PartOfNumber.Right);
-                        if (Num256.NumberStateRight != stateOfNumber.error)
-                        {
-                            this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
-                            this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
-                            FillBinaryVars(PartOfNumber.Right);
-                            // Fill SEM 
-                        }
-                        else
-                        {
-                            this.BinaryIntPart = "0";
-                            this.BinaryFloatPart = "0";
-                            FillBinaryVars(PartOfNumber.Right);
-                        }
+                    tempNumber = convertToExp(DenormalizedNumber);
+                    defineNumberState(tempNumber, PartOfNumber.Right);
+                    if (Num256.NumberStateRight != stateOfNumber.error)
+                    {
+                        this.BinaryIntPart = convert10to2IPart(IntPartDenormalized);
+                        this.BinaryFloatPart = convert10to2FPart(FloatPartDenormalized);
+                        FillBinaryVars(PartOfNumber.Right);
+                        // Fill SEM 
+                    }
+                    else
+                    {
+                        this.BinaryIntPart = "0";
+                        this.BinaryFloatPart = "0";
+                        FillBinaryVars(PartOfNumber.Right);
+                    }
 
-                        if (Num64.NumberStateRight != stateOfNumber.error)
-                        {
-                            thread64.Start();       
-                        }
-                        if (Num128.NumberStateRight != stateOfNumber.error)
-                        {
-                            thread128.Start();       
-                        }
-                        if (Num256.NumberStateRight != stateOfNumber.error)
-                        {
-                            thread256.Start();       
-                        }
-                        /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART END <<<<<<<<<<<<<<<<<<<<<<<*/
+                    if (Num64.NumberStateRight != stateOfNumber.error)
+                    {
+                        thread64.Start();
+                    }
+                    if (Num128.NumberStateRight != stateOfNumber.error)
+                    {
+                        thread128.Start();
+                    }
+                    if (Num256.NumberStateRight != stateOfNumber.error)
+                    {
+                        thread256.Start();
+                    }
+                    /*>>>>>>>>>>>>>>>>>>>>> RIGTH PART END <<<<<<<<<<<<<<<<<<<<<<<*/
                 }
             }
             catch (Exception ex)
@@ -1177,7 +1178,7 @@ namespace Flexible_computing
                 exceptionUtil.AddException("Func 'SetNumber(Object threadContext)' =[" + ex.Message + " ]");
             }
         }
-      
+
         public void Calculate32()
         {
             try
@@ -1202,7 +1203,7 @@ namespace Flexible_computing
             try
             {
                 bool RightPart = (bool)RightPartCalculation;
-                PartOfNumber tempPart = RightPart == false ? PartOfNumber.Left: PartOfNumber.Right;
+                PartOfNumber tempPart = RightPart == false ? PartOfNumber.Left : PartOfNumber.Right;
                 if (!RightPart)
                     Num64.Exponenta = selectExp(Num64, PartOfNumber.Left);
                 else
@@ -1224,7 +1225,7 @@ namespace Flexible_computing
                 progIncThreadSafe();
             }
             catch (Exception ex)
-            {  
+            {
                 //if (Thread.CurrentThread!=null)
                 // throw new FCCoreFunctionException("Func 'Calculate64'=[" + ex.Message + "]");
             }
@@ -1303,11 +1304,11 @@ namespace Flexible_computing
             switch (NumberFormat)
             {
                 case 1:
-                    inputStringL = inputString.Substring(0,inputString.IndexOf(";"));
+                    inputStringL = inputString.Substring(0, inputString.IndexOf(";"));
                     inputStringR = inputString.Substring(inputString.IndexOf(";") + 1, inputString.Length);
                     break;
                 case 2:
-                    inputStringL = inputString.Substring(0,inputString.IndexOf("/"));
+                    inputStringL = inputString.Substring(0, inputString.IndexOf("/"));
                     inputStringR = inputString.Substring(inputString.IndexOf("/") + 1, inputString.Length);
                     break;
             }
@@ -1318,7 +1319,7 @@ namespace Flexible_computing
             return calcStatus;
         }
 
-        public String NormalizeNumber(String dataString, int inAccuracy,PartOfNumber Left_Right)
+        public String NormalizeNumber(String dataString, int inAccuracy, PartOfNumber Left_Right)
         {
             try
             {
@@ -1351,7 +1352,8 @@ namespace Flexible_computing
                             SignRight = "0";
                     }
                 }
-                else {
+                else
+                {
                     if (NumberFormat == 0)
                         SignLeft = "1";
                     else
@@ -1399,8 +1401,8 @@ namespace Flexible_computing
         /// <param name="dataString">Input String to dernomolize</param>
         /// <param name="Left_Right">True if left part now working, else right</param>
         /// <returns>Denormolized number as String</returns>
-        public String DenormalizeNumber(String dataString ,PartOfNumber Left_Right)
-        {   
+        public String DenormalizeNumber(String dataString, PartOfNumber Left_Right)
+        {
             String denormNumber = "";
             String denormIntPart = "", denormFloatPart = "";
             String[] tempArray;
@@ -1471,7 +1473,7 @@ namespace Flexible_computing
                             }
                         }
                     }
-                        //throw new Exception("Func [selectSEM]:= NoSignException.");
+                //throw new Exception("Func [selectSEM]:= NoSignException.");
 
                 int index = dataString.IndexOf('e') + 1;
                 if (index < dataString.Length)
@@ -1493,10 +1495,10 @@ namespace Flexible_computing
                     String fPartTemp = denormFloatPart;
                     if (iExp > 0)
                     {
-                        tempArray = new String[Math.Abs( iExp - denormFloatPart.Length)];
-                        for (int i = 0; i < (Math.Abs( iExp - denormFloatPart.Length)); i++)
+                        tempArray = new String[Math.Abs(iExp - denormFloatPart.Length)];
+                        for (int i = 0; i < (Math.Abs(iExp - denormFloatPart.Length)); i++)
                             tempArray[i] = "0";
-                        fPartTemp = fPartTemp + String.Join("",tempArray) ;
+                        fPartTemp = fPartTemp + String.Join("", tempArray);
                         denormFloatPart = "0";
                     }
                     denormIntPart = denormIntPart + fPartTemp.Substring(0, iExp);
@@ -1510,7 +1512,7 @@ namespace Flexible_computing
                     tempArray = new String[Math.Abs(iExp - denormIntPart.Length)];
                     for (int i = 0; i < Math.Abs((iExp - denormIntPart.Length)); i++)
                         tempArray[i] = "0";
-                        iPartTemp = String.Join("", tempArray) + iPartTemp;
+                    iPartTemp = String.Join("", tempArray) + iPartTemp;
                     if (iExp > denormIntPart.Length)
                     {
                         denormFloatPart = iPartTemp + denormFloatPart;
@@ -1690,7 +1692,7 @@ namespace Flexible_computing
         /// <param name="num">True - number consist only of '0' ; False - has one or more '1'</param>
         /// <param name="expFull">True - exponent consist only of '1' ; False - has one or more '0'</param>
         /// <returns>Number state</returns>
-        public stateOfNumber checkNumberState(bool exp, bool man, bool num, bool expFull,bool isRecalculation)
+        public stateOfNumber checkNumberState(bool exp, bool man, bool num, bool expFull, bool isRecalculation)
         {
             // exp == 0 
             if (exp)
@@ -1734,7 +1736,7 @@ namespace Flexible_computing
         /// Defines states for all numbers in FCCore.
         /// If Exp or Mantisa in number are empty , number state won't be calculated.
         /// </summary>
-        public stateOfNumber changeNumberState(int inputNumCapacity,PartOfNumber Left_Right)
+        public stateOfNumber changeNumberState(int inputNumCapacity, PartOfNumber Left_Right)
         {
             bool expZero, manZero, numZero, expFull;
             expZero = manZero = numZero = expFull = false;
@@ -1760,11 +1762,11 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num32.Mantisa);
                                     expFull = checkExpFull(Num32.Exponenta);
                                     if (Num32.NumberState != stateOfNumber.error)
-                                    //    Num32.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        //    Num32.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 }
                             } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 32 Exponenta or Mantissa is empty.'");
-                        break;
+                            break;
                         }
                     case 64:
                         {
@@ -1776,8 +1778,8 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num64.MantisaRight);
                                     expFull = checkExpFull(Num64.ExponentaRight);
                                     if (Num64.NumberStateRight != stateOfNumber.error)
-                                    //    Num64.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        //    Num64.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 64 ExponentaR or MantissaR is empty.'");
                             }
                             else
@@ -1788,8 +1790,8 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num64.Mantisa);
                                     expFull = checkExpFull(Num64.Exponenta);
                                     if (Num64.NumberState != stateOfNumber.error)
-                                    //    Num64.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        //    Num64.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 64 Exponenta or Mantissa is empty.'");
                             }
                             break;
@@ -1804,8 +1806,8 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num128.MantisaRight);
                                     expFull = checkExpFull(Num128.ExponentaRight);
                                     if (Num128.NumberStateRight != stateOfNumber.error)
-                                    //    Num128.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        //    Num128.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 128 ExponentaR or MantissaR is empty.'");
                             }
                             else
@@ -1816,8 +1818,8 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num128.Mantisa);
                                     expFull = checkExpFull(Num128.Exponenta);
                                     if (Num128.NumberState != stateOfNumber.error)
-                                    //    Num128.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        //    Num128.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 128 Exponenta or Mantissa is empty.'");
                             }
                             break;
@@ -1832,8 +1834,8 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num256.MantisaRight);
                                     expFull = checkExpFull(Num256.ExponentaRight);
                                     if (Num256.NumberStateRight != stateOfNumber.error)
-                                    //    Num256.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        //    Num256.NumberStateRight = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 } throw new FCCoreArithmeticException("Func changeNumberState (int,PartOfNumber)=['Format 256 ExponentaR or MantissaR is empty.'");
                             }
                             else
@@ -1844,8 +1846,8 @@ namespace Flexible_computing
                                     manZero = isStringZero(Num256.Mantisa);
                                     expFull = checkExpFull(Num256.Exponenta);
                                     if (Num256.NumberState != stateOfNumber.error)
-                                    //    Num256.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
-                                    return checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        //    Num256.NumberState = checkNumberState(expZero, manZero, numZero, expFull, false);
+                                        return checkNumberState(expZero, manZero, numZero, expFull, false);
                                 } throw new FCCoreArithmeticException("Func changeNumberState (int,PartofNumber)=['Format 256 Exponenta or Mantissa is empty.'");
                             }
                             break;
@@ -1865,7 +1867,7 @@ namespace Flexible_computing
         /// Defines states for all numbers in FCCore.
         /// If Exp or Mantisa in number are empty , number state won't be calculated.
         /// </summary>
-        public void changeNumberState(bool rightPart,bool recalculation)
+        public void changeNumberState(bool rightPart, bool recalculation)
         {
             int i;
             bool expZero, manZero, numZero, expFull;
@@ -1877,7 +1879,7 @@ namespace Flexible_computing
                     numZero = isStringZero(inputString);
                 else
                     numZero = false;
-                
+
                 if (rightPart)
                 {
                     numZero = isStringZero(inputStringR);
@@ -1996,18 +1998,18 @@ namespace Flexible_computing
         }
 
 
-        private enum pb32  { min=-45, max=38 ,mint=-7,maxt=4};
-        private enum pb64  { min=-323, max=308, minfi=-45, maxfi=38, minfit=-7, maxfit=4, mint=-45, maxt=38 };
-        private enum pb128 { min=-4963, max=4932, minfi=-323, maxfi=308, minfit=-45, maxfit=38, mint=-323, maxt=308 };
-        private enum pb256 { min=-157892, max=157826, minfi=-4963, maxfi=4932, minfit=-4963, maxfit=4932, mint=-4963, maxt=4932 };
-        
+        private enum pb32 { min = -45, max = 38, mint = -7, maxt = 4 };
+        private enum pb64 { min = -323, max = 308, minfi = -45, maxfi = 38, minfit = -7, maxfit = 4, mint = -45, maxt = 38 };
+        private enum pb128 { min = -4963, max = 4932, minfi = -323, maxfi = 308, minfit = -45, maxfit = 38, mint = -323, maxt = 308 };
+        private enum pb256 { min = -157892, max = 157826, minfi = -4963, maxfi = 4932, minfit = -4963, maxfit = 4932, mint = -4963, maxt = 4932 };
+
         /// <summary> new func
         /// Defines states for all numbers in FCCore, based on nmber bounds
         /// </summary>
         public void defineNumberState(String inNum, PartOfNumber RightPart)
         {
-            String Exp="";
-            int exp=0;
+            String Exp = "";
+            int exp = 0;
             int min32, max32, min64, max64, min128, max128, min256, max256;
             min32 = max32 = min64 = max64 = min128 = max128 = min256 = max256 = 0;
             if (inNum.IndexOf('e') != -1)
@@ -2015,10 +2017,10 @@ namespace Flexible_computing
                 Exp = inNum.Substring(inNum.IndexOf('e') + 1);
                 exp = int.Parse(Exp);
             }
-            
+
             switch (NumberFormat)
             {
-                case 0: 
+                case 0:
                     min32 = (int)pb32.min;
                     min64 = (int)pb64.min;
                     min128 = (int)pb128.min;
@@ -2028,8 +2030,8 @@ namespace Flexible_computing
                     max64 = (int)pb64.max;
                     max128 = (int)pb128.max;
                     max256 = (int)pb256.max;
-                     break;
-                case 1: 
+                    break;
+                case 1:
                 case 2:
                     min32 = (int)pb32.min;
                     max32 = (int)pb32.max;
@@ -2066,7 +2068,7 @@ namespace Flexible_computing
 
             if (exp != 0)
             {
-                
+
                 if ((exp < min32) || (exp > max32))
                 {
                     if (RightPart == PartOfNumber.Left)
@@ -2102,8 +2104,8 @@ namespace Flexible_computing
             else
             {
                 //32 
-                if ( RightPart == PartOfNumber.Left)
-                Num32.NumberState = stateOfNumber.normalized;
+                if (RightPart == PartOfNumber.Left)
+                    Num32.NumberState = stateOfNumber.normalized;
 
                 //64
                 if (RightPart == PartOfNumber.Right)
@@ -2554,7 +2556,7 @@ namespace Flexible_computing
             }
             catch (Exception ex)
             {
-                throw new FCCoreArithmeticException("Func 'compare' = [ "+ex.Message+" ]");
+                throw new FCCoreArithmeticException("Func 'compare' = [ " + ex.Message + " ]");
             }
 
         }
@@ -2569,7 +2571,7 @@ namespace Flexible_computing
             // удаление 0 в начале числа
             String outStr = "";
             char[] trimparams = { '0' };
-            int i = 0, z = 0, k = 0; 
+            int i = 0, z = 0, k = 0;
             //inputStr.TrimStart('0');
             //inputStr.TrimEnd('0');
             try
@@ -2606,7 +2608,7 @@ namespace Flexible_computing
             }
             catch (Exception ex)
             {
-                throw new FCCoreGeneralException("Func 'deleteZeroFromNumber' = [ "+ex.Message+" ]");
+                throw new FCCoreGeneralException("Func 'deleteZeroFromNumber' = [ " + ex.Message + " ]");
             }
         }
 
@@ -2655,9 +2657,9 @@ namespace Flexible_computing
                 bynaryStringInt = inNumber.BinaryIntPart;
                 bynaryStringFloat = inNumber.BinaryFloatPart;
             }
-            else 
+            else
             {
-                if (Left_Right ==  PartOfNumber.Left)
+                if (Left_Right == PartOfNumber.Left)
                 {// Left part of number
                     bynaryStringInt = inNumber.BinaryIntPartFILeft;
                     bynaryStringFloat = inNumber.BinaryFloatPartFILeft;
@@ -2752,9 +2754,9 @@ namespace Flexible_computing
         /// <param name="inNumber">Number - var from which mantissa need to be taken</param>
         /// <param name="Left_Right">False - Left part og number, else - Right </param>
         /// <returns>Returns Mantissa in 2cc</returns>
-        public String selectMantissa(Number inNumber,int inputStringFormat, PartOfNumber Left_Right)
+        public String selectMantissa(Number inNumber, int inputStringFormat, PartOfNumber Left_Right)
         {
-            int i,l, z = 0;
+            int i, l, z = 0;
             int currMBits;
             String result = "";
             String M = "";
@@ -2845,11 +2847,11 @@ namespace Flexible_computing
                     // After Research Modification HERE NEEDED !
                     l = currMBits + 1 - result.Length;
                     tempArray = new String[l];
-                    for (i = 0; i < l;i++)
+                    for (i = 0; i < l; i++)
                     {
                         tempArray[i] = "0";
                     }
-                    result = result + String.Join("",tempArray);
+                    result = result + String.Join("", tempArray);
                 }
                 switch (Rounding)
                 {
@@ -2881,7 +2883,7 @@ namespace Flexible_computing
                                 M = "0";
                                 if (checkExpFull(inNumber.Exponenta))
                                 {
-                                    if (NumberFormat==0)
+                                    if (NumberFormat == 0)
                                         inNumber.NumberState = stateOfNumber.NaN;
                                     else
                                         inNumber.NumberStateRight = stateOfNumber.NaN;
@@ -2906,36 +2908,36 @@ namespace Flexible_computing
                                     M = String.Join("", tempArray) + M;
                                 }
                         }
-                       // inNumber.Mantisa = M;
+                        // inNumber.Mantisa = M;
                         break;
 
                     case 2:// +Inf 
                         M = result.Substring(1, currMBits);
-                            if (Sign[0] == '+')
+                        if (Sign[0] == '+')
+                        {
+                            if (!checkStringFull(M))
                             {
-                                if (!checkStringFull(M))
+                                M = convert2to10IPart(M);
+                                //M = sumIPart(M, "1");
+                                M = Addition(M, "1");
+                            }
+                            else
+                            {
+                                M = "0";
+                                if (checkExpFull(inNumber.Exponenta))
                                 {
-                                    M = convert2to10IPart(M);
-                                    //M = sumIPart(M, "1");
-                                    M = Addition(M, "1");
+                                    if (NumberFormat == 0)
+                                        inNumber.NumberState = stateOfNumber.NaN;
+                                    else
+                                        inNumber.NumberStateRight = stateOfNumber.NaN;
                                 }
                                 else
                                 {
-                                    M = "0";
-                                    if (checkExpFull(inNumber.Exponenta))
-                                    {
-                                        if (NumberFormat==0)
-                                            inNumber.NumberState = stateOfNumber.NaN;
-                                        else
-                                            inNumber.NumberStateRight = stateOfNumber.NaN;
-                                    }
-                                    else
-                                    {
-                                        sumExp(inNumber, "1");
-                                    }
+                                    sumExp(inNumber, "1");
                                 }
-                                M = convert10to2IPart(M);
                             }
+                            M = convert10to2IPart(M);
+                        }
                         break;
 
                     case 3:
@@ -2954,7 +2956,7 @@ namespace Flexible_computing
                                 M = "0";
                                 if (checkExpFull(inNumber.Exponenta))
                                 {
-                                    if (NumberFormat==0)
+                                    if (NumberFormat == 0)
                                         inNumber.NumberState = stateOfNumber.NaN;
                                     else
                                         inNumber.NumberStateRight = stateOfNumber.NaN;
@@ -2968,7 +2970,7 @@ namespace Flexible_computing
                         }
                         break;
                 }
-     
+
                 return M;
             }
             catch (Exception ex)
@@ -2982,13 +2984,13 @@ namespace Flexible_computing
         /// Uses: Number.E, Number.M
         /// </summary>
         /// <param name="inNumber">Input variable.</param>
-        public void calcRes(Number inNumber,PartOfNumber RightPart)
+        public void calcRes(Number inNumber, PartOfNumber RightPart)
         {
 
             String M = "", E = "", Mr = "", Er = "", binIPartOut, binFPartOut;
             try
             {
-                int z,cycle;
+                int z, cycle;
                 int Offset = 0;
                 int precision = 1900;
                 String Sign = "";
@@ -2997,8 +2999,8 @@ namespace Flexible_computing
                 String[] tempArray;
                 switch (inNumber.Name)
                 {
-                    case "Num32":  precision = 1000; break;
-                    case "Num64":  precision = 1200; break;
+                    case "Num32": precision = 1000; break;
+                    case "Num64": precision = 1200; break;
                     case "Num128": precision = 1800; break;
                     case "Num256": precision = 1900; break;
                 }
@@ -3015,108 +3017,108 @@ namespace Flexible_computing
                 z = RightPart == PartOfNumber.Left ? 0 : 1;
                 //for (z = 0; z < cycle; z++)
                 //{
-                    if (NumberFormat == 0 || z==0) // Number
-                    {
-                        M = inNumber.Mantisa;
-                        E = inNumber.Exponenta;
-                    }
-                    else // Fraction or Interval
-                    {
-                        Mr = inNumber.MantisaRight;
-                        Er = inNumber.ExponentaRight;
-                    }
-                    if (z == 0)
-                        currentState = inNumber.NumberState;
-                    else
-                        currentState = inNumber.NumberStateRight;
+                if (NumberFormat == 0 || z == 0) // Number
+                {
+                    M = inNumber.Mantisa;
+                    E = inNumber.Exponenta;
+                }
+                else // Fraction or Interval
+                {
+                    Mr = inNumber.MantisaRight;
+                    Er = inNumber.ExponentaRight;
+                }
+                if (z == 0)
+                    currentState = inNumber.NumberState;
+                else
+                    currentState = inNumber.NumberStateRight;
 
-                    switch (currentState)
-                    {
-                        case stateOfNumber.normalized:
-                            if (NumberFormat==0)
+                switch (currentState)
+                {
+                    case stateOfNumber.normalized:
+                        if (NumberFormat == 0)
+                            calcResForNorm(inNumber, M, E, Offset, precision, z);
+                        else
+                        {
+                            if (RightPart == PartOfNumber.Left)
                                 calcResForNorm(inNumber, M, E, Offset, precision, z);
                             else
-                            {
-                                if (RightPart == PartOfNumber.Left)
-                                    calcResForNorm(inNumber, M, E, Offset, precision, z);
-                                else
-                                    calcResForNorm(inNumber, Mr, Er, Offset, precision, z);
-                            }
-                          
-                            break;
+                                calcResForNorm(inNumber, Mr, Er, Offset, precision, z);
+                        }
 
-                        case stateOfNumber.denormalized:
-                            if (NumberFormat == 0)
+                        break;
+
+                    case stateOfNumber.denormalized:
+                        if (NumberFormat == 0)
+                            calcResForDenorm(inNumber, M, E, Offset, precision, z);
+                        else
+                        {
+                            if (RightPart == PartOfNumber.Left)
                                 calcResForDenorm(inNumber, M, E, Offset, precision, z);
                             else
-                            {
-                                if (RightPart == PartOfNumber.Left)
-                                    calcResForDenorm(inNumber, M, E, Offset, precision, z);
-                                else
-                                    calcResForDenorm(inNumber, Mr, Er, Offset, precision, z);
-                            }
-
-                            break;
-
-                        case stateOfNumber.zero:
-                            calcResForZero(inNumber,z,cycle);
-                            
-                            break;
-
-                        default:
-                            calcResForNan(inNumber, z, cycle);
-                          
-                            break;
-
-                    }//switch
-                    stateOfNumber tempState = RightPart == PartOfNumber.Right ? inNumber.NumberStateRight : inNumber.NumberState;
-
-                    /* Sign */
-                    if (RightPart == PartOfNumber.Left)
-                        Sign = SignCharacterLeft;
-                    else
-                        Sign = SignCharacterRight;
-
-                    if ((tempState == stateOfNumber.normalized) || (tempState == stateOfNumber.denormalized))
-                    {
-                        switch(NumberFormat)
-                        {
-                            case 0:
-                                inNumber.CorrectResultExp = Sign + convertToExp(inNumber.CorrectResult);
-                                inNumber.CorrectResult2ccExp = Sign + convertToExp(inNumber.CorrectResult2cc);
-                                break;
-                            case 1:
-                                if (z == 0)
-                                {
-                                    inNumber.CorrectResultFractionExpL = Sign + convertToExp(inNumber.CorrectResultFractionL);
-                                    inNumber.CorrectResultFraction2ccExpL = Sign + convertToExp(inNumber.CorrectResultFraction2ccL);
-                                }
-                                else
-                                {
-                                    inNumber.CorrectResultFractionExpR = Sign + convertToExp(inNumber.CorrectResultFractionR);
-                                    inNumber.CorrectResultFraction2ccExpR = Sign + convertToExp(inNumber.CorrectResultFraction2ccR);
-                                }
-                                break;
-                            case 2:
-                                if (z == 0)
-                                {
-                                    inNumber.CorrectResultIntervalExpL = Sign + convertToExp(inNumber.CorrectResultIntervalL);
-                                    inNumber.CorrectResultInterval2ccExpL = Sign + convertToExp(inNumber.CorrectResultInterval2ccL);
-                                }
-                                else
-                                {
-                                    inNumber.CorrectResultIntervalExpR = Sign + convertToExp(inNumber.CorrectResultIntervalR);
-                                    inNumber.CorrectResultInterval2ccExpR = Sign + convertToExp(inNumber.CorrectResultInterval2ccR);
-                                }
-                                break;
+                                calcResForDenorm(inNumber, Mr, Er, Offset, precision, z);
                         }
+
+                        break;
+
+                    case stateOfNumber.zero:
+                        calcResForZero(inNumber, z, cycle);
+
+                        break;
+
+                    default:
+                        calcResForNan(inNumber, z, cycle);
+
+                        break;
+
+                }//switch
+                stateOfNumber tempState = RightPart == PartOfNumber.Right ? inNumber.NumberStateRight : inNumber.NumberState;
+
+                /* Sign */
+                if (RightPart == PartOfNumber.Left)
+                    Sign = SignCharacterLeft;
+                else
+                    Sign = SignCharacterRight;
+
+                if ((tempState == stateOfNumber.normalized) || (tempState == stateOfNumber.denormalized))
+                {
+                    switch (NumberFormat)
+                    {
+                        case 0:
+                            inNumber.CorrectResultExp = Sign + convertToExp(inNumber.CorrectResult);
+                            inNumber.CorrectResult2ccExp = Sign + convertToExp(inNumber.CorrectResult2cc);
+                            break;
+                        case 1:
+                            if (z == 0)
+                            {
+                                inNumber.CorrectResultFractionExpL = Sign + convertToExp(inNumber.CorrectResultFractionL);
+                                inNumber.CorrectResultFraction2ccExpL = Sign + convertToExp(inNumber.CorrectResultFraction2ccL);
+                            }
+                            else
+                            {
+                                inNumber.CorrectResultFractionExpR = Sign + convertToExp(inNumber.CorrectResultFractionR);
+                                inNumber.CorrectResultFraction2ccExpR = Sign + convertToExp(inNumber.CorrectResultFraction2ccR);
+                            }
+                            break;
+                        case 2:
+                            if (z == 0)
+                            {
+                                inNumber.CorrectResultIntervalExpL = Sign + convertToExp(inNumber.CorrectResultIntervalL);
+                                inNumber.CorrectResultInterval2ccExpL = Sign + convertToExp(inNumber.CorrectResultInterval2ccL);
+                            }
+                            else
+                            {
+                                inNumber.CorrectResultIntervalExpR = Sign + convertToExp(inNumber.CorrectResultIntervalR);
+                                inNumber.CorrectResultInterval2ccExpR = Sign + convertToExp(inNumber.CorrectResultInterval2ccR);
+                            }
+                            break;
                     }
+                }
 
                 //}// for
             }
             catch (Exception ex)
             {
-                throw new FCCoreArithmeticException("Func 'calcRes' = [ "+ex.Message+" ]");
+                throw new FCCoreArithmeticException("Func 'calcRes' = [ " + ex.Message + " ]");
             }
         }
         public void calcResForNorm(Number inNumber, String M, String E, int Offset, int precision, int z)
@@ -3155,7 +3157,7 @@ namespace Flexible_computing
                 {
                     // After Research
                     int max = 0;
-                    tempArray = new String[Math.Abs(iE) +1];
+                    tempArray = new String[Math.Abs(iE) + 1];
                     for (int i = 1; i < Math.Abs(iE); i++) //for (int i = -1; i > iE; i--)
                     {
                         tempArray[max] = "0";
@@ -3163,15 +3165,15 @@ namespace Flexible_computing
                     }
                     if (max > 0)
                         M = String.Join("", tempArray) + M;
-                    else
-                        M = "0" + M; // WAS  commented  WARNING
+                    //else
+                    //    M = "0" + M;
 
                     binIPartOut = "0";
                     binFPartOut = M;
                 }
 
                 /* Sign */
-                if ((z == 0)||(NumberFormat == 0))
+                if ((z == 0) || (NumberFormat == 0))
                     Sign = SignCharacterLeft;
                 else
                     Sign = SignCharacterRight;
@@ -3469,81 +3471,81 @@ namespace Flexible_computing
         {
             try
             {
-                int z,cycle;
- 
+                int z, cycle;
+
                 cycle = NumberFormat == 0 ? 1 : 2;
                 z = RightPart == PartOfNumber.Left ? 0 : 1;
                 //for (z = 0; z < cycle; z++)
                 //{
-                    if ((inNumber.NumberState != stateOfNumber.error && NumberFormat == 0) || (NumberFormat != 0 && inNumber.NumberStateRight != stateOfNumber.error))
+                if ((inNumber.NumberState != stateOfNumber.error && NumberFormat == 0) || (NumberFormat != 0 && inNumber.NumberStateRight != stateOfNumber.error))
+                {
+                    String tempInput = "";// DenormalizedNumber; 
+                    if (z == 0)
+                        tempInput = inNumber.Denormalized;
+                    else
+                        tempInput = inNumber.DenormalizedRight;
+
+                    if ((tempInput[0] == '+') || (tempInput[0] == '-'))
+                        tempInput = tempInput.Substring(1);
+
+                    String temp2;
+                    switch (NumberFormat)
                     {
-                        String tempInput = "";// DenormalizedNumber; 
-                        if (z == 0)
-                            tempInput = inNumber.Denormalized;
-                        else
-                            tempInput = inNumber.DenormalizedRight;
+                        case 0:
+                            if (inNumber.CorrectResult[0] == '+')
+                                temp2 = inNumber.CorrectResult.Substring(1);
+                            else
+                                temp2 = inNumber.CorrectResult;
 
-                        if ((tempInput[0] == '+') || (tempInput[0] == '-'))
-                            tempInput = tempInput.Substring(1);
-
-                        String temp2;
-                        switch (NumberFormat)
-                        {
-                            case 0:
-                                if (inNumber.CorrectResult[0] == '+')
-                                    temp2 = inNumber.CorrectResult.Substring(1);
+                            inNumber.Error = convertToExp(Subtraction(tempInput, temp2));
+                            break;
+                        case 1:
+                            if (z == 0)
+                            {
+                                if (inNumber.CorrectResultFractionL[0] == '+')
+                                    temp2 = inNumber.CorrectResultFractionL.Substring(1);
                                 else
-                                    temp2 = inNumber.CorrectResult;
+                                    temp2 = inNumber.CorrectResultFractionL;
 
-                                inNumber.Error = convertToExp(Subtraction(tempInput, temp2));
-                                break;
-                            case 1:
-                                if (z == 0)
-                                {
-                                    if (inNumber.CorrectResultFractionL[0] == '+')
-                                        temp2 = inNumber.CorrectResultFractionL.Substring(1);
-                                    else
-                                        temp2 = inNumber.CorrectResultFractionL;
-
-                                    inNumber.ErrorFractionLeft = convertToExp(Subtraction(tempInput, temp2)) ;
-                                }
+                                inNumber.ErrorFractionLeft = convertToExp(Subtraction(tempInput, temp2));
+                            }
+                            else
+                            {
+                                if (inNumber.CorrectResultFractionR[0] == '+')
+                                    temp2 = inNumber.CorrectResultFractionR.Substring(1);
                                 else
-                                {
-                                    if (inNumber.CorrectResultFractionR[0] == '+')
-                                        temp2 = inNumber.CorrectResultFractionR.Substring(1);
-                                    else
-                                        temp2 = inNumber.CorrectResultFractionR;
+                                    temp2 = inNumber.CorrectResultFractionR;
 
-                                    inNumber.ErrorFractionRight = convertToExp(Subtraction(tempInput, temp2));
-                                }
-                                break;
-                            case 2:
-                                if (z == 0)
-                                {
-                                    if (inNumber.CorrectResultIntervalL[0] == '+')
-                                        temp2 = inNumber.CorrectResultIntervalL.Substring(1);
-                                    else
-                                        temp2 = inNumber.CorrectResultIntervalL;
-
-                                    inNumber.ErrorIntervalLeft = convertToExp(Subtraction(tempInput, temp2)) ;
-                                }
+                                inNumber.ErrorFractionRight = convertToExp(Subtraction(tempInput, temp2));
+                            }
+                            break;
+                        case 2:
+                            if (z == 0)
+                            {
+                                if (inNumber.CorrectResultIntervalL[0] == '+')
+                                    temp2 = inNumber.CorrectResultIntervalL.Substring(1);
                                 else
-                                {
-                                    if (inNumber.CorrectResultIntervalR[0] == '+')
-                                        temp2 = inNumber.CorrectResultIntervalR.Substring(1);
-                                    else
-                                        temp2 = inNumber.CorrectResultIntervalR;
+                                    temp2 = inNumber.CorrectResultIntervalL;
 
-                                    inNumber.ErrorIntervalRight = convertToExp(Subtraction(tempInput, temp2));
-                                }
-                                break;
-                        }
+                                inNumber.ErrorIntervalLeft = convertToExp(Subtraction(tempInput, temp2));
+                            }
+                            else
+                            {
+                                if (inNumber.CorrectResultIntervalR[0] == '+')
+                                    temp2 = inNumber.CorrectResultIntervalR.Substring(1);
+                                else
+                                    temp2 = inNumber.CorrectResultIntervalR;
+
+                                inNumber.ErrorIntervalRight = convertToExp(Subtraction(tempInput, temp2));
+                            }
+                            break;
                     }
+                }
                 //}// for
             }
             catch (Exception ex)
             {
-                throw new FCCoreArithmeticException("Func 'calcError' = [ "+ex.Message+" ]");
+                throw new FCCoreArithmeticException("Func 'calcError' = [ " + ex.Message + " ]");
             }
         }
         //----------------------   NOT TESTED FUNCS BEGIN
@@ -3606,10 +3608,10 @@ namespace Flexible_computing
                 {
                     if (inString[i] == '1')
                     {
-                        divider = DevideBy2(i + 1);
+                        divider = DevideBy2(i);
                         result = Addition(result, divider);
                     }
-                   // divider = Devision(divider, "2", Precision);
+                    // divider = Devision(divider, "2", Precision);
                 }
                 return result.Substring(result.IndexOf(',') + 1, result.Length - result.IndexOf(',') - 1);
             }
@@ -3696,7 +3698,8 @@ namespace Flexible_computing
                 throw new FCCoreArithmeticException("Func 'convertToExp' = [ " + ex.Message + " ]");
             }
         }
-        
+
+        [Obsolete("Not used anymore", true)]
         public String convertToExp2(String inputStr)
         {
             String currentValue;
@@ -3775,7 +3778,7 @@ namespace Flexible_computing
                 throw new FCCoreArithmeticException("Func 'convertToExp' = [ " + ex.Message + " ]");
             }
         }
-     
+
         //----------------------   NOT TESTED FUNCS END
 
         //----------------------   TESTED 
@@ -3819,7 +3822,7 @@ namespace Flexible_computing
         /// <param name="Devident">Number which is devided.</param>
         /// <param name="Devider">Number which is devides.</param>
         /// <returns>Quotient</returns>
-        public String Devision(String Devident, String Devider,int Precision)
+        public String Devision(String Devident, String Devider, int Precision)
         {
             String SignResult = "", Result = "";
             String iPartResult = "", fPartResult = "";
@@ -4233,7 +4236,7 @@ namespace Flexible_computing
             { throw new FCCoreArithmeticException("Func 'Addition' = [" + ex.Message + "]"); }
         }
 
-        private  String addV2(BigInteger Operand1, BigInteger Operand2)
+        private String addV2(BigInteger Operand1, BigInteger Operand2)
         {
             BigInteger Result;
             try
@@ -4245,7 +4248,7 @@ namespace Flexible_computing
             { throw new FCCoreArithmeticException("Func 'addV2' = [" + ex.Message + "]"); }
         }
 
-        public  String Subtraction(String Operand1, String Operand2)
+        public String Subtraction(String Operand1, String Operand2)
         {
             String SignResult = "", Result = "";
             String fPartOp1 = "", fPartOp2 = "";
@@ -4360,7 +4363,7 @@ namespace Flexible_computing
                     LenFractionPartOperand2 = 0;
                 }
 
-                 if (LenFractionPartOperand1 < LenFractionPartOperand2)
+                if (LenFractionPartOperand1 < LenFractionPartOperand2)
                 {
                     BiggerLen = LenFractionPartOperand2;
                     for (i = 0; i < LenFractionPartOperand2 - LenFractionPartOperand1; i++)
@@ -4406,7 +4409,7 @@ namespace Flexible_computing
                         index = Result.Length;
                         if (BiggerLen > index)
                         {
-                            for (i = 0; i < BiggerLen - index ; i++) // After Research Modification NEEDED !
+                            for (i = 0; i < BiggerLen - index; i++) // After Research Modification NEEDED !
                                 Result = "0" + Result;
                             Result = "0," + Result;
                         }
@@ -4451,7 +4454,7 @@ namespace Flexible_computing
                 temp[i] = "0";
             Result = String.Join("", temp) + Devident.ToString();
             //if (Degree != 0)
-                return "+0," + Result;
+            return "+0," + Result;
             //else
             //    return "+" + Result;
         }
@@ -4488,26 +4491,26 @@ namespace Flexible_computing
                         case 1100: hex += "C"; break;
                         case 1101: hex += "D"; break;
                         case 1110: hex += "E"; break;
-                        case 1111: hex += "F";break;
-                    default: break;
+                        case 1111: hex += "F"; break;
+                        default: break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new FCCoreArithmeticException("Func 'convert2to16' = ["+ ex.Message+ "]");
+                throw new FCCoreArithmeticException("Func 'convert2to16' = [" + ex.Message + "]");
             }
 
             return hex;
         }
 
-        public String convert16to2(String hex,int bitOutput)
+        public String convert16to2(String hex, int bitOutput)
         {
             int i;
-            String result="";
-            String []tempArray;
+            String result = "";
+            String[] tempArray;
             String hex_table = "0123456789ABCDEF";
-            String [] bin_table = {"0000","0001","0010","0011",
+            String[] bin_table = {"0000","0001","0010","0011",
                                   "0100","0101","0110","0111",
                                   "1000","1001","1010","1011",
                                   "1100","1101","1110","1111"};
@@ -4526,7 +4529,7 @@ namespace Flexible_computing
             }
             catch (Exception ex)
             {
-                throw new FCCoreArithmeticException("Func 'convert16to2(String hex)' =["+ ex.Message +"]");
+                throw new FCCoreArithmeticException("Func 'convert16to2(String hex)' =[" + ex.Message + "]");
             }
 
         }
@@ -4540,7 +4543,43 @@ namespace Flexible_computing
                 return hex_table[inDigit];
         }
 
+        public String convert2toT(String bin)
+        {
+            String hex = "";
 
+            try
+            {
+                int iTemp = bin.Length % 2;
+
+                if (iTemp > 0)
+                    for (int i = 0; i < 2 - iTemp; i++)
+                        bin = "0" + bin;
+
+                for (int i = 0; i < bin.Length; i += 2)
+                {
+                    String temp = bin.Substring(i, 2);
+                    switch (int.Parse(temp))
+                    {
+                        case 00: hex += "A"; break;
+                        case 01: hex += "0"; break;
+                        case 10: hex += "1"; break;
+                        case 11: hex += "M"; break;
+                        default: break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new FCCoreArithmeticException("Func 'convert2to16' = [" + ex.Message + "]");
+            }
+
+            return hex;
+        }
+
+        public String convertTto16(String bin)
+        {
+            return convert2to16(bin);
+        }
         /* Temporary Func's
          public String sumFPart(String a, String b)
         {

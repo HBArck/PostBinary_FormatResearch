@@ -62,13 +62,17 @@ namespace Flexible_computing
         TreeNode mainNode;
         bool isFormatInfoFullView = false;
 
-        public TextBox[] textBoxes;/*= { tbExp32, tbExp64, tbExp64_2, tbExp128, tbExp128_2, tbExp256, tbExp256_2, 
+        /*public TextBox[] textBoxes;/*= { tbExp32, tbExp64, tbExp64_2, tbExp128, tbExp128_2, tbExp256, tbExp256_2, 
                             tbMantisa32, tbMantisa64, tbMantisa64_2, tbMantisa128, tbMantisa128_2, tbMantisa256, tbMantisa256_2,
                             tbCF32, tbCF64, tbCF128, tbCF256, tbMF32, tbMF64, tbMF128, tbMF256}; // This Array stores all tbExponents & tbMantissas from Form*/
         String[] textCalcError;   // tbCalcError
         // Left & Right part of Float & Interval
         String LeftPart;
         String RightPart;
+        String tM64, tM128, tM256, tM64_2, tM128_2, tM256_2; // Mantisas in TetraCode CodeBasis
+        TextBox[] textBoxes ;
+        String[] textBoxesInTetra ;
+
         /* Temporary Var's
         public String out32Dec;
         public String out32Bin;
@@ -131,18 +135,19 @@ namespace Flexible_computing
             dataGridView1.Rows.Add(3);
             dataGridView2.Rows.Add(12);
             //textCalcError= new String[4];
-            //var  temp = Core.Num32.GetType().GetProperty("Mantisa");
+            //var  temp = Core.Num32.GetType().GetProperty("Mantisa");  
             //temp.SetValue(Core.Num32, "new mantissa",null);
             //tbMantisa32.Text = Core.Num32.Mantisa;
 
             ThreadPool.SetMaxThreads(20, 10);
             ThreadPool.SetMinThreads(10, 5);
-            tTime.Start();
+            //tTime.Start();  // Debug Timer 
             GUITimer.Start();
             tabControl_Format.SelectedIndex = 0;
 
             radioFloat.Enabled = false;
             radioInterval.Enabled = false;
+            //chbTetra.Enabled = false;
             roundType = 1;
             label18.Text = miToInt.Text;
 
@@ -181,7 +186,10 @@ namespace Flexible_computing
             il.Images.Add(Properties.Resources.arrow_right);
             il.Images.Add(Properties.Resources.warning);
             mainNode = treeView1.Nodes.Add("Core","Core",0); 
-            treeView1.SelectedImageIndex = 4;         
+            treeView1.SelectedImageIndex = 4;      
+   
+            textBoxes = new TextBox[]{ tbMantisa64, tbMantisa64_2, tbMantisa128, tbMantisa128_2, tbMantisa256, tbMantisa256_2 };
+            textBoxesInTetra = new String[] { tM64, tM64_2, tM128, tM128_2, tM256, tM256_2 };
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1911,7 +1919,7 @@ namespace Flexible_computing
             }
             catch (Exception ex)
             {
-                //throw new FCFormGeneralException("Func 'convert2to16'=["+ex.Message+"]");
+                throw new FCFormGeneralException("Func 'convert2to16'=["+ex.Message+"]");
             }
         }
         /// <summary>
@@ -2085,54 +2093,164 @@ namespace Flexible_computing
             }
             
         }
+
+        public void convert2toT(Object threadContext)
+        { 
+            String temp_str;
+            try
+            {
+                if (tbExp32.InvokeRequired)
+                {
+                    convert2to16Del d = new convert2to16Del(convert2to16);
+                    this.Invoke(d, new object[] { threadContext });
+                }
+                else
+                {
+
+                 TextBox[] textBoxes = {  tbMantisa64, tbMantisa64_2, tbMantisa128, tbMantisa128_2, tbMantisa256, tbMantisa256_2};
+                 foreach (TextBox currTextBox in textBoxes)
+                 {
+                    temp_str = Core.convert2toT(currTextBox.Text);
+                    currTextBox.Text = temp_str;
+                 }
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw new FCFormGeneralException("Func 'convert2to16'=["+ex.Message+"]");
+            }
+        }
+       
         private void l2ccTo16cc_Click(object sender, EventArgs e)
         {
             try
             {
                 if (l2ccTo16cc.Text == "2cc")
                 {
-                    l2ccTo16cc.Text = "16cc";
-                    currentCCOnTabs = true;
-                    convert2to16(null);
-                    changeBitLength(1);
-                    tbMantisa128.ScrollBars = ScrollBars.None;
-                    tbMantisa128.TextAlign = HorizontalAlignment.Center;
-                    tbMantisa128.Size = new Size(tbMantisa128.Size.Width, 24);
-                    tbMantisa128_2.ScrollBars = ScrollBars.None;
-                    tbMantisa128_2.TextAlign = HorizontalAlignment.Center;
-                    tbMantisa128_2.Size = new Size(tbMantisa128.Size.Width, 24);
-                    if (inputStringFormat > 0)
+                    if ((!chbTetra.Checked) || (chbTetra.Checked && l2ccTo16cc.Text == " T "))
                     {
-                        tbMantisa256.ScrollBars = ScrollBars.None;
-                        tbMantisa256.TextAlign = HorizontalAlignment.Center;
-                        tbMantisa256.Size = new Size(tbMantisa256.Size.Width, 24);
-                        tbMantisa256_2.ScrollBars = ScrollBars.None;
-                        tbMantisa256_2.TextAlign = HorizontalAlignment.Center;
-                        tbMantisa256_2.Size = new Size(tbMantisa256.Size.Width, 24);
+                        l2ccTo16cc.Text = "16cc";
+                        currentCCOnTabs = true;
+                        convert2to16(null);
+                        changeBitLength(1);
+                        tbMantisa128.ScrollBars = ScrollBars.None;
+                        tbMantisa128.TextAlign = HorizontalAlignment.Center;
+                        tbMantisa128.Size = new Size(tbMantisa128.Size.Width, 24);
+                        tbMantisa128_2.ScrollBars = ScrollBars.None;
+                        tbMantisa128_2.TextAlign = HorizontalAlignment.Center;
+                        tbMantisa128_2.Size = new Size(tbMantisa128.Size.Width, 24);
+                        if (inputStringFormat > 0)
+                        {
+                            tbMantisa256.ScrollBars = ScrollBars.None;
+                            tbMantisa256.TextAlign = HorizontalAlignment.Center;
+                            tbMantisa256.Size = new Size(tbMantisa256.Size.Width, 24);
+                            tbMantisa256_2.ScrollBars = ScrollBars.None;
+                            tbMantisa256_2.TextAlign = HorizontalAlignment.Center;
+                            tbMantisa256_2.Size = new Size(tbMantisa256.Size.Width, 24);
+                        }
+                    }
+                    else
+                    { // if Tetra = checked -> next Tcc
+                        l2ccTo16cc.Text = " T ";
+                        convert2toT(null);
                     }
                 }
                 else
                 {
-                    convert16to2();
-                    l2ccTo16cc.Text = "2cc";
-                    currentCCOnTabs = false;
-                    changeBitLength(0);
-                    tbMantisa128.ScrollBars = ScrollBars.Horizontal;
-                    tbMantisa128.TextAlign = HorizontalAlignment.Left;
-                    tbMantisa128.Size = new Size(tbMantisa128.Size.Width, 41);
-                    tbMantisa128_2.ScrollBars = ScrollBars.Horizontal;
-                    tbMantisa128_2.TextAlign = HorizontalAlignment.Left;
-                    tbMantisa128_2.Size = new Size(tbMantisa128.Size.Width, 41);
-                    if (inputStringFormat > 0)
+                    if (l2ccTo16cc.Text == "16cc")
                     {
-                        tbMantisa256.ScrollBars = ScrollBars.Horizontal;
-                        tbMantisa256.TextAlign = HorizontalAlignment.Left;
-                        tbMantisa256.Size = new Size(tbMantisa256.Size.Width, 41);
-                        tbMantisa256_2.ScrollBars = ScrollBars.Horizontal;
-                        tbMantisa256_2.TextAlign = HorizontalAlignment.Left;
-                        tbMantisa256_2.Size = new Size(tbMantisa256.Size.Width, 41);
+                        if (TetraCheck)
+                        {
+                            // changing mantisa 64-256
+                            
+                            for (int i = 0; i < textBoxes.Length; i++)
+                                textBoxes[i].Text = textBoxesInTetra[i];
+
+                            tbExp64.Text = Core.Num64.Exponenta;
+                            tbExp64_2.Text = Core.Num64.ExponentaRight;
+                            tbMF64.Text = Core.Num64.MF;
+                            tbCF64.Text = Core.Num64.CF;
+
+                            tbExp128.Text = Core.Num128.Exponenta;
+                            tbExp128_2.Text = Core.Num128.ExponentaRight;
+                            tbMF128.Text = Core.Num128.MF;
+                            tbCF128.Text = Core.Num128.CF;
+
+                            tbExp256.Text = Core.Num256.Exponenta;
+                            tbExp256_2.Text = Core.Num256.ExponentaRight;
+                            tbMF256.Text = Core.Num256.MF;
+                            tbCF256.Text = Core.Num256.CF;
+                            // changing mantisa 32
+                            tbExp32.Text = Core.Num32.Exponenta;
+                            tbMantisa32.Text = Core.Num32.Mantisa;
+                            tbMF32.Text = Core.Num32.MF;
+                            tbCF32.Text = Core.Num32.CF;
+
+                            l2ccTo16cc.Text = "2cc";
+                            currentCCOnTabs = false;
+                            changeBitLength(0);
+                            tbMantisa128.ScrollBars = ScrollBars.Horizontal;
+                            tbMantisa128.TextAlign = HorizontalAlignment.Left;
+                            tbMantisa128.Size = new Size(tbMantisa128.Size.Width, 41);
+                            tbMantisa128_2.ScrollBars = ScrollBars.Horizontal;
+                            tbMantisa128_2.TextAlign = HorizontalAlignment.Left;
+                            tbMantisa128_2.Size = new Size(tbMantisa128.Size.Width, 41);
+                            if (inputStringFormat > 0)
+                            {
+                                tbMantisa256.ScrollBars = ScrollBars.Horizontal;
+                                tbMantisa256.TextAlign = HorizontalAlignment.Left;
+                                tbMantisa256.Size = new Size(tbMantisa256.Size.Width, 41);
+                                tbMantisa256_2.ScrollBars = ScrollBars.Horizontal;
+                                tbMantisa256_2.TextAlign = HorizontalAlignment.Left;
+                                tbMantisa256_2.Size = new Size(tbMantisa256.Size.Width, 41);
+                            }
+                        }
+                        else
+                        {
+                            convert16to2();
+                            l2ccTo16cc.Text = "2cc";
+                            currentCCOnTabs = false;
+                            changeBitLength(0);
+                            tbMantisa128.ScrollBars = ScrollBars.Horizontal;
+                            tbMantisa128.TextAlign = HorizontalAlignment.Left;
+                            tbMantisa128.Size = new Size(tbMantisa128.Size.Width, 41);
+                            tbMantisa128_2.ScrollBars = ScrollBars.Horizontal;
+                            tbMantisa128_2.TextAlign = HorizontalAlignment.Left;
+                            tbMantisa128_2.Size = new Size(tbMantisa128.Size.Width, 41);
+                            if (inputStringFormat > 0)
+                            {
+                                tbMantisa256.ScrollBars = ScrollBars.Horizontal;
+                                tbMantisa256.TextAlign = HorizontalAlignment.Left;
+                                tbMantisa256.Size = new Size(tbMantisa256.Size.Width, 41);
+                                tbMantisa256_2.ScrollBars = ScrollBars.Horizontal;
+                                tbMantisa256_2.TextAlign = HorizontalAlignment.Left;
+                                tbMantisa256_2.Size = new Size(tbMantisa256.Size.Width, 41);
+                            }
+                        }
                     }
-                }
+                    else
+                    {
+                        l2ccTo16cc.Text = "16cc";
+                        currentCCOnTabs = true;
+                        convert2to16(null);
+                        changeBitLength(1);
+                        tbMantisa128.ScrollBars = ScrollBars.None;
+                        tbMantisa128.TextAlign = HorizontalAlignment.Center;
+                        tbMantisa128.Size = new Size(tbMantisa128.Size.Width, 24);
+                        tbMantisa128_2.ScrollBars = ScrollBars.None;
+                        tbMantisa128_2.TextAlign = HorizontalAlignment.Center;
+                        tbMantisa128_2.Size = new Size(tbMantisa128.Size.Width, 24);
+                        if (inputStringFormat > 0)
+                        {
+                            tbMantisa256.ScrollBars = ScrollBars.None;
+                            tbMantisa256.TextAlign = HorizontalAlignment.Center;
+                            tbMantisa256.Size = new Size(tbMantisa256.Size.Width, 24);
+                            tbMantisa256_2.ScrollBars = ScrollBars.None;
+                            tbMantisa256_2.TextAlign = HorizontalAlignment.Center;
+                            tbMantisa256_2.Size = new Size(tbMantisa256.Size.Width, 24);
+                        }
+                    }
+                }              
                 Form1_Paint(sender, null);
             }
             catch(Exception ex)
@@ -3440,6 +3558,132 @@ namespace Flexible_computing
                 }
             }
         }
+
+        private void chbTetra_CheckedChanged(object sender, EventArgs e)
+        {
+
+            TetraCheck = (chbTetra.Checked) ? true : false;
+            if (((TetraCheck) && (tabControl_Format.SelectedIndex <= 1))) // NO SUCH FORMATS 64/16pi or 64/16fp
+            {
+                radioFloat.Enabled = false;
+                radioInterval.Enabled = false;
+                дробьToolStripMenuItem.Enabled = false;
+                интервалToolStripMenuItem.Enabled = false;
+                числоToolStripMenuItem.Checked = true;
+
+            }
+            else
+            {
+                radioFloat.Enabled = true;
+                radioInterval.Enabled = true;
+                дробьToolStripMenuItem.Enabled = true;
+                интервалToolStripMenuItem.Enabled = true;
+            }
+
+            String tempStr = "", tempStr2 = "";
+            bool stopFlag = false;
+          
+            if (TetraCheck)
+            {
+                // Fields for formats
+                // if 16cc then translate to 2cc
+                if (currentCCOnTabs == true)
+                { convert16to2(); }
+                // make form 0-01 , 1 - 10 
+
+                for (int i = 0; i < textBoxes.Length; i++)
+                {
+                    tempStr = "";
+                    for (int j = 0; j < textBoxes[i].TextLength; j++)
+                        switch (textBoxes[i].Text[j])
+                        {
+                            case '0': tempStr += "01"; break;
+                            case '1': tempStr += "10"; break;
+                        }
+                    textBoxes[i].MaxLength *= 2;
+                    textBoxes[i].Text = tempStr;
+                    textBoxesInTetra[i] = tempStr;
+                }
+
+            }
+            else
+            {
+                // Fields for formats
+                // Check if possible data loss, and send mess
+                for (int i = 0; i < textBoxes.Length; i++)
+                {
+                    if (textBoxes[i].Text.Contains("A") || textBoxes[i].Text.Contains("M"))
+                    {
+                        if (MessageBox.Show("Possible Data Lost!Proceed", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Cancel)
+                        {
+                            stopFlag = true;
+                            break;
+                        }
+                        else
+                        {
+                            stopFlag = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (!stopFlag)
+                {
+                    tbRes.Text = "";
+                    tbCalcError.Text = "";
+                    //if (!tetraTranslation)
+                    //    MessageBox.Show("Minimum Value for M & A selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //else
+                    //    MessageBox.Show("Maximum Value for M & A selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    // if 16cc is checked
+                    if (currentCCOnTabs == true)
+                    {
+                        convert16to2();
+                    }
+                    else
+                    {
+                        // if Tetra is cheked then translate from Tcc -> 2cc
+                        //convert2toT(null);
+
+
+                        for (int i = 0; i < textBoxes.Length; i++)
+                        {
+                            tempStr = "";
+                            for (int j = 0; j < textBoxes[i].TextLength-1; j += 2)
+                            {
+                                tempStr2 = "";
+                                tempStr2 = textBoxes[i].Text[j].ToString() + textBoxes[i].Text[j + 1].ToString();
+                                if (!tetraTranslation)
+                                { //minimum
+                                    switch (tempStr2)
+                                    {
+                                        case "00": tempStr += "1"; break;
+                                        case "01": tempStr += "0"; break;
+                                        case "10": tempStr += "1"; break;
+                                        case "11": tempStr += "0"; break;
+                                    }
+                                }
+                                else
+                                { // maximum
+                                    switch (tempStr2)
+                                    {
+                                        case "00": tempStr += "0"; break;
+                                        case "01": tempStr += "0"; break;
+                                        case "10": tempStr += "1"; break;
+                                        case "11": tempStr += "1"; break;
+                                    }
+                                }
+                            }
+                            textBoxes[i].MaxLength /= 2;
+                            textBoxes[i].Text = tempStr;
+                        }
+                    }
+                }
+                else
+                { return; }
+            }
+        }
+
 
     
     }//class Form1

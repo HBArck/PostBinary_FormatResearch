@@ -93,7 +93,7 @@ namespace Flexible_computing
                         /*__9__*/   { "Нормализованное","Денормализованное","Нуль","Бесконечность","Не число","Не представимо"}
                                  };//{"","","","","",""}
         String[][,] inStr = { languageStringsEng, languageStringsRus, languageStringsGer, languageStringsUkr };
-
+        bool tetraTranslation = false; // used when cbTetra changes to uncheked. If false then M-> 0 A->
         int CurrentSelectedTab = 0;
         /// <summary>
         /// Changing language based on input var lang
@@ -184,29 +184,7 @@ namespace Flexible_computing
             }
         }
 
-        private void chbTetra_CheckStateChanged(object sender, EventArgs e)
-        {
-            TetraCheck = (TetraCheck) ? false : true;
-            if ((TetraCheck) && (tabControl_Format.SelectedIndex <= 1)) // NO SUCH FORMATS 64/16pi or 64/16fp
-            {
-                radioFloat.Enabled = false;
-                radioInterval.Enabled = false;
-                дробьToolStripMenuItem.Enabled = false;
-                интервалToolStripMenuItem.Enabled = false;
-                числоToolStripMenuItem.Checked = true;
-            }
-            else
-            {
-                radioFloat.Enabled = true;
-                radioInterval.Enabled = true;
-                дробьToolStripMenuItem.Enabled = true;
-                интервалToolStripMenuItem.Enabled = true;
-            }
-            if (TetraCheck)
-            {
- 
-            }
-        }
+
 
 //---------------------------   BLOCK of input Validating func's -------------------
         private void tbInput_TextChanged(object sender, EventArgs e)
@@ -1455,12 +1433,12 @@ namespace Flexible_computing
                         интервалToolStripMenuItem.Enabled = true;
                         chbTetra.Enabled = true;
                     }
-                    else
-                    {
-                        chbTetra.Enabled = false;
-                        if (chbTetra.Checked)
-                            chbTetra.Checked = false;
-                    }
+                    //else
+                    //{
+                    //    chbTetra.Enabled = false;
+                    //    if (chbTetra.Checked)
+                    //        chbTetra.Checked = false;
+                    //}
                 }
             }
             textChangeOnForm();

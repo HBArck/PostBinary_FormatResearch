@@ -2681,7 +2681,7 @@
             this.chbTetra.TabIndex = 3;
             this.chbTetra.Text = "Тетракод";
             this.chbTetra.UseVisualStyleBackColor = true;
-            this.chbTetra.CheckStateChanged += new System.EventHandler(this.chbTetra_CheckStateChanged);
+            this.chbTetra.CheckedChanged += new System.EventHandler(this.chbTetra_CheckedChanged);
             // 
             // radioInterval
             // 
